@@ -63,20 +63,11 @@ public class Main extends JavaPlugin {
         Location location = player.getLocation();
         // command received, is this our command tho?
         switch (command.getName().toLowerCase()) {
-            case "draw":
-                draw();
-                break;
-            case "jesus":
-                jesus();
-                break;
-            case "drill":
-                drill();
-                break;
-            case "clearchunk":
-                clearchunk(command, args);
-                break;
-            case "stopcommand":
-                clearTask();
+            case "draw" -> draw();
+            case "jesus" -> jesus();
+            case "drill" -> drill();
+            case "clearchunk" -> clearchunk(command, args);
+            case "stopcommand" -> clearTask();
         }
     }
 
@@ -91,7 +82,6 @@ public class Main extends JavaPlugin {
                 for (String argument : arg) {
                     materialsToExclude.add(Material.valueOf(argument.toUpperCase()));
                 }
-                Location location = player.getLocation();
                 if (player != null) {
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
