@@ -1,9 +1,9 @@
 main: com.stubfx.plugin.Main
-name: MyPlugin
+name: stubFXplugin
 version: 1.0
 api-version: '1.17'
-author: me
-description: An Example plugin
+author: stubFX
+description: A simple stream plugin made at twitch.tv/stubfx
 commands:
   draw:
     description: An example command
