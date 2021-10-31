@@ -49,8 +49,7 @@ public class Main extends JavaPlugin {
                              String label,
                              String[] args) {
         clearTask();
-        // fist of all, look for me
-        player = getServer().getPlayer("stubbinoFixino");
+        player = ((Player) sender);
         if (player == null) {
             return false;
         }
