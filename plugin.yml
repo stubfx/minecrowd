@@ -8,16 +8,28 @@ commands:
   draw:
     description: An example command
     usage: /draw
+    permission: stubfxplugin.draw
+    permission-message: You don't have the stubFXplugin.draw permission.
   jesus:
     description: An example command
     usage: /jesus
+    permission: stubfxplugin.jesus
+    permission-message: You don't have the stubFXplugin.jesus permission.
   drill:
     description: An example command
     usage: /drill
+    permission: stubfxplugin.drill
+    permission-message: You don't have the stubFXplugin.drill permission.
   clearchunk:
     description: An example command
     usage: /clearchunk
+    permission: stubfxplugin.clearchunk
+    permission-message: You don't have the stubFXplugin.clearchunk permission.
   stopcommand:
     description: An example command
     usage: /stopcommand
-default-permission: op
+    permission: stubfxplugin.stopcommand
+    permission-message: You don't have the stubFXplugin.stopcommand permission.
+permissions:
+  stubfxplugin.*:
+    default: op
