@@ -1,0 +1,32 @@
+main: com.stubfx.plugin.Main
+name: MyPlugin
+version: 1.0
+api-version: '1.17'
+author: me
+description: An Example plugin
+commands:
+  draw:
+    description: An example command
+    usage: /draw
+    permission: myplugin.mycommand
+    permission-message: You don't have the myplugin.mycommand permission.
+  jesus:
+    description: An example command
+    usage: /jesus
+    permission: myplugin.mycommand
+    permission-message: You don't have the myplugin.mycommand permission.
+  drill:
+    description: An example command
+    usage: /drill
+    permission: myplugin.mycommand
+    permission-message: You don't have the myplugin.mycommand permission.
+  clearchunk:
+    description: An example command
+    usage: /clearchunk
+    permission: myplugin.mycommand
+    permission-message: You don't have the myplugin.mycommand permission.
+  stopcommand:
+    description: An example command
+    usage: /stopcommand
+    permission: myplugin.mycommand
+    permission-message: You don't have the myplugin.mycommand permission.
