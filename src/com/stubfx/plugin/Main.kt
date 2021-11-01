@@ -40,7 +40,7 @@ class Main : JavaPlugin() {
             "draw" -> draw(player)
             "jesus" -> jesus(player)
             "drill" -> drill(player)
-            "clearchunk" -> clearchunk(player, args)
+            "clearchunk" -> clearChunkBelow(player.location, args)
             "sculktrap" -> sculktrap(player)
             "stubstop" -> clearTask()
         }
@@ -52,9 +52,9 @@ class Main : JavaPlugin() {
         player.sendMessage("sculk trap ready.")
     }
 
-    private fun clearchunk(player: Player, args: Array<String>?, clearFullChunk: Boolean = false) {
-        val playerHeight = if (!clearFullChunk) player.location.y else 255
-        val chunk = player.location.chunk
+    private fun clearChunkBelow(location: Location, args: Array<String>?, clearFullChunk: Boolean = false) {
+        val playerHeight = if (!clearFullChunk) location.y else 255
+        val chunk = location.chunk
         myTask = object : BukkitRunnable() {
             override fun run() {
                 val materialsToExclude = mutableListOf<Material>()
@@ -121,7 +121,7 @@ class Main : JavaPlugin() {
         if (player.inventory.itemInMainHand.type == Material.GOLDEN_SHOVEL) {
             val targetBlockExact = player.getTargetBlockExact(20)
             if (targetBlockExact != null) {
-                clearchunk(player, null, true)
+                clearChunkBelow(player.location, null, true)
             }
         }
     }
