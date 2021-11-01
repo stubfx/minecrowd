@@ -119,9 +119,9 @@ class Main : JavaPlugin() {
     fun onPlayerInteractEvent(event: PlayerInteractEvent) {
         val player = event.player
         if (player.inventory.itemInMainHand.type == Material.GOLDEN_SHOVEL) {
-            val targetBlockExact = player.getTargetBlockExact(20)
-            if (targetBlockExact != null) {
-                clearChunkBelow(player.location, null, true)
+            val clickedBlock = event.clickedBlock
+            if (clickedBlock != null) {
+                clearChunkBelow(clickedBlock.location, null, true)
             }
         }
     }
