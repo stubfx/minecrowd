@@ -1,6 +1,6 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
-version: 1.0.1
+version: 1.0.2
 api-version: '1.17'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
@@ -25,11 +25,16 @@ commands:
     usage: /clearchunk
     permission: stubfxplugin.clearchunk
     permission-message: You don't have the stubFXplugin.clearchunk permission.
-  stopcommand:
+  sculktrap:
     description: An example command
-    usage: /stopcommand
-    permission: stubfxplugin.stopcommand
-    permission-message: You don't have the stubFXplugin.stopcommand permission.
+    usage: /sculktrap
+    permission: stubfxplugin.sculktrap
+    permission-message: You don't have the stubFXplugin.sculktrap permission.
+  stubstop:
+    description: An example command
+    usage: /stubstop
+    permission: stubfxplugin.stubstop
+    permission-message: You don't have the stubFXplugin.stubstop permission.
 permissions:
   stubfxplugin.*:
     default: op

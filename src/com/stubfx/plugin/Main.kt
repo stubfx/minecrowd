@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitTask
 class Main : JavaPlugin() {
 
     private val DRILL_OFFSET = 2
-    private var player: Player? = null
     private var myTask: BukkitTask? = null
 
     override fun onEnable() {
@@ -30,36 +29,31 @@ class Main : JavaPlugin() {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         clearTask()
-        player = sender as Player
-        if (player == null) {
-            return false
-        }
         // in this case we found me.
-        checkCommand(command, args)
+        checkCommand(sender as Player, command, args)
         return false
     }
 
-    private fun checkCommand(command: Command, args: Array<String>) {
+    private fun checkCommand(player: Player, command: Command, args: Array<String>) {
         when (command.name.lowercase()) {
-            "draw" -> draw()
-            "jesus" -> jesus()
-            "drill" -> drill()
-            "clearchunk" -> clearchunk(player!!.location, args)
-            "stopcommand" -> clearTask()
+            "draw" -> draw(player)
+            "jesus" -> jesus(player)
+            "drill" -> drill(player)
+            "clearchunk" -> clearchunk(player, args)
+            "sculktrap" -> sculktrap(player)
+            "stubstop" -> clearTask()
         }
     }
 
-    private fun getPlayerLocation(): Location? {
-        return player?.location
+    private fun sculktrap(player: Player) {
+        player.location.clone().add(0.0, -3.0, 0.0).block.type = Material.SCULK_SENSOR
+        player.location.clone().add(0.0, -2.0, 0.0).block.type = Material.TNT
+        player.sendMessage("sculk trap ready.")
     }
 
-    fun clearChunkListener(location: Location, args: Array<String>?, clearFullChunk: Boolean) {
-        clearchunk(location, args, clearFullChunk)
-    }
-
-    private fun clearchunk(location: Location, args: Array<String>?, clearFullChunk: Boolean = false) {
-        val playerHeight = if (!clearFullChunk) location.y else 255
-        val chunk = location.chunk
+    private fun clearchunk(player: Player, args: Array<String>?, clearFullChunk: Boolean = false) {
+        val playerHeight = if (!clearFullChunk) player.location.y else 255
+        val chunk = player.location.chunk
         myTask = object : BukkitRunnable() {
             override fun run() {
                 val materialsToExclude = mutableListOf<Material>()
@@ -87,38 +81,47 @@ class Main : JavaPlugin() {
         }.runTask(this)
     }
 
-    private fun drill() {
+    private fun drill(player: Player) {
         myTask = object : BukkitRunnable() {
             override fun run() {
-                val location = getPlayerLocation()
+                val location = player.location
                 for (z in -DRILL_OFFSET..DRILL_OFFSET) {
                     for (x in -DRILL_OFFSET..DRILL_OFFSET) {
                         for (y in 0..DRILL_OFFSET + 2) {
-                            location?.clone()?.add(x.toDouble(), y.toDouble(), z.toDouble())?.block?.type = Material.AIR
+                            location.clone().add(x.toDouble(), y.toDouble(), z.toDouble()).block.type = Material.AIR
                         }
                     }
                 }
-                location?.block?.type = Material.TORCH
+                location.block.type = Material.TORCH
             }
         }.runTaskTimer(this, 1, 1)
     }
 
-    private fun jesus() {
+    private fun jesus(player: Player) {
         myTask = object : BukkitRunnable() {
             override fun run() {
-                getPlayerLocation()?.add(0.toDouble(), (-1).toDouble(), 0.toDouble())?.block?.type = Material.STONE
+                player.location.add(0.0, -1.0, 0.0).block.type = Material.STONE
             }
         }.runTaskTimer(this, 1, 1)
     }
 
-    private fun draw() {
+    private fun draw(player: Player) {
         // in this case we want to activate the command.
         myTask = object : BukkitRunnable() {
             override fun run() {
-                val targetBlockExact = player?.getTargetBlockExact(20)
-                targetBlockExact?.type = player?.inventory?.itemInMainHand?.type ?: Material.AIR
+                val targetBlockExact = player.getTargetBlockExact(20)
+                targetBlockExact?.type = player.inventory.itemInMainHand.type
             }
         }.runTaskTimer(this, 1, 1)
+    }
+
+    fun onPlayerAction(player: Player) {
+        if (player.inventory.itemInMainHand.type == Material.GOLDEN_SHOVEL) {
+            val targetBlockExact = player.getTargetBlockExact(20)
+            if (targetBlockExact != null) {
+                clearchunk(player, null, true)
+            }
+        }
     }
 
 
