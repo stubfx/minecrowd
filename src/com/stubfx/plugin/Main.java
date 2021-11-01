@@ -7,7 +7,6 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -27,7 +26,7 @@ public class Main extends JavaPlugin {
     }
 
     public void removeBlock(Block block) {
-        block.setType(Material.STONE);
+        block.setType(Material.AIR);
     }
 
     @Override
@@ -140,7 +139,7 @@ public class Main extends JavaPlugin {
                 if (player != null) {
                     Block targetBlockExact = player.getTargetBlockExact(20);
                     if (targetBlockExact != null) {
-                        removeBlock(targetBlockExact);
+                        targetBlockExact.setType(player.getInventory().getItemInMainHand().getType());
                     }
                 }
             }
