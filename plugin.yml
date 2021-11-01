@@ -1,4 +1,4 @@
-main: com.stubfx.plugin.MainKt
+main: com.stubfx.plugin.Main
 name: stubFXplugin
 version: 1.0
 api-version: '1.17'

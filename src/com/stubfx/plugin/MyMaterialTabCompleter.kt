@@ -1,23 +1,17 @@
-package com.stubfx.plugin;
+package com.stubfx.plugin
 
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.Material
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
+import java.util.stream.Collectors
+import java.util.stream.Stream
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-public class MyMaterialTabCompleter implements TabCompleter {
-
-    @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        return Stream.of(Material.values())
-                .map(Material::toString)
-//                .map(x -> x.replace("LEGACY_", "")) // remember to check for the api-version in the plugin.yml
-                .filter(x -> x.toLowerCase().contains(strings[strings.length-1]))
-//                .map(x -> "minecraft:" + x.toLowerCase())
-                .collect(Collectors.toList());
+class MyMaterialTabCompleter : TabCompleter {
+    override fun onTabComplete(commandSender: CommandSender, command: Command, s: String, strings: Array<String>): List<String>? {
+        return Stream.of(*Material.values())
+                .map { obj: Material -> obj.toString() } //                .map(x -> x.replace("LEGACY_", "")) // remember to check for the api-version in the plugin.yml
+                .filter { x: String -> x.lowercase().contains(strings[strings.size - 1]) } //                .map(x -> "minecraft:" + x.toLowerCase())
+                .collect(Collectors.toList())
     }
 }
