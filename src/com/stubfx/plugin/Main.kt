@@ -5,6 +5,7 @@ import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
@@ -115,7 +116,8 @@ class Main : JavaPlugin() {
         }.runTaskTimer(this, 1, 1)
     }
 
-    fun onPlayerAction(player: Player) {
+    fun onPlayerInteractEvent(event: PlayerInteractEvent) {
+        val player = event.player
         if (player.inventory.itemInMainHand.type == Material.GOLDEN_SHOVEL) {
             val targetBlockExact = player.getTargetBlockExact(20)
             if (targetBlockExact != null) {

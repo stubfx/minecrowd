@@ -17,7 +17,7 @@ class PlayerListener(val main: Main) : Listener {
         val player = event.player
         // if player is OP, golden shovel will clear the whole chunk.
         if (player.isOp) {
-            main.onPlayerAction(player)
+            main.onPlayerInteractEvent(event)
         }
     }
 
