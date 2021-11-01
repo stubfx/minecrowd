@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitTask
 
 class Main : JavaPlugin() {
 
+    private val DRILL_OFFSET = 2
     private var player: Player? = null
     private var myTask: BukkitTask? = null
 
@@ -90,9 +91,9 @@ class Main : JavaPlugin() {
         myTask = object : BukkitRunnable() {
             override fun run() {
                 val location = getPlayerLocation()
-                for (z in -1..1) {
-                    for (x in -1..1) {
-                        for (y in 0..3) {
+                for (z in -DRILL_OFFSET..DRILL_OFFSET) {
+                    for (x in -DRILL_OFFSET..DRILL_OFFSET) {
+                        for (y in 0..DRILL_OFFSET + 2) {
                             location?.clone()?.add(x.toDouble(), y.toDouble(), z.toDouble())?.block?.type = Material.AIR
                         }
                     }
