@@ -19,6 +19,15 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         getCommand("clearchunk")?.tabCompleter = MyMaterialTabCompleter()
         server.pluginManager.registerEvents(PlayerListener(this), this)
+        server.pluginManager.registerEvents(EntityListener(this), this)
+    }
+
+    fun consoleLog(msg: String) {
+        server.consoleSender.sendMessage("LOG: $msg")
+    }
+
+    fun getTicks(): Int {
+        return 20
     }
 
     override fun onDisable() {
@@ -130,6 +139,4 @@ class Main : JavaPlugin() {
             }
         }
     }
-
-
 }
