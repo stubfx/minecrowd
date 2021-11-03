@@ -30,6 +30,21 @@ commands:
     usage: /sculktrap
     permission: stubfxplugin.sculktrap
     permission-message: You don't have the stubFXplugin.sculktrap permission.
+  writeas:
+    description: An example command
+    usage: /writeas
+    permission: stubfxplugin.writeas
+    permission-message: You don't have the stubFXplugin.writeas permission.
+  chunkreplace:
+    description: An example command
+    usage: /chunkreplace
+    permission: stubfxplugin.chunkreplace
+    permission-message: You don't have the stubFXplugin.chunkreplace permission.
+  sectionreplace:
+    description: An example command
+    usage: /sectionreplace
+    permission: stubfxplugin.sectionreplace
+    permission-message: You don't have the stubFXplugin.sectionreplace permission.
   stubstop:
     description: An example command
     usage: /stubstop
