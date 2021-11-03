@@ -67,11 +67,10 @@ class Main : JavaPlugin() {
     private fun checkCommand(player: Player, command: Command, args: Array<String>) {
         when (command.name.lowercase()) {
             "draw" -> draw(player)
-            "jesus" -> jesus(player)
             "drill" -> drill(player)
             "clearchunk" -> clearChunkBelow(player.location, args)
             "sculktrap" -> sculktrap(player)
-            "writeas" -> writeas(command, args)
+            "writeas" -> writeas(args)
             "woolreplace" -> sectionReplace(player, args)
             "chunkreplace" -> chunkreplace(player, args)
             "stubstop" -> clearTask()
@@ -79,7 +78,7 @@ class Main : JavaPlugin() {
     }
 
     private fun chunkreplace(player: Player, args: Array<String>) {
-        var tmp = object : BukkitRunnable(){
+        object : BukkitRunnable(){
             override fun run() {
                 // get the chunk of the player
                 val chunk = player.location.chunk
@@ -142,8 +141,7 @@ class Main : JavaPlugin() {
         }.runTask(this)
     }
 
-    private fun writeas(command: Command, args: Array<String>) {
-        var isFirst = true
+    private fun writeas(args: Array<String>) {
         server.onlinePlayers.forEach { player ->
             player
                 .sendMessage("<${args[0]}> ${args.drop(1).joinToString(" ")}")
@@ -202,14 +200,6 @@ class Main : JavaPlugin() {
         }.runTaskTimer(this, 1, 1)
     }
 
-    private fun jesus(player: Player) {
-        myTask = object : BukkitRunnable() {
-            override fun run() {
-                player.location.add(0.0, -1.0, 0.0).block.type = Material.STONE
-            }
-        }.runTaskTimer(this, 1, 1)
-    }
-
     private fun draw(player: Player) {
         // in this case we want to activate the command.
         myTask = object : BukkitRunnable() {
@@ -225,7 +215,7 @@ class Main : JavaPlugin() {
             // cannot, im sry
             return
         }
-        val tmp = object : BukkitRunnable() {
+        object : BukkitRunnable() {
             override fun run() {
                 location.block.type = material
             }

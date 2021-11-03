@@ -10,11 +10,6 @@ commands:
     usage: /draw
     permission: stubfxplugin.draw
     permission-message: You don't have the stubFXplugin.draw permission.
-  jesus:
-    description: An example command
-    usage: /jesus
-    permission: stubfxplugin.jesus
-    permission-message: You don't have the stubFXplugin.jesus permission.
   drill:
     description: An example command
     usage: /drill
