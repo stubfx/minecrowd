@@ -1,15 +1,20 @@
 package com.stubfx.plugin
 
+import com.stubfx.plugin.listeners.EntityListener
+import com.stubfx.plugin.listeners.PlayerListener
+import com.stubfx.plugin.listeners.ProjectileListener
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
+
 
 class Main : JavaPlugin() {
 
@@ -19,30 +24,16 @@ class Main : JavaPlugin() {
     private var materialReplaceMap: HashMap<Player, Pair<Location?, Location?>> = HashMap()
 
     override fun onEnable() {
-        getCommand("clearchunk")?.tabCompleter = MyMaterialTabCompleter()
-        getCommand("chunkreplace")?.tabCompleter = MyMaterialTabCompleter()
+        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
+        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
+        getCommand("chunkreplace")?.tabCompleter = MaterialTabCompleter()
         server.pluginManager.registerEvents(PlayerListener(this), this)
         server.pluginManager.registerEvents(EntityListener(this), this)
-    }
-
-    fun checkLocationsWorld(l1: Location, l2: Location) {
-        if (l1.world != l2.world) {
-            throw IllegalArgumentException("both locations must be from the same world")
-        }
-    }
-
-    fun getMinLocation(l1: Location, l2: Location): Location{
-        checkLocationsWorld(l1, l2)
-        return Location(l1.world, minOf(l1.x, l2.x), minOf(l1.y, l2.y), minOf(l1.z, l2.z))
-    }
-
-    fun getMaxLocation(l1: Location, l2: Location): Location{
-        checkLocationsWorld(l1, l2)
-        return Location(l1.world, maxOf(l1.x, l2.x), maxOf(l1.y, l2.y), maxOf(l1.z, l2.z))
+        server.pluginManager.registerEvents(ProjectileListener(this), this)
     }
 
     fun consoleLog(msg: String) {
-        server.consoleSender.sendMessage("LOG: $msg")
+        server.consoleSender.sendMessage("STUB LOG: $msg")
     }
 
     fun getTicks(): Int {
@@ -68,38 +59,17 @@ class Main : JavaPlugin() {
         when (command.name.lowercase()) {
             "draw" -> draw(player)
             "drill" -> drill(player)
-            "clearchunk" -> clearChunkBelow(player.location, args)
+            "clearchunk" -> clearChunk(player.location, args)
             "sculktrap" -> sculktrap(player)
             "writeas" -> writeas(args)
-            "woolreplace" -> sectionReplace(player, args)
+            "sectionreplace" -> sectionReplace(player, args)
             "chunkreplace" -> chunkreplace(player, args)
             "stubstop" -> clearTask()
         }
     }
 
     private fun chunkreplace(player: Player, args: Array<String>) {
-        object : BukkitRunnable(){
-            override fun run() {
-                // get the chunk of the player
-                val chunk = player.location.chunk
-                for (x in 0..15) {
-                    for (z in 0..15) {
-                        for (y in 255 downTo 1) {
-                            // this runs for any selected block of the chunk
-                            // we need to convert to air, only if they are not ores
-                            val block = chunk.getBlock(x, y, z)
-                            // check if block type is not contained in the 'exclude list'
-                            if (block.type != Material.AIR &&
-                                block.type != Material.CAVE_AIR &&
-                                block.type != Material.VOID_AIR ) {
-                                // if is not air, just replace it.
-                                block.type = Material.valueOf(args[0])
-                            }
-                        }
-                    }
-                }
-            }
-        }.runTask(this)
+        BlockReplacer.chunkReplace(this, player.location.chunk, Material.valueOf(args[0]), args.drop(1).map { Material.valueOf(it) })
     }
 
     private fun sectionReplace(player: Player, args: Array<String>) {
@@ -120,25 +90,8 @@ class Main : JavaPlugin() {
         replaceWithMaterial(locationPair.first!!, locationPair.second!!, Material.valueOf(args[0]))
     }
 
-    fun replaceWithMaterial(loc1 : Location, loc2: Location, material: Material) {
-        myTask = object : BukkitRunnable() {
-            override fun run() {
-                checkLocationsWorld(loc1, loc2)
-                val minL = getMinLocation(loc1, loc2)
-                val maxL = getMaxLocation(loc1, loc2)
-                for (z in minL.z.toInt()..maxL.z.toInt()) {
-                    for (x in minL.x.toInt()..maxL.x.toInt()) {
-                        for (y in minL.y.toInt()..maxL.y.toInt()) {
-                            val block = Location(loc1.world, x.toDouble(), y.toDouble(), z.toDouble()).block
-                            if (block.type != Material.AIR) {
-                                // if is not air, just replace it.
-                                Location(loc2.world, x.toDouble(), y.toDouble(), z.toDouble()).block.type = material
-                            }
-                        }
-                    }
-                }
-            }
-        }.runTask(this)
+    private fun replaceWithMaterial(loc1 : Location, loc2: Location, material: Material) {
+        BlockReplacer.replaceArea(this,loc1, loc2, material)
     }
 
     private fun writeas(args: Array<String>) {
@@ -154,34 +107,8 @@ class Main : JavaPlugin() {
         player.sendMessage("sculk trap ready.")
     }
 
-    private fun clearChunkBelow(location: Location, args: Array<String>?, clearFullChunk: Boolean = false) {
-        val playerHeight = if (!clearFullChunk) location.y else 255
-        val chunk = location.chunk
-        myTask = object : BukkitRunnable() {
-            override fun run() {
-                val materialsToExclude = mutableListOf<Material>()
-                if (args != null) {
-                    for (arg in args) {
-                        materialsToExclude.add(Material.valueOf(arg))
-                    }
-                }
-                for (x in 0..15) {
-                    for (z in 0..15) {
-                        for (y in playerHeight.toInt() downTo 1) {
-                            // this runs for any selected block of the chunk
-                            // we need to convert to air, only if they are not ores
-                            val block = chunk.getBlock(x, y, z)
-                            // check if block type is not contained in the 'exclude list'
-                            if (!materialsToExclude.contains(block.type)) {
-                                // here if the block is not what we are looking for
-                                // so we convert that into air
-                                block.type = Material.AIR
-                            }
-                        }
-                    }
-                }
-            }
-        }.runTask(this)
+    private fun clearChunk(location: Location, args: Array<String>?) {
+        BlockReplacer.chunkReplace(this, location.chunk, Material.AIR, args?.map { s -> Material.valueOf(s) })
     }
 
     private fun drill(player: Player) {
@@ -232,7 +159,7 @@ class Main : JavaPlugin() {
             Material.GOLDEN_SHOVEL -> {
                 if (event.action == Action.LEFT_CLICK_BLOCK) {
                     if (clickedBlock != null) {
-                        clearChunkBelow(clickedBlock.location, null, true)
+                        clearChunk(clickedBlock.location, null)
                     }
                 }
             }
@@ -256,6 +183,11 @@ class Main : JavaPlugin() {
                     materialReplaceMap[player] = locationPair.copy(locationPair.first, clickedBlock?.location)
                     player.sendMessage("Second position set")
                     return
+                }
+            }
+            Material.FIRE_CHARGE -> {
+                if (event.action == Action.LEFT_CLICK_AIR) {
+                    player.launchProjectile(Fireball::class.java).velocity = player.location.direction.multiply(0.5)
                 }
             }
             else -> {
