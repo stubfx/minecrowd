@@ -25,7 +25,7 @@ class EntityListener(val main: Main) : Listener {
             // then the attacker is an operator
             val player = event.damager as Player
             if (player.inventory.itemInMainHand.type == Material.STICK) {
-                val levitation = PotionEffectType.LEVITATION.createEffect(main.getTicks() * 3, 10)
+                val levitation = PotionEffectType.LEVITATION.createEffect(main.getTicks() * 3, 50)
                 (event.entity as LivingEntity).addPotionEffect(levitation)
             }
         }

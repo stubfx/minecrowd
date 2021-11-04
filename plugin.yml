@@ -1,17 +1,17 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
-version: 1.0.9.3
+version: 1.0.9.4
 api-version: '1.17'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
 commands:
   draw:
-    description: An example command
+    description: Let you draw on any surface with the block in your main hand
     usage: /draw
     permission: stubfxplugin.draw
     permission-message: You don't have the stubFXplugin.draw permission.
   drill:
-    description: An example command
+    description: Helpful for tunnels, just activate it and run
     usage: /drill
     permission: stubfxplugin.drill
     permission-message: You don't have the stubFXplugin.drill permission.
