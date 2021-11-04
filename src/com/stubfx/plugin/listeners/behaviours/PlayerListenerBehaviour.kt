@@ -12,7 +12,6 @@ object PlayerListenerBehaviour {
 
     fun onOPInteractEvent(main: Main, event: PlayerInteractEvent) {
         // if player is not op, just quit.
-        event.player.sendMessage("opinteract")
         if (!event.player.isOp) return
         val player = event.player
         val clickedBlock = event.clickedBlock
@@ -31,7 +30,6 @@ object PlayerListenerBehaviour {
 
     fun onPlayerInteractEvent(main: Plugin, event: PlayerInteractEvent) {
         val player = event.player
-        event.player.sendMessage("justinteract")
         when (player.inventory.itemInMainHand.type) {
             Material.FIRE_CHARGE -> {
                 if (event.action == Action.LEFT_CLICK_AIR) {
