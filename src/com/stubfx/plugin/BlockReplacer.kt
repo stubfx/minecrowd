@@ -22,21 +22,15 @@ object BlockReplacer {
         plugin.server.consoleSender.sendMessage(start.toString())
         plugin.server.consoleSender.sendMessage(end.toString())
         plugin.server.consoleSender.sendMessage(material.toString())
-        replaceArea(plugin, start, end, material, excluded)
+        replaceArea(plugin, start, end, material, excluded, true)
     }
 
     fun replaceAreaExAir(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null){
         val materialToExclude: MutableList<Material> = ArrayList()
-        materialToExclude.add(Material.AIR)
-        materialToExclude.add(Material.CAVE_AIR)
-        materialToExclude.add(Material.VOID_AIR)
-        if (excluded != null) {
-            materialToExclude.addAll(excluded)
-        }
-        replaceArea(plugin, loc1, loc2, material, materialToExclude)
+        replaceArea(plugin, loc1, loc2, material, materialToExclude, true)
     }
 
-    fun replaceArea(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null) {
+    fun replaceArea(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null, excludeAir: Boolean = true) {
         object : BukkitRunnable() {
             override fun run() {
                 Utils.checkLocationsWorld(loc1, loc2)
@@ -48,16 +42,13 @@ object BlockReplacer {
                     for (z in minL.z.toInt()..maxL.z.toInt()) {
                         for (y in minL.y.toInt()..maxL.y.toInt()) {
                             val block = Location(loc1.world, x.toDouble(), y.toDouble(), z.toDouble()).block
-                            // look for air.
-                            if (block.type != Material.AIR &&
-                                block.type != Material.CAVE_AIR &&
-                                block.type != Material.VOID_AIR) {
-                                // in this case we need to make sure that is not in the excluded list.
-                                if (excluded?.contains(block.type) != true) {
-                                    // well, that's not even in the excluded list...
-                                    // what a poor block.
-                                    block.type = material
-                                }
+                            // if we need to exclude air, and the block is actually air, just skip.
+                            if (excludeAir && block.type.isAir) continue
+                            // in this case we need to make sure that is not in the excluded list.
+                            if (excluded?.contains(block.type) != true) {
+                                // well, that's not even in the excluded list...
+                                // what a poor block.
+                                block.type = material
                             }
                         }
                     }
