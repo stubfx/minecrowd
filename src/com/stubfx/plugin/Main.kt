@@ -3,14 +3,14 @@ package com.stubfx.plugin
 import com.stubfx.plugin.listeners.EntityListener
 import com.stubfx.plugin.listeners.PlayerListener
 import com.stubfx.plugin.listeners.ProjectileListener
+import com.stubfx.plugin.listeners.behaviours.PlayerListenerBehaviour
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
-import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
@@ -137,7 +137,7 @@ class Main : JavaPlugin() {
         }.runTaskTimer(this, 1, 1)
     }
 
-    private fun replaceBlockOnNextTick(location: Location?, material: Material?) {
+    fun replaceBlockOnNextTick(location: Location?, material: Material?) {
         if (location == null || material == null) {
             // cannot, im sry
             return
@@ -149,49 +149,33 @@ class Main : JavaPlugin() {
         }.runTaskLater(this, 1)
     }
 
-    fun onPlayerInteractEvent(event: PlayerInteractEvent) {
-        // if player is not op, just quit.
-        // or if action is not Action.LEFT_CLICK_BLOCK a block, just quit.
-        if (!event.player.isOp) return
-        val player = event.player
-        val clickedBlock = event.clickedBlock
-        when (player.inventory.itemInMainHand.type) {
-            Material.GOLDEN_SHOVEL -> {
-                if (event.action == Action.LEFT_CLICK_BLOCK) {
-                    if (clickedBlock != null) {
-                        clearChunk(clickedBlock.location, null)
-                    }
-                }
-            }
-            Material.GOLDEN_AXE -> {
-                // is the player already into the map?
-                if (materialReplaceMap[player] == null) {
-                    // in this case we add the player then
-                    materialReplaceMap[player] = Pair(null, null)
-                }
-                val locationPair = materialReplaceMap[player]!!
-                // now we have the player for sure
-                if (event.action == Action.LEFT_CLICK_BLOCK) {
-                    materialReplaceMap[player] = locationPair.copy(clickedBlock?.location, locationPair.second)
-                    // replace the block pls.
-                    replaceBlockOnNextTick(clickedBlock?.location, clickedBlock?.type)
-                    player.sendMessage("First position set")
-                    return
-                }
-                if (event.action == Action.RIGHT_CLICK_BLOCK) {
-                    // set second position on right click
-                    materialReplaceMap[player] = locationPair.copy(locationPair.first, clickedBlock?.location)
-                    player.sendMessage("Second position set")
-                    return
-                }
-            }
-            Material.FIRE_CHARGE -> {
-                if (event.action == Action.LEFT_CLICK_AIR) {
-                    player.launchProjectile(Fireball::class.java).velocity = player.location.direction.multiply(0.5)
-                }
-            }
-            else -> {
-                // just do nothing for the moment.
+    fun onOPMaterialReplaceTool(player: Player, clickedBlock: Block?, action: Action) {
+        // is the player already into the map?
+        if (materialReplaceMap[player] == null) {
+            // in this case we add the player then
+            materialReplaceMap[player] = Pair(null, null)
+        }
+        val locationPair = materialReplaceMap[player]!!
+        // now we have the player for sure
+        if (action == Action.LEFT_CLICK_BLOCK) {
+            materialReplaceMap[player] = locationPair.copy(clickedBlock?.location, locationPair.second)
+            // replace the block pls.
+            replaceBlockOnNextTick(clickedBlock?.location, clickedBlock?.type)
+            player.sendMessage("First position set")
+            return
+        }
+        if (action == Action.RIGHT_CLICK_BLOCK) {
+            // set second position on right click
+            materialReplaceMap[player] = locationPair.copy(locationPair.first, clickedBlock?.location)
+            player.sendMessage("Second position set")
+            return
+        }
+    }
+
+    fun onOPClearChunkTool(clickedBlock: Block?, action: Action) {
+        if (action == Action.LEFT_CLICK_BLOCK) {
+            if (clickedBlock != null) {
+                clearChunk(clickedBlock.location, null)
             }
         }
     }

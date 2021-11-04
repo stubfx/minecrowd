@@ -9,7 +9,7 @@ class ProjectileListener(val main: Main) : Listener {
 
     @EventHandler
     fun onEntityDamageByEntity(event: ProjectileHitEvent) {
-        TODO("to be implemented")
+        // aight.
     }
 
 }
