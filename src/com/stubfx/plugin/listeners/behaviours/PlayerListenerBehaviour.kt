@@ -14,7 +14,6 @@ object PlayerListenerBehaviour {
         // if player is not op, just quit.
         if (!event.player.isOp) return
         val player = event.player
-        val clickedBlock = event.clickedBlock
         when (player.inventory.itemInMainHand.type) {
             else -> {
                 // just do nothing for the moment.
