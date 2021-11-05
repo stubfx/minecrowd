@@ -16,12 +16,6 @@ object PlayerListenerBehaviour {
         val player = event.player
         val clickedBlock = event.clickedBlock
         when (player.inventory.itemInMainHand.type) {
-            Material.GOLDEN_SHOVEL -> {
-                main.onOPClearChunkTool(clickedBlock, event.action)
-            }
-            Material.GOLDEN_AXE -> {
-                main.onOPMaterialReplaceTool(player, clickedBlock, event.action)
-            }
             else -> {
                 // just do nothing for the moment.
             }

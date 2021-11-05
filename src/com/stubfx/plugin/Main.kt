@@ -57,41 +57,10 @@ class Main : JavaPlugin() {
 
     private fun checkCommand(player: Player, command: Command, args: Array<String>) {
         when (command.name.lowercase()) {
-            "draw" -> draw(player)
-            "drill" -> drill(player)
-            "clearchunk" -> clearChunk(player.location, args)
             "sculktrap" -> sculktrap(player)
             "writeas" -> writeas(args)
-            "sectionreplace" -> sectionReplace(player, args)
-            "chunkreplace" -> chunkreplace(player, args)
             "stubstop" -> clearTask()
         }
-    }
-
-    private fun chunkreplace(player: Player, args: Array<String>) {
-        BlockReplacer.chunkReplace(this, player.location.chunk, Material.valueOf(args[0]), args.drop(1).map { Material.valueOf(it) })
-    }
-
-    private fun sectionReplace(player: Player, args: Array<String>) {
-        //first of all, is the player in the map?
-        val locationPair: Pair<Location?, Location?>? = materialReplaceMap[player]
-        if (locationPair == null) {
-            player.sendMessage("Sry, you need to select locations with the golden axe first")
-            return
-        }
-        // the player is in the map, are the locations safe?
-        if (locationPair.first == null || locationPair.second == null ) {
-            // ok then we can replace.
-            player.sendMessage("Sry, you need to select locations with the golden axe first")
-            return
-        }
-        // OOOOOOH YES, LETS RUN IT.
-        // Chimpanzzze looks kinda confused, i dunno what to say, help me pls.
-        replaceWithMaterial(locationPair.first!!, locationPair.second!!, Material.valueOf(args[0]))
-    }
-
-    private fun replaceWithMaterial(loc1 : Location, loc2: Location, material: Material) {
-        BlockReplacer.replaceArea(this,loc1, loc2, material)
     }
 
     private fun writeas(args: Array<String>) {
@@ -105,36 +74,6 @@ class Main : JavaPlugin() {
         player.location.clone().add(0.0, -3.0, 0.0).block.type = Material.SCULK_SENSOR
         player.location.clone().add(0.0, -2.0, 0.0).block.type = Material.TNT
         player.sendMessage("sculk trap ready.")
-    }
-
-    private fun clearChunk(location: Location, args: Array<String>?) {
-        BlockReplacer.chunkReplace(this, location.chunk, Material.AIR, args?.map { s -> Material.valueOf(s) })
-    }
-
-    private fun drill(player: Player) {
-        myTask = object : BukkitRunnable() {
-            override fun run() {
-                val location = player.location
-                for (z in -DRILL_OFFSET..DRILL_OFFSET) {
-                    for (x in -DRILL_OFFSET..DRILL_OFFSET) {
-                        for (y in 0..DRILL_OFFSET + 2) {
-                            location.clone().add(x.toDouble(), y.toDouble(), z.toDouble()).block.type = Material.AIR
-                        }
-                    }
-                }
-                location.block.type = Material.TORCH
-            }
-        }.runTaskTimer(this, 1, 1)
-    }
-
-    private fun draw(player: Player) {
-        // in this case we want to activate the command.
-        myTask = object : BukkitRunnable() {
-            override fun run() {
-                val targetBlockExact = player.getTargetBlockExact(20)
-                targetBlockExact?.type = player.inventory.itemInMainHand.type
-            }
-        }.runTaskTimer(this, 1, 1)
     }
 
     fun replaceBlockOnNextTick(location: Location?, material: Material?) {
@@ -169,14 +108,6 @@ class Main : JavaPlugin() {
             materialReplaceMap[player] = locationPair.copy(locationPair.first, clickedBlock?.location)
             player.sendMessage("Second position set")
             return
-        }
-    }
-
-    fun onOPClearChunkTool(clickedBlock: Block?, action: Action) {
-        if (action == Action.LEFT_CLICK_BLOCK) {
-            if (clickedBlock != null) {
-                clearChunk(clickedBlock.location, null)
-            }
         }
     }
 }

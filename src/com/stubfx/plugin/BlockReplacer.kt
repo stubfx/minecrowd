@@ -30,7 +30,7 @@ object BlockReplacer {
         replaceArea(plugin, loc1, loc2, material, materialToExclude, true)
     }
 
-    fun replaceArea(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null, excludeAir: Boolean = true) {
+    private fun replaceArea(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null, excludeAir: Boolean = true) {
         object : BukkitRunnable() {
             override fun run() {
                 Utils.checkLocationsWorld(loc1, loc2)
