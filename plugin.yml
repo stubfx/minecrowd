@@ -5,11 +5,6 @@ api-version: '1.17'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
 commands:
-  clearchunk:
-    description: An example command
-    usage: /clearchunk
-    permission: stubfxplugin.clearchunk
-    permission-message: You don't have the stubFXplugin.clearchunk permission.
   sculktrap:
     description: An example command
     usage: /sculktrap
@@ -20,16 +15,6 @@ commands:
     usage: /writeas
     permission: stubfxplugin.writeas
     permission-message: You don't have the stubFXplugin.writeas permission.
-  chunkreplace:
-    description: An example command
-    usage: /chunkreplace
-    permission: stubfxplugin.chunkreplace
-    permission-message: You don't have the stubFXplugin.chunkreplace permission.
-  sectionreplace:
-    description: An example command
-    usage: /sectionreplace
-    permission: stubfxplugin.sectionreplace
-    permission-message: You don't have the stubFXplugin.sectionreplace permission.
   stubstop:
     description: An example command
     usage: /stubstop
