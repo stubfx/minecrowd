@@ -25,7 +25,8 @@ class PlayerListener(private val main: Main) : Listener {
     // the handler for the drop is going to have a low priority (aka is going to run first), if he was trying to drop a safe object
     // we add the player to the list. On the playerInteractionEvent, if the player is on the list we just remove him and do nothing
     // otherwise we just go on with the normal flow.
-    // Oh, another think, the playerInteractEven doesn't get fired while the player is dropping an item but facing a block,
+    // Oh, another think, the playerInter
+    // actEven doesn't get fired while the player is dropping an item but facing a block,
     // so we need to check that, otherwise the player will not be able to throw its next fireball.
 
     @EventHandler(priority = EventPriority.LOWEST)

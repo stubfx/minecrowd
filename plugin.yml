@@ -1,25 +1,15 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
 version: 1.1.0
-api-version: '1.17'
+api-version: '1.18'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
 commands:
-  sculktrap:
+  creep:
     description: An example command
-    usage: /sculktrap
-    permission: stubfxplugin.sculktrap
+    usage: /creep
+    permission: stubfxplugin.creep
     permission-message: You don't have the stubFXplugin.sculktrap permission.
-  writeas:
-    description: An example command
-    usage: /writeas
-    permission: stubfxplugin.writeas
-    permission-message: You don't have the stubFXplugin.writeas permission.
-  stubstop:
-    description: An example command
-    usage: /stubstop
-    permission: stubfxplugin.stubstop
-    permission-message: You don't have the stubFXplugin.stubstop permission.
 permissions:
   stubfxplugin.*:
     default: op
