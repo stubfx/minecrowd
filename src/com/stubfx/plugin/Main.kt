@@ -9,6 +9,8 @@ import com.sun.net.httpserver.HttpServer
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.Item
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.io.IOException
@@ -22,9 +24,11 @@ class Main : JavaPlugin() {
     private var lastCommandTime = 0L
     private var apyKey = "ERROR"
     private var httpserver : HttpServer? = null
+    private var httpServerSocket : InetSocketAddress? = null
 
     private fun startServer() {
-        httpserver = HttpServer.create(InetSocketAddress(8001), 0)
+        httpServerSocket = InetSocketAddress(8001)
+        httpserver = HttpServer.create(httpServerSocket, 0)
         httpserver?.createContext("/command", MyHandler(this))
         httpserver?.executor = null // creates a default executor
         httpserver?.start()
@@ -33,14 +37,19 @@ class Main : JavaPlugin() {
     internal class MyHandler(private val main: Main) : HttpHandler {
         @Throws(IOException::class)
         override fun handle(t: HttpExchange) {
-            val command = t.requestURI.query
+            val query = t.requestURI.query
+            var params : HashMap<String, String> = HashMap()
+            query.split("&").forEach {
+                var split = it.split("=")
+                params.put(split[0], split[1])
+            }
             t.sendResponseHeaders(204, -1)
             t.responseBody.close()
-            main.chatCommandResolve(command)
+            main.chatCommandResolve(params["name"]!!, params["command"]!!)
         }
     }
 
-    private fun chatCommandResolve(command: String) {
+    private fun chatCommandResolve(name: String, command: String) {
         object : BukkitRunnable() {
             override fun run() {
                 val date = Date().time
@@ -49,20 +58,42 @@ class Main : JavaPlugin() {
                 }
                 // in this case, COMMAND_COOLDOWN has passed
                 // and we can run the command
-                lastCommandTime = date
+                var hasCommandRun = true
                 when (command.lowercase()) {
                     "creeper" -> creeperSpawn()
+                    "dropit" -> forceDropItem()
+                    "fire" -> forceDropItem()
+                    else -> {
+                        // in this case the command is not listed above
+                        hasCommandRun = false
+                    }
+                }
+                if (hasCommandRun) {
+                    lastCommandTime = date
+                    // TODO change with title command
+                    server.onlinePlayers.forEach{
+                        it.player?.sendMessage("${name} has run the command ${command}")
+                    }
                 }
             }
         }.runTask(this)
     }
 
+    private fun forceDropItem() {
+        server.onlinePlayers.forEach {
+            val item = it.itemInUse ?: return
+            it.inventory.remove(item)
+            val itemDropped: Item = it.world.dropItemNaturally(it.location, item)
+            itemDropped.pickupDelay = 40
+        }
+    }
+
     override fun onEnable() {
-        apyKey = System.getenv("apiKey")
+//        apyKey = System.getenv("apiKey")
         startServer()
-        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
-        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
-        getCommand("chunkreplace")?.tabCompleter = MaterialTabCompleter()
+//        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
+//        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
+//        getCommand("chunkreplace")?.tabCompleter = MaterialTabCompleter()
         server.pluginManager.registerEvents(PlayerListener(this), this)
         server.pluginManager.registerEvents(EntityListener(this), this)
         server.pluginManager.registerEvents(ProjectileListener(this), this)
@@ -73,12 +104,16 @@ class Main : JavaPlugin() {
     }
 
     override fun onDisable() {
+        server.operators.forEach{
+            it.player?.sendMessage("RELOAAAAAAAD")
+        }
         httpserver?.stop(0)
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         when (command.name.lowercase()) {
             "creep" -> creeperSpawn()
+            "dropit" -> forceDropItem()
         }
         return false
     }
