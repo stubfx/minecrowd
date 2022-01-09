@@ -9,7 +9,6 @@ import com.sun.net.httpserver.HttpServer
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.io.IOException
@@ -19,16 +18,16 @@ import java.util.*
 
 class Main : JavaPlugin() {
 
-    private val COMMAND_COOLDOWN = 2*1000*60;// 2 mins cooldown in millis
-    private var LAST_COMMAND_TIME = 0L
-    private var API_KEY = "ERROR"
-    private var HTTP_SERVER : HttpServer? = null
+    private val commandCooldown = 2*1000*60 // 2 mins cooldown in millis
+    private var lastCommandTime = 0L
+    private var apyKey = "ERROR"
+    private var httpserver : HttpServer? = null
 
     private fun startServer() {
-        HTTP_SERVER = HttpServer.create(InetSocketAddress(8001), 0)
-        HTTP_SERVER?.createContext("/command", MyHandler(this))
-        HTTP_SERVER?.executor = null // creates a default executor
-        HTTP_SERVER?.start()
+        httpserver = HttpServer.create(InetSocketAddress(8001), 0)
+        httpserver?.createContext("/command", MyHandler(this))
+        httpserver?.executor = null // creates a default executor
+        httpserver?.start()
     }
 
     internal class MyHandler(private val main: Main) : HttpHandler {
@@ -45,12 +44,12 @@ class Main : JavaPlugin() {
         object : BukkitRunnable() {
             override fun run() {
                 val date = Date().time
-                if (date < LAST_COMMAND_TIME + COMMAND_COOLDOWN){
+                if (date < lastCommandTime + commandCooldown){
                     return
                 }
                 // in this case, COMMAND_COOLDOWN has passed
                 // and we can run the command
-                LAST_COMMAND_TIME = date
+                lastCommandTime = date
                 when (command.lowercase()) {
                     "creeper" -> creeperSpawn()
                 }
@@ -59,7 +58,7 @@ class Main : JavaPlugin() {
     }
 
     override fun onEnable() {
-        API_KEY = System.getenv("apiKey")
+        apyKey = System.getenv("apiKey")
         startServer()
         getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
         getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
@@ -74,19 +73,14 @@ class Main : JavaPlugin() {
     }
 
     override fun onDisable() {
-        HTTP_SERVER?.stop(0)
+        httpserver?.stop(0)
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-        // in this case we found me.
-        checkCommand(sender as Player, command, args)
-        return false
-    }
-
-    private fun checkCommand(player: Player, command: Command, args: Array<String>) {
         when (command.name.lowercase()) {
             "creep" -> creeperSpawn()
         }
+        return false
     }
 
     private fun creeperSpawn() {
