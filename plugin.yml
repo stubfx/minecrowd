@@ -1,20 +1,10 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
-version: 1.0.10.24
+version: 1.0.10.104
 api-version: '1.18'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
 commands:
-  creep:
-    description: An example command
-    usage: /creep
-    permission: stubfxplugin.creep
-    permission-message: You don't have the stubFXplugin.sculktrap permission.
-    dropit:
-      description: An example command
-      usage: /dropit
-      permission: stubfxplugin.dropit
-      permission-message: You don't have the stubFXplugin.sculktrap permission.
 permissions:
   stubfxplugin.*:
     default: op
