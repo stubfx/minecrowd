@@ -8,14 +8,15 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.scheduler.BukkitTask
 
 
 class Main : JavaPlugin() {
 
     private var chatReactor = ChatReactor(this)
 
-    fun runOnBukkit(func: () -> Unit) {
-        object : BukkitRunnable() {
+    fun runOnBukkit(func: () -> Unit) : BukkitTask {
+        return object : BukkitRunnable() {
             override fun run() {
                 func()
             }
@@ -26,9 +27,9 @@ class Main : JavaPlugin() {
 //        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("chunkreplace")?.tabCompleter = MaterialTabCompleter()
-        server.pluginManager.registerEvents(PlayerListener(this), this)
-        server.pluginManager.registerEvents(EntityListener(this), this)
-        server.pluginManager.registerEvents(ProjectileListener(this), this)
+//        server.pluginManager.registerEvents(PlayerListener(this), this)
+//        server.pluginManager.registerEvents(EntityListener(this), this)
+//        server.pluginManager.registerEvents(ProjectileListener(this), this)
     }
 
     fun getTicks(): Int {

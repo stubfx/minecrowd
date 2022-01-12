@@ -7,15 +7,15 @@ import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import org.bukkit.*
 import org.bukkit.attribute.Attribute
-import org.bukkit.entity.EntityType
-import org.bukkit.entity.Item
-import org.bukkit.entity.LivingEntity
-import org.bukkit.entity.Player
+import org.bukkit.entity.*
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.scheduler.BukkitTask
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.util.*
+import kotlin.random.Random
 
 class ChatReactor(private val main: Main) {
 
@@ -26,15 +26,65 @@ class ChatReactor(private val main: Main) {
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
 
+    companion object {
+
+        private var currentTask: BukkitTask? = null
+        private var main: Main? = null
+        private var currentTaskTickCount = 0
+
+        fun runOnBukkitEveryTick(func: () -> Unit, duration: Int): BukkitTask {
+            val taskDuration = main!!.getTicks() * duration
+            return object : BukkitRunnable() {
+                override fun run() {
+                    currentTaskTickCount++
+                    func()
+                    if (currentTaskTickCount > taskDuration) {
+                        this.cancel()
+                    }
+                }
+            }.runTaskTimer(main!!, 1, 1)
+        }
+
+        fun stopTask() {
+            currentTask?.cancel()
+        }
+
+        fun startShortRecurrentTask(func: () -> Unit) {
+            stopTask()
+            currentTaskTickCount = 0
+            currentTask = runOnBukkitEveryTick(func, 1)
+        }
+
+        fun startRecurrentTask(func: () -> Unit) {
+            stopTask()
+            currentTaskTickCount = 0
+            currentTask = runOnBukkitEveryTick(func, 20)
+        }
+
+        fun setMainRef(main: Main) {
+            this.main = main
+        }
+
+    }
+
+
     init {
         startServer()
+        setMainRef(main)
+    }
+
+    fun getCloseLocationFromPlayer(location: Location): Location {
+        val x = Random.nextDouble(-10.0, 10.0)
+        val y = Random.nextDouble(1.0, 10.0)
+        val z = Random.nextDouble(-10.0, 10.0)
+        return location.add(x, y, z)
     }
 
     fun getServer(): Server {
         return main.server
     }
 
-    inline fun forEachPlayer(func: (player: Player) -> Unit) {
+    private inline fun forEachPlayer(func: (player: Player) -> Unit) {
         getServer().onlinePlayers.forEach { func(it) }
     }
 
@@ -67,33 +117,30 @@ class ChatReactor(private val main: Main) {
             t.sendResponseHeaders(204, -1)
             t.responseBody.close()
             if (ref.checkApiKey(params["apiKey"])) {
-                ref.chatCommandResolve(params["name"]!!, params["command"]!!)
+                ref.chatCommandResolve(params["name"]!!, params["command"]!!, params["options"])
             } else {
                 println("[ChatReactor]: wrong apiKey")
             }
         }
     }
 
-    private fun chatCommandResolve(name: String, command: String) {
+    private fun chatCommandResolve(name: String, command: String, options: String?) {
         main.runOnBukkit {
-            val date = Date().time
-            if (date < lastCommandTime + commandCooldown) {
-                return@runOnBukkit
-            }
-            // in this case, COMMAND_COOLDOWN has passed
-            // and we can run the command
-            var hasCommandRun = true
+            var showTitle = true
             when (command.lowercase()) {
-                "creeper" -> creeperSpawn()
-//                "dropit" -> forceDropItem()
+                "spawn" -> mobspawn(options)
+                "dropit" -> forceDropItem()
                 "levitate" -> levitatePlayer()
                 "fire" -> setPlayerOnFire()
-                "swap" -> scrambleLocations()
+//                "swap" -> scrambleLocations()
                 "diamonds" -> giveDiamonds()
-                "fireballs" -> giveFireballs()
-                "chickens!" -> chickenInvasion()
+//                "fireballs" -> giveFireballs()
+                "chickens" -> chickenInvasion()
                 "knock" -> knockbackPlayer()
-                "panic" -> playPanicSound()
+                "panic" -> {
+                    showTitle = false
+                    playPanicSound()
+                }
                 "tree" -> generateTreeCage()
                 "speedy" -> speedUpPlayer()
                 "heal" -> heal()
@@ -102,30 +149,145 @@ class ChatReactor(private val main: Main) {
                 "wallhack" -> wallhack()
                 "superman" -> giveShitTonOfHearts()
                 "normalman" -> revertSuperman()
-                "1hp" -> setOneHP()
+//                "1hp" -> setOneHP()
                 "water" -> setWaterBlock()
-                "woollify" -> createWoolBubble()
+                "woollify" -> woollify()
                 "randomblock" -> giverandomblock()
+                "neverfall" -> neverFall()
+                "armored" -> armored()
+                "tothenether" -> toTheNether()
+                "totheoverworld" -> toTheOverworld()
+                "bob" -> spawnBob()
+                "nukemobs" -> nukeMobs()
+                "dinnerbone" -> applyDinnerbone()
+                "craftingtable" -> craftingLand()
+//                "nochunknoparty" -> clearChunk()
+                "anvil" -> spawnAnvilOnTop()
+                "ihaveit" -> iHaveIt()
+                "goingdown" -> goingDown()
                 else -> {
                     // in this case the command is not listed above
-                    hasCommandRun = false
+                    showTitle = false
                 }
             }
-            if (hasCommandRun) {
-                lastCommandTime = date
+            if (showTitle) {
                 forEachPlayer {
-                    it.sendTitle(command, name, 10, 70, 20) // ints are def values
+                    it.sendTitle(command.uppercase(), name, 10, 70, 20) // ints are def values
                 }
+            }
+        }
+    }
+
+    private fun goingDown() {
+        startShortRecurrentTask {
+            forEachPlayer {
+                it.location.subtract(0.0, 1.0, 0.0).block.type = Material.AIR
+            }
+        }
+    }
+
+    private fun iHaveIt() {
+        startRecurrentTask {
+            forEachPlayer {
+                val type = it.getTargetBlockExact(100)?.type ?: return@forEachPlayer
+                it.inventory.addItem(ItemStack(type))
+            }
+        }
+    }
+
+    private fun spawnAnvilOnTop() {
+        forEachPlayer {
+            it.location.add(0.0, 5.0, 0.0).block.type = Material.ANVIL
+        }
+    }
+
+    private fun clearChunk() {
+        forEachPlayer {
+            val chunk = it.getTargetBlockExact(100)?.chunk ?: return
+            BlockReplacer.chunkReplace(main, chunk, Material.AIR)
+        }
+    }
+
+    private fun craftingLand() {
+        forEachPlayer {
+            val loc1 = it.location.subtract(20.0, 20.0, 20.0)
+            val loc2 = it.location.add(20.0, 20.0, 20.0)
+            BlockReplacer.replaceAreaExAir(main, loc1, loc2, Material.CRAFTING_TABLE)
+        }
+    }
+
+    private fun applyDinnerbone() {
+        forEachPlayer { player ->
+            player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
+                if (it is LivingEntity) {
+                    it.customName = "Dinnerbone"
+                    it.isCustomNameVisible = false
+                }
+            }
+        }
+    }
+
+    private fun spawnBob() {
+        forEachPlayer {
+            val zombie = it.world.spawnEntity(it.location, EntityType.ZOMBIE) as Zombie
+            val chicken = it.world.spawnEntity(it.location, EntityType.CHICKEN) as Chicken
+            zombie.setBaby()
+            zombie.customName = "bob"
+            zombie.isCustomNameVisible = true
+            zombie.equipment?.helmet = ItemStack(Material.DIAMOND_HELMET)
+            zombie.equipment?.chestplate = ItemStack(Material.DIAMOND_CHESTPLATE)
+            zombie.equipment?.leggings = ItemStack(Material.DIAMOND_LEGGINGS)
+            zombie.equipment?.boots = ItemStack(Material.DIAMOND_BOOTS)
+            zombie.equipment?.setItemInMainHand(ItemStack(Material.NETHERITE_SWORD))
+            chicken.addPassenger(zombie)
+        }
+    }
+
+    private fun nukeMobs() {
+        forEachPlayer { player ->
+            player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
+                if (it is LivingEntity) {
+                    it.health = 0.0
+                }
+            }
+        }
+    }
+
+    private fun toTheNether() {
+        forEachPlayer {
+            it.teleport(main.server.getWorld("world_nether")?.spawnLocation ?: it.location)
+        }
+    }
+
+    private fun toTheOverworld() {
+        forEachPlayer {
+            it.teleport(main.server.getWorld("world")?.spawnLocation ?: it.location)
+        }
+    }
+
+    private fun armored() {
+        forEachPlayer {
+            it.inventory.helmet = ItemStack(Material.NETHERITE_HELMET)
+            it.inventory.chestplate = ItemStack(Material.NETHERITE_CHESTPLATE)
+            it.inventory.leggings = ItemStack(Material.NETHERITE_LEGGINGS)
+            it.inventory.boots = ItemStack(Material.NETHERITE_BOOTS)
+            it.inventory.setItemInMainHand(ItemStack(Material.NETHERITE_SWORD))
+        }
+    }
+
+    private fun neverFall() {
+        startRecurrentTask {
+            forEachPlayer {
+                it.location.subtract(0.0, 1.0, 0.0).block.type = Material.ORANGE_WOOL
             }
         }
     }
 
     private fun giverandomblock() {
         forEachPlayer {
-            forEachPlayer {
-                val itemDropped: Item = it.world.dropItemNaturally(it.location, ItemStack(listOf(*Material.values()).random(), 1))
-                itemDropped.pickupDelay = 40
-            }
+            val itemDropped: Item =
+                it.world.dropItemNaturally(it.location, ItemStack(listOf(*Material.values()).random(), 1))
+            itemDropped.pickupDelay = 40
         }
     }
 
@@ -146,8 +308,8 @@ class ChatReactor(private val main: Main) {
         }
     }
 
-    private fun createWoolBubble() {
-        val wool : List<Material> = listOf(
+    private fun woollify() {
+        val wool: List<Material> = listOf(
             Material.WHITE_WOOL,
             Material.BLUE_WOOL,
             Material.RED_WOOL,
@@ -215,28 +377,28 @@ class ChatReactor(private val main: Main) {
 
     private fun generateTreeCage() {
         forEachPlayer {
-            it.world.generateTree(it.location.add(1.toDouble(),0.toDouble(),0.toDouble()), TreeType.BIG_TREE)
-            it.world.generateTree(it.location.add((-1).toDouble(),0.toDouble(),0.toDouble()), TreeType.BIG_TREE)
-            it.world.generateTree(it.location.add(0.toDouble(),0.toDouble(),1.toDouble()), TreeType.BIG_TREE)
-            it.world.generateTree(it.location.add(0.toDouble(),0.toDouble(), (-1).toDouble()), TreeType.BIG_TREE)
+            it.world.generateTree(it.location.add(1.toDouble(), 0.toDouble(), 0.toDouble()), TreeType.BIG_TREE)
+            it.world.generateTree(it.location.add((-1).toDouble(), 0.toDouble(), 0.toDouble()), TreeType.BIG_TREE)
+            it.world.generateTree(it.location.add(0.toDouble(), 0.toDouble(), 1.toDouble()), TreeType.BIG_TREE)
+            it.world.generateTree(it.location.add(0.toDouble(), 0.toDouble(), (-1).toDouble()), TreeType.BIG_TREE)
         }
     }
 
     private fun playPanicSound() {
-        val sounds : List<Sound> = listOf(
+        val sounds: List<Sound> = listOf(
             Sound.ENTITY_CREEPER_PRIMED,
             Sound.ENTITY_ENDERMAN_SCREAM,
             Sound.ENTITY_SILVERFISH_AMBIENT
         )
         forEachPlayer {
-            it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3);
-            it.world.playSound(it.location, sounds.random(), 3f, 1f);
+            it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3)
+            it.world.playSound(it.location, sounds.random(), 3f, 1f)
         }
     }
 
     private fun knockbackPlayer() {
         forEachPlayer {
-            it.velocity = it.location.direction.multiply(-2);
+            it.velocity = it.location.direction.multiply(-2)
         }
     }
 
@@ -249,7 +411,7 @@ class ChatReactor(private val main: Main) {
     }
 
     private fun scrambleLocations() {
-        val locations : MutableList<Location> = mutableListOf()
+        val locations: MutableList<Location> = mutableListOf()
         forEachPlayer {
             locations.add(it.location)
         }
@@ -268,22 +430,33 @@ class ChatReactor(private val main: Main) {
 
     private fun setPlayerOnFire() {
         forEachPlayer {
-            it.fireTicks = 20*20 // secs * avg tics
+            it.fireTicks = 20 * 20 // secs * avg tics
         }
     }
 
     private fun forceDropItem() {
         forEachPlayer {
             val item = it.inventory.itemInMainHand
-            it.inventory.remove(item)
-            val itemDropped: Item = it.world.dropItemNaturally(it.location, item)
-            itemDropped.pickupDelay = 100
+            if (!item.type.isAir) {
+                it.inventory.remove(item)
+                val itemDropped: Item = it.world.dropItemNaturally(it.location, item)
+                itemDropped.pickupDelay = 100
+            }
         }
     }
 
-    private fun creeperSpawn() {
+    private fun mobspawn(options: String?) {
+        val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)
+        var mobToSpawn = EntityType.CREEPER
+        try {
+            mobToSpawn = EntityType.valueOf(options?.uppercase() ?: "CREEPER")
+        } catch (_: Exception) {
+        }
+        if (blacklist.contains(mobToSpawn)) {
+            return
+        }
         forEachPlayer {
-            it.world.spawnEntity(it.location, EntityType.CREEPER)
+            it.world.spawnEntity(getCloseLocationFromPlayer(it.location), mobToSpawn)
         }
     }
 

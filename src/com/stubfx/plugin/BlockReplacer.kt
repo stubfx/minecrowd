@@ -16,7 +16,7 @@ object BlockReplacer {
         // keep in mind that chunk.x gets the chunk index, not the world index
         // so we need to extract the coordinates of the first block.
         val block: Block = chunk.getBlock(0,0,0)
-        val start = Location(block.world, block.x.toDouble(), 0.0, block.z.toDouble())
+        val start = Location(block.world, block.x.toDouble(), -63.0, block.z.toDouble())
         val end =
             Location(block.world, block.x.toDouble() + CHUNK_BLOCKS_NUMBER, 255.0, block.z.toDouble() + CHUNK_BLOCKS_NUMBER)
         plugin.server.consoleSender.sendMessage(start.toString())
