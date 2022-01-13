@@ -5,53 +5,20 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
+import java.util.*
 import kotlin.random.Random
+import kotlin.time.milliseconds
 
+data class CommandResultWrapper(val name: String, val result: Boolean, val message: String)
 
-abstract class Command(mainRef: Main, val playerName: String) {
+abstract class Command(val main: Main, val playerName: String) {
 
-    var coolDown : Int = 0
-    var ticks = mainRef.getTicks()
-
-    init {
-        main = mainRef
-    }
+    var ticks = main.getTicks()
 
     companion object {
-
-        private var currentTask: BukkitTask? = null
-        lateinit var main: Main
-        private var currentTaskTickCount = 0
-
-        private fun runOnBukkitEveryTick(func: () -> Unit, duration: Int): BukkitTask {
-            val taskDuration = main.getTicks() * duration
-            return object : BukkitRunnable() {
-                override fun run() {
-                    currentTaskTickCount++
-                    func()
-                    if (currentTaskTickCount > taskDuration) {
-                        this.cancel()
-                    }
-                }
-            }.runTaskTimer(main, 1, 1)
-        }
-
-        fun stopTask() {
-            currentTask?.cancel()
-        }
-
-        fun startShortRecurrentTask(func: () -> Unit) {
-            stopTask()
-            currentTaskTickCount = 0
-            currentTask = runOnBukkitEveryTick(func, 1)
-        }
-
-        fun startRecurrentTask(func: () -> Unit) {
-            stopTask()
-            currentTaskTickCount = 0
-            currentTask = runOnBukkitEveryTick(func, 20)
-        }
-
+        // TODO update coolDown value based on config, if any.
+        var coolDown : Long = 10 * 1000 // standard cooldown in seconds
+        var lastRunEpoch: Long = 0
     }
 
     fun forEachPlayer(func: (player: Player) -> Unit) {
@@ -69,12 +36,6 @@ abstract class Command(mainRef: Main, val playerName: String) {
 
     abstract fun behavior()
 
-    fun silentRun() {
-        behavior()
-        // no alerts here.
-        // showTitle()
-    }
-
     private fun showTitle() {
         forEachPlayer {
             it.sendTitle(title(), playerName, 10, 70, 20) // ints are def values
@@ -82,10 +43,30 @@ abstract class Command(mainRef: Main, val playerName: String) {
     }
 
     open fun title() : String = name()
+    open fun successMessage() : String = ""
 
-    open fun run() {
-        behavior()
-        showTitle()
+    fun isInCoolDown() : Boolean {
+        return Date().time <= (lastRunEpoch + coolDown)
+    }
+
+    open fun run() : CommandResultWrapper {
+        return run(false)
+    }
+
+    fun run(isSilent : Boolean) : CommandResultWrapper {
+        var run = false
+        val time = Date().time
+        if (!isInCoolDown()) {
+            lastRunEpoch = time
+            println("[ChatReactor] : Running command ${name()} - silent: $isSilent")
+            run = true
+            CommandRunner.runOnBukkit {
+                behavior()
+            }
+            if (!isSilent) showTitle()
+        }
+        val msg = if (!run) "@${playerName} ,${name()} command is in cooldown" else successMessage()
+        return CommandResultWrapper(name(), run, msg)
     }
 
 }

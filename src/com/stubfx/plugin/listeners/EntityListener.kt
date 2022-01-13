@@ -13,14 +13,7 @@ import org.bukkit.potion.PotionEffectType
 class EntityListener(val main: Main) : Listener {
 
 //    @EventHandler
-//    fun onPlayerJoin(event: PlayerJoinEvent?) {
-//
-//    }
-
-
-
-    @EventHandler
-    fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
+//    fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
 //        if (event.damager.isOp) {
 //            // then the attacker is an operator
 //            val player = event.damager as Player
@@ -29,6 +22,6 @@ class EntityListener(val main: Main) : Listener {
 //                (event.entity as LivingEntity).addPotionEffect(levitation)
 //            }
 //        }
-    }
+//    }
 
 }

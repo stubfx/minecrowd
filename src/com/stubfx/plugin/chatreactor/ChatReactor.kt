@@ -1,17 +1,16 @@
 package com.stubfx.plugin.chatreactor
 
 import com.stubfx.plugin.Main
+import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
+import com.stubfx.plugin.chatreactor.commands.StubCommand
 import com.stubfx.plugin.chatreactor.commands.impl.*
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
-import org.bukkit.*
-import org.bukkit.entity.*
-import org.bukkit.scheduler.BukkitRunnable
-import org.bukkit.scheduler.BukkitTask
 import java.io.IOException
+import java.lang.Exception
 import java.net.InetSocketAddress
-import java.util.*
+
 
 class ChatReactor(private val main: Main) {
 
@@ -19,58 +18,8 @@ class ChatReactor(private val main: Main) {
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
 
-    companion object {
-
-        private var currentTask: BukkitTask? = null
-        private var main: Main? = null
-        private var currentTaskTickCount = 0
-
-        fun runOnBukkitEveryTick(func: () -> Unit, duration: Int): BukkitTask {
-            val taskDuration = main!!.getTicks() * duration
-            return object : BukkitRunnable() {
-                override fun run() {
-                    currentTaskTickCount++
-                    func()
-                    if (currentTaskTickCount > taskDuration) {
-                        this.cancel()
-                    }
-                }
-            }.runTaskTimer(main!!, 1, 1)
-        }
-
-        fun stopTask() {
-            currentTask?.cancel()
-        }
-
-        fun startShortRecurrentTask(func: () -> Unit) {
-            stopTask()
-            currentTaskTickCount = 0
-            currentTask = runOnBukkitEveryTick(func, 1)
-        }
-
-        fun startRecurrentTask(func: () -> Unit) {
-            stopTask()
-            currentTaskTickCount = 0
-            currentTask = runOnBukkitEveryTick(func, 20)
-        }
-
-        fun setMainRef(main: Main) {
-            this.main = main
-        }
-
-    }
-
     init {
         startServer()
-        setMainRef(main)
-    }
-
-    fun getServer(): Server {
-        return main.server
-    }
-
-    private inline fun forEachPlayer(func: (player: Player) -> Unit) {
-        getServer().onlinePlayers.forEach { func(it) }
     }
 
     private fun startServer() {
@@ -99,52 +48,68 @@ class ChatReactor(private val main: Main) {
                 val split = it.split("=")
                 params[split[0]] = split[1]
             }
-            t.sendResponseHeaders(204, -1)
-            t.responseBody.close()
+            println("test")
             if (ref.checkApiKey(params["apiKey"])) {
-                ref.chatCommandResolve(params["name"]!!, params["command"]!!, params["options"])
+                val chatCommandResolve =
+                    ref.chatCommandResolve(params["name"]!!, params["command"]!!, params["options"])
+                if (chatCommandResolve.result) {
+                    // the command has run.
+                    t.sendResponseHeaders(204, -1)
+                    t.responseBody.close()
+                } else {
+                    // the command has not run
+                    // may have been in cool down
+                    t.sendResponseHeaders(200, chatCommandResolve.message.length.toLong())
+                    t.responseBody.write(chatCommandResolve.message.toByteArray())
+                    t.responseBody.close()
+                }
             } else {
                 println("[ChatReactor]: wrong apiKey")
             }
         }
     }
 
-    private fun chatCommandResolve(playerName: String, command: String, options: String?) {
-        main.runOnBukkit {
-            when (command.lowercase()) {
-                "spawn" -> Spawn(main, options, playerName).run()
-                "dropit" -> DropIt(main, playerName).run()
-                "levitate" -> Levitate(main, playerName).run()
-                "fire" -> Fire(main, playerName).run()
-                "diamonds" -> Diamonds(main, playerName).run()
-                "chickens" -> Chickens(main, playerName).run()
-                "knock" -> Knock(main, playerName).run()
-                "panic" -> PanicSound(main, playerName).run()
-                "tree" -> TreeCage(main, playerName).run()
-                "speedy" -> Speedy(main, playerName).run()
-                "heal" -> Heal(main, playerName).run()
-                "hungry" -> Hungry(main, playerName).run()
-                "feed" -> Feed(main, playerName).run()
-                "wallhack" -> WallHack(main, playerName).run()
-                "superman" -> Superman(main, playerName).run()
-                "normalman" -> Normalman(main, playerName).run()
-                "water" -> Water(main, playerName).run()
-                "woollify" -> Woollify(main, playerName).run()
-                "randomblock" -> RandomBlock(main, playerName).run()
-                "neverfall" -> NeverFall(main, playerName).run()
-                "armored" -> Armored(main, playerName).run()
-                "tothenether" -> ToTheNether(main, playerName).run()
-                "totheoverworld" -> ToTheOverworld(main, playerName).run()
-                "bob" -> Bob(main, playerName).run()
-                "nukemobs" -> NukeMobs(main, playerName).run()
-                "dinnerbone" -> Dinnerbone(main, playerName).run()
-                "craftingtable" -> CraftingTable(main, playerName).run()
-                "anvil" -> Anvil(main, playerName).run()
-                "ihaveit" -> IHaveIt(main, playerName).run()
-                "paint" -> Paint(main, playerName).run()
-                "goingdown" -> GoingDown(main, playerName).run()
-                "nochunknoparty" -> ClearChunk(main, playerName).run()
-            }
+    private fun chatCommandResolve(playerName: String, command: String, options: String?): CommandResultWrapper {
+        val commandInstance = when (command.lowercase()) {
+            "spawn" -> Spawn(main, options, playerName)
+            "dropit" -> DropIt(main, playerName)
+            "levitate" -> Levitate(main, playerName)
+            "fire" -> Fire(main, playerName)
+            "diamonds" -> Diamonds(main, playerName)
+            "chickens" -> Chickens(main, playerName)
+            "knock" -> Knock(main, playerName)
+            "panic" -> PanicSound(main, playerName)
+            "tree" -> TreeCage(main, playerName)
+            "speedy" -> Speedy(main, playerName)
+            "heal" -> Heal(main, playerName)
+            "hungry" -> Hungry(main, playerName)
+            "feed" -> Feed(main, playerName)
+            "wallhack" -> WallHack(main, playerName)
+            "superman" -> Superman(main, playerName)
+            "normalman" -> Normalman(main, playerName)
+            "water" -> Water(main, playerName)
+            "woollify" -> Woollify(main, playerName)
+            "randomblock" -> RandomBlock(main, playerName)
+            "neverfall" -> NeverFall(main, playerName)
+            "armored" -> Armored(main, playerName)
+            "tothenether" -> ToTheNether(main, playerName)
+            "totheoverworld" -> ToTheOverworld(main, playerName)
+            "bob" -> Bob(main, playerName)
+            "nukemobs" -> NukeMobs(main, playerName)
+            "dinnerbone" -> Dinnerbone(main, playerName)
+            "craftingtable" -> CraftingTable(main, playerName)
+            "anvil" -> Anvil(main, playerName)
+            "ihaveit" -> IHaveIt(main, playerName)
+            "paint" -> Paint(main, playerName)
+            "goingdown" -> GoingDown(main, playerName)
+            "nochunknoparty" -> ClearChunk(main, playerName)
+            else -> StubCommand(main, playerName)
+        }
+        return try {
+            commandInstance.run()
+        } catch (e: Exception) {
+            println(e)
+            CommandResultWrapper("stub", false, "wrong command.")
         }
     }
 

@@ -1,9 +1,7 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.ChatReactor
-import com.stubfx.plugin.listeners.EntityListener
-import com.stubfx.plugin.listeners.PlayerListener
-import com.stubfx.plugin.listeners.ProjectileListener
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
@@ -15,14 +13,6 @@ class Main : JavaPlugin() {
 
     private var chatReactor = ChatReactor(this)
 
-    fun runOnBukkit(func: () -> Unit) : BukkitTask {
-        return object : BukkitRunnable() {
-            override fun run() {
-                func()
-            }
-        }.runTask(this)
-    }
-
     override fun onEnable() {
 //        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
@@ -30,6 +20,7 @@ class Main : JavaPlugin() {
 //        server.pluginManager.registerEvents(PlayerListener(this), this)
 //        server.pluginManager.registerEvents(EntityListener(this), this)
 //        server.pluginManager.registerEvents(ProjectileListener(this), this)
+        CommandRunner.setMainRef(this)
     }
 
     fun getTicks(): Int {

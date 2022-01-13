@@ -2,6 +2,7 @@ package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.Material
 
 class Paint(main: Main, playerName: String) : Command(main, playerName) {
@@ -18,16 +19,11 @@ class Paint(main: Main, playerName: String) : Command(main, playerName) {
             Material.CYAN_WOOL,
             Material.GRAY_WOOL,
         ).random()
-        startRecurrentTask {
+        CommandRunner.startRecurrentTask {
             forEachPlayer {
                 it.getTargetBlockExact(100)?.type = wool
             }
         }
     }
-
-    override fun run() {
-        silentRun()
-    }
-
 
 }

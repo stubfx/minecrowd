@@ -2,6 +2,7 @@ package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import org.bukkit.Particle
 import org.bukkit.Sound
 
@@ -24,6 +25,10 @@ class PanicSound(main: Main, playerName: String) : Command(main, playerName) {
             it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3)
             it.world.playSound(it.location, sounds.random(), 3f, 1f)
         }
+    }
+
+    override fun run(): CommandResultWrapper {
+        return super.run(true)
     }
 
 }

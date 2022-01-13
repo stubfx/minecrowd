@@ -15,7 +15,7 @@ class Superman(main: Main, playerName: String) : Command(main, playerName) {
             it.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue = 200.0
         }
         // let's fix it.
-        Heal(main, playerName).silentRun()
+        Heal(main, playerName).run(true)
     }
 
 }
