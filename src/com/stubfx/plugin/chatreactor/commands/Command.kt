@@ -75,15 +75,17 @@ abstract class Command(mainRef: Main, val playerName: String) {
         // showTitle()
     }
 
-    fun run() {
-        behavior()
-        showTitle()
-    }
-
     private fun showTitle() {
         forEachPlayer {
-            it.sendTitle(name(), playerName, 10, 70, 20) // ints are def values
+            it.sendTitle(title(), playerName, 10, 70, 20) // ints are def values
         }
+    }
+
+    open fun title() : String = name()
+
+    open fun run() {
+        behavior()
+        showTitle()
     }
 
 }

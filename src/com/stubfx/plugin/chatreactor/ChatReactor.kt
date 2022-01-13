@@ -111,7 +111,6 @@ class ChatReactor(private val main: Main) {
 
     private fun chatCommandResolve(playerName: String, command: String, options: String?) {
         main.runOnBukkit {
-            var showTitle = true
             when (command.lowercase()) {
                 "spawn" -> Spawn(main, options, playerName).run()
                 "dropit" -> DropIt(main, playerName).run()

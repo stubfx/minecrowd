@@ -25,4 +25,9 @@ class Paint(main: Main, playerName: String) : Command(main, playerName) {
         }
     }
 
+    override fun run() {
+        silentRun()
+    }
+
+
 }

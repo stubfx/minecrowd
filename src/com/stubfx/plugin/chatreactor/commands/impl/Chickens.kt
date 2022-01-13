@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType
 class Chickens(main: Main, playerName: String) : Command(main, playerName) {
 
     override fun name(): String {
-        return "Chickens"
+        return "chickens"
     }
 
     override fun behavior() {
@@ -17,5 +17,7 @@ class Chickens(main: Main, playerName: String) : Command(main, playerName) {
             }
         }
     }
+
+    override fun title(): String = "Chickens!"
 
 }
