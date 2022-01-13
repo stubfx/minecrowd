@@ -42,7 +42,7 @@ abstract class Command(val main: Main, val playerName: String) {
         }
     }
 
-    open fun title() : String = name()
+    open fun title() : String = ConfigManager.getTitle(name())!!
     open fun successMessage() : String = ""
 
     fun isInCoolDown() : Boolean {
@@ -50,7 +50,7 @@ abstract class Command(val main: Main, val playerName: String) {
     }
 
     open fun run() : CommandResultWrapper {
-        return run(false)
+        return run(ConfigManager.isSilent(name()))
     }
 
     fun run(isSilent : Boolean) : CommandResultWrapper {
