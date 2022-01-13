@@ -19,9 +19,6 @@ import kotlin.random.Random
 
 class ChatReactor(private val main: Main) {
 
-    private val commandCooldown = 0 // to be handled in StreamElements.
-
-    private var lastCommandTime = 0L
     private var apiKey = ""
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
@@ -132,9 +129,7 @@ class ChatReactor(private val main: Main) {
                 "dropit" -> forceDropItem()
                 "levitate" -> levitatePlayer()
                 "fire" -> setPlayerOnFire()
-//                "swap" -> scrambleLocations()
                 "diamonds" -> giveDiamonds()
-//                "fireballs" -> giveFireballs()
                 "chickens" -> chickenInvasion()
                 "knock" -> knockbackPlayer()
                 "panic" -> {
@@ -149,7 +144,6 @@ class ChatReactor(private val main: Main) {
                 "wallhack" -> wallhack()
                 "superman" -> giveShitTonOfHearts()
                 "normalman" -> revertSuperman()
-//                "1hp" -> setOneHP()
                 "water" -> setWaterBlock()
                 "woollify" -> woollify()
                 "randomblock" -> giverandomblock()
@@ -161,10 +155,14 @@ class ChatReactor(private val main: Main) {
                 "nukemobs" -> nukeMobs()
                 "dinnerbone" -> applyDinnerbone()
                 "craftingtable" -> craftingLand()
-//                "nochunknoparty" -> clearChunk()
                 "anvil" -> spawnAnvilOnTop()
                 "ihaveit" -> iHaveIt()
+                "paint" -> paint()
                 "goingdown" -> goingDown()
+//                "swap" -> scrambleLocations()
+//                "fireballs" -> giveFireballs()
+//                "1hp" -> setOneHP()
+//                "nochunknoparty" -> clearChunk()
                 else -> {
                     // in this case the command is not listed above
                     showTitle = false
@@ -174,6 +172,21 @@ class ChatReactor(private val main: Main) {
                 forEachPlayer {
                     it.sendTitle(command.uppercase(), name, 10, 70, 20) // ints are def values
                 }
+            }
+        }
+    }
+
+    private fun paint() {
+        val wool: Material = listOf(
+            Material.WHITE_WOOL,
+            Material.BLUE_WOOL,
+            Material.RED_WOOL,
+            Material.CYAN_WOOL,
+            Material.GRAY_WOOL,
+        ).random()
+        startRecurrentTask {
+            forEachPlayer {
+                it.getTargetBlockExact(100)?.type = wool
             }
         }
     }
@@ -388,7 +401,10 @@ class ChatReactor(private val main: Main) {
         val sounds: List<Sound> = listOf(
             Sound.ENTITY_CREEPER_PRIMED,
             Sound.ENTITY_ENDERMAN_SCREAM,
-            Sound.ENTITY_SILVERFISH_AMBIENT
+            Sound.ENTITY_SILVERFISH_AMBIENT,
+            Sound.BLOCK_END_PORTAL_SPAWN,
+            Sound.ENTITY_WITHER_SHOOT,
+            Sound.ENTITY_GHAST_WARN
         )
         forEachPlayer {
             it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3)
@@ -447,6 +463,7 @@ class ChatReactor(private val main: Main) {
 
     private fun mobspawn(options: String?) {
         val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)
+        EntityType.GLOW_SQUID
         var mobToSpawn = EntityType.CREEPER
         try {
             mobToSpawn = EntityType.valueOf(options?.uppercase() ?: "CREEPER")
@@ -456,7 +473,7 @@ class ChatReactor(private val main: Main) {
             return
         }
         forEachPlayer {
-            it.world.spawnEntity(getCloseLocationFromPlayer(it.location), mobToSpawn)
+            it.world.spawnEntity(it.location, mobToSpawn)
         }
     }
 
