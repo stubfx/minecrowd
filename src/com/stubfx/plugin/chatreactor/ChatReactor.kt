@@ -48,7 +48,6 @@ class ChatReactor(private val main: Main) {
                 val split = it.split("=")
                 params[split[0]] = split[1]
             }
-            println("test")
             if (ref.checkApiKey(params["apiKey"])) {
                 val chatCommandResolve =
                     ref.chatCommandResolve(params["name"]!!, params["command"]!!, params["options"])
