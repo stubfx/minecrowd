@@ -2,6 +2,7 @@ package com.stubfx.plugin.chatreactor
 
 import com.stubfx.plugin.BlockReplacer
 import com.stubfx.plugin.Main
+import com.stubfx.plugin.chatreactor.commands.Spawn
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
@@ -125,7 +126,7 @@ class ChatReactor(private val main: Main) {
         main.runOnBukkit {
             var showTitle = true
             when (command.lowercase()) {
-                "spawn" -> mobspawn(options)
+                "spawn" -> Spawn(main, options).run()
                 "dropit" -> forceDropItem()
                 "levitate" -> levitatePlayer()
                 "fire" -> setPlayerOnFire()
@@ -458,22 +459,6 @@ class ChatReactor(private val main: Main) {
                 val itemDropped: Item = it.world.dropItemNaturally(it.location, item)
                 itemDropped.pickupDelay = 100
             }
-        }
-    }
-
-    private fun mobspawn(options: String?) {
-        val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)
-        EntityType.GLOW_SQUID
-        var mobToSpawn = EntityType.CREEPER
-        try {
-            mobToSpawn = EntityType.valueOf(options?.uppercase() ?: "CREEPER")
-        } catch (_: Exception) {
-        }
-        if (blacklist.contains(mobToSpawn)) {
-            return
-        }
-        forEachPlayer {
-            it.world.spawnEntity(it.location, mobToSpawn)
         }
     }
 
