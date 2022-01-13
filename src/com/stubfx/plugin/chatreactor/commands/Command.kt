@@ -1,12 +1,17 @@
 package com.stubfx.plugin.chatreactor.commands
 
 import com.stubfx.plugin.Main
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
+import kotlin.random.Random
 
 
-abstract class Command(mainRef: Main) {
+abstract class Command(mainRef: Main, val playerName: String) {
+
+    var coolDown : Int = 0
+    var ticks = mainRef.getTicks()
 
     init {
         main = mainRef
@@ -15,7 +20,7 @@ abstract class Command(mainRef: Main) {
     companion object {
 
         private var currentTask: BukkitTask? = null
-        private lateinit var main: Main
+        lateinit var main: Main
         private var currentTaskTickCount = 0
 
         private fun runOnBukkitEveryTick(func: () -> Unit, duration: Int): BukkitTask {
@@ -53,14 +58,32 @@ abstract class Command(mainRef: Main) {
         main.server.onlinePlayers.forEach { func(it) }
     }
 
-    var coolDown : Int = 0
+    fun getCloseLocationFromPlayer(location: Location): Location {
+        val x = Random.nextDouble(-10.0, 10.0)
+        val y = Random.nextDouble(1.0, 10.0)
+        val z = Random.nextDouble(-10.0, 10.0)
+        return location.add(x, y, z)
+    }
 
     abstract fun name(): String
 
     abstract fun behavior()
 
+    fun silentRun() {
+        behavior()
+        // no alerts here.
+        // showTitle()
+    }
+
     fun run() {
         behavior()
+        showTitle()
+    }
+
+    private fun showTitle() {
+        forEachPlayer {
+            it.sendTitle(name(), playerName, 10, 70, 20) // ints are def values
+        }
     }
 
 }
