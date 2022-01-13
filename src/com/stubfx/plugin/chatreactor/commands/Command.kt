@@ -1,5 +1,6 @@
 package com.stubfx.plugin.chatreactor.commands
 
+import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -16,7 +17,6 @@ abstract class Command(val main: Main, val playerName: String) {
     var ticks = main.getTicks()
 
     companion object {
-        // TODO update coolDown value based on config, if any.
         var coolDown : Long = 10 * 1000 // standard cooldown in seconds
         var lastRunEpoch: Long = 0
     }
@@ -54,6 +54,7 @@ abstract class Command(val main: Main, val playerName: String) {
     }
 
     fun run(isSilent : Boolean) : CommandResultWrapper {
+        coolDown = ConfigManager.getCooldown(name())
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {

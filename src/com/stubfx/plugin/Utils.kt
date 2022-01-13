@@ -1,5 +1,7 @@
 package com.stubfx.plugin
 
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Location
 
 class Utils {
@@ -19,6 +21,17 @@ class Utils {
         fun getMaxLocation(l1: Location, l2: Location): Location {
             checkLocationsWorld(l1, l2)
             return Location(l1.world, maxOf(l1.x, l2.x), maxOf(l1.y, l2.y), maxOf(l1.z, l2.z))
+        }
+
+        fun log(msg: String, type: String = "") {
+            val color: ChatColor = when(type) {
+                "error" -> ChatColor.RED;
+                "warning" -> ChatColor.YELLOW;
+                "bho" -> ChatColor.GRAY;
+                else -> ChatColor.AQUA;
+            }
+
+            Bukkit.getConsoleSender().sendMessage("$color[StubFX] $msg")
         }
     }
 

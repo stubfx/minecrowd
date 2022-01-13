@@ -10,7 +10,6 @@ import org.bukkit.scheduler.BukkitTask
 
 
 class Main : JavaPlugin() {
-
     private var chatReactor = ChatReactor(this)
 
     override fun onEnable() {
@@ -21,6 +20,7 @@ class Main : JavaPlugin() {
 //        server.pluginManager.registerEvents(EntityListener(this), this)
 //        server.pluginManager.registerEvents(ProjectileListener(this), this)
         CommandRunner.setMainRef(this)
+        ConfigManager.load()
     }
 
     fun getTicks(): Int {
@@ -29,6 +29,7 @@ class Main : JavaPlugin() {
 
     override fun onDisable() {
         chatReactor.onDisable()
+        ConfigManager.save()
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
