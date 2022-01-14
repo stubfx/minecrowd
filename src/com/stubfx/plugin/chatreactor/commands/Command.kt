@@ -23,11 +23,8 @@ abstract class Command {
 
     var ticks = 20 // this is supposed to be a minecraft constant.
     var commandConfig: CommandConfig = ConfigManager.getCommand(this.commandName())
-
-    companion object {
-        var coolDown : Long = 0 // will be overridden by defaultCoolDown function
-        var lastRunEpoch: Long = 0
-    }
+    var coolDown : Long = 0 // will be overridden by defaultCoolDown function
+    var lastRunEpoch: Long = 0
 
     init {
         coolDown = this.defaultCoolDown()
