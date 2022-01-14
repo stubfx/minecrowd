@@ -4,13 +4,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.entity.EntityType
 
-class Spawn(main: Main, private val options: String?, playerName: String) : Command(main, playerName) {
+class Spawn(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "Spawn"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         // this is what the function is supposed to do.
         val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)
         EntityType.GLOW_SQUID

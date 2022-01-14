@@ -5,13 +5,13 @@ import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.entity.LivingEntity
 import org.bukkit.potion.PotionEffectType
 
-class WallHack(main: Main, playerName: String) : Command(main, playerName) {
+class WallHack(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "wallhack"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer { player ->
             player.getNearbyEntities(200.0, 200.0, 200.0).forEach {
                 if (it is LivingEntity) {

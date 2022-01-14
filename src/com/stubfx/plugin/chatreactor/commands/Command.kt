@@ -4,15 +4,23 @@ import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitRunnable
-import org.bukkit.scheduler.BukkitTask
 import java.util.*
 import kotlin.random.Random
-import kotlin.time.milliseconds
+
+enum class CommandType {
+    SPAWN, DROPIT, LEVITATE, FIRE,
+    DIAMONDS, CHICKENS, KNOCK, PANIC,
+    TREE, SPEEDY, HEAL, HUNGRY,
+    FEED, WALLHACK, SUPERMAN, NORMALMAN,
+    WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
+    TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
+    DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY
+}
 
 data class CommandResultWrapper(val name: String, val result: Boolean, val message: String)
 
-abstract class Command(val main: Main, val playerName: String) {
+abstract class Command(val main: Main) {
 
     var ticks = main.getTicks()
 
@@ -32,42 +40,46 @@ abstract class Command(val main: Main, val playerName: String) {
         return location.add(x, y, z)
     }
 
-    abstract fun name(): String
+    abstract fun commandName(): String
 
-    abstract fun behavior()
+    abstract fun behavior(playerName: String, options: String?)
 
-    private fun showTitle() {
+    private fun showTitle(playerName: String) {
         forEachPlayer {
             it.sendTitle(title(), playerName, 10, 70, 20) // ints are def values
         }
     }
 
-    open fun title() : String = ConfigManager.getTitle(name())!!
+    open fun title() : String = ConfigManager.getTitle(commandName())
     open fun successMessage() : String = ""
 
     fun isInCoolDown() : Boolean {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
-    open fun run() : CommandResultWrapper {
-        return run(ConfigManager.isSilent(name()))
+    open fun run(playerName: String) : CommandResultWrapper {
+        return run(playerName, "", ConfigManager.isSilent(commandName()))
     }
 
-    fun run(isSilent : Boolean) : CommandResultWrapper {
-        coolDown = ConfigManager.getCooldown(name())
+    open fun run(isSilent: Boolean) : CommandResultWrapper {
+        return run("", "", ConfigManager.isSilent(commandName()))
+    }
+
+    fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean) : CommandResultWrapper {
+        coolDown = ConfigManager.getCooldown(commandName())
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {
             lastRunEpoch = time
-            println("[ChatReactor] : Running command ${name()} - silent: $isSilent")
+            println("[ChatReactor] : Running command ${commandName()} - silent: $isSilent")
             run = true
             CommandRunner.runOnBukkit {
-                behavior()
+                behavior(playerName, options)
             }
-            if (!isSilent) showTitle()
+            if (!isSilent) showTitle(playerName)
         }
-        val msg = if (!run) "@${playerName} ,${name()} command is in cooldown" else successMessage()
-        return CommandResultWrapper(name(), run, msg)
+        val msg = if (!run) "@${playerName} ,${commandName()} command is in cooldown" else successMessage()
+        return CommandResultWrapper(commandName(), run, msg)
     }
 
 }

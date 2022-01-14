@@ -5,13 +5,13 @@ import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-class Armored(main: Main, playerName: String) : Command(main, playerName) {
+class Armored(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "armored"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             it.inventory.helmet = ItemStack(Material.NETHERITE_HELMET)
             it.inventory.chestplate = ItemStack(Material.NETHERITE_CHESTPLATE)

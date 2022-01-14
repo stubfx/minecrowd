@@ -5,13 +5,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.Material
 
-class CraftingTable(main: Main, playerName: String) : Command(main, playerName) {
+class CraftingTable(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "craftingtable"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             val loc1 = it.location.subtract(20.0, 20.0, 20.0)
             val loc2 = it.location.add(20.0, 20.0, 20.0)

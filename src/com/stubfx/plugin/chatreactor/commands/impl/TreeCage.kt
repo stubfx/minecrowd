@@ -4,13 +4,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.TreeType
 
-class TreeCage(main: Main, playerName: String) : Command(main, playerName) {
+class TreeCage(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "treecage"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             it.world.generateTree(it.location.add(1.toDouble(), 0.toDouble(), 0.toDouble()), TreeType.BIG_TREE)
             it.world.generateTree(it.location.add((-1).toDouble(), 0.toDouble(), 0.toDouble()), TreeType.BIG_TREE)

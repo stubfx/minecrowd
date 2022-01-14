@@ -4,13 +4,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.entity.EntityType
 
-class Chickens(main: Main, playerName: String) : Command(main, playerName) {
+class Chickens(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "chickens"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             for (i in 0..20) {
                 it.world.spawnEntity(it.location, EntityType.CHICKEN)

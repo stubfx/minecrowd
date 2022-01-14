@@ -55,8 +55,8 @@ object ConfigManager {
         config.set("commands.$command.cooldown", seconds)
     }
 
-    fun getTitle(command: String) : String? {
-        return config.getString("commands.$command.title")
+    fun getTitle(command: String) : String {
+        return config.getString("commands.$command.title") ?: command
     }
 
     fun setTitle(command: String, title: String) {

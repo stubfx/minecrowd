@@ -6,13 +6,13 @@ import org.bukkit.Material
 import org.bukkit.entity.Item
 import org.bukkit.inventory.ItemStack
 
-class Diamonds(main: Main, playerName: String) : Command(main, playerName) {
+class Diamonds(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "Diamonds"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             val itemDropped: Item = it.world.dropItemNaturally(it.location, ItemStack(Material.DIAMOND, 2))
             itemDropped.pickupDelay = 40

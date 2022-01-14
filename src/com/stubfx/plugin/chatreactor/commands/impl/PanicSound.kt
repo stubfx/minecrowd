@@ -6,13 +6,13 @@ import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import org.bukkit.Particle
 import org.bukkit.Sound
 
-class PanicSound(main: Main, playerName: String) : Command(main, playerName) {
+class PanicSound(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "Panic"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         val sounds: List<Sound> = listOf(
             Sound.ENTITY_CREEPER_PRIMED,
             Sound.ENTITY_ENDERMAN_SCREAM,
@@ -27,7 +27,7 @@ class PanicSound(main: Main, playerName: String) : Command(main, playerName) {
         }
     }
 
-    override fun run(): CommandResultWrapper {
+    override fun run(playerName: String): CommandResultWrapper {
         return super.run(true)
     }
 

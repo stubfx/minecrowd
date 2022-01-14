@@ -5,13 +5,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.Material
 
-class Woollify(main: Main, playerName: String) : Command(main, playerName) {
+class Woollify(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "woollify"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         val wool: List<Material> = listOf(
             Material.WHITE_WOOL,
             Material.BLUE_WOOL,

@@ -5,13 +5,13 @@ import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.inventory.ItemStack
 
-class IHaveIt(main: Main, playerName: String) : Command(main, playerName) {
+class IHaveIt(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "ihaveit"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {
             forEachPlayer {
                 val type = it.getTargetBlockExact(100)?.type ?: return@forEachPlayer

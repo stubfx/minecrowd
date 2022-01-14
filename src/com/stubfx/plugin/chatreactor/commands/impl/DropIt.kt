@@ -4,13 +4,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.entity.Item
 
-class DropIt(main: Main, playerName: String) : Command(main, playerName) {
+class DropIt(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "DropIt"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             val item = it.inventory.itemInMainHand
             if (!item.type.isAir) {

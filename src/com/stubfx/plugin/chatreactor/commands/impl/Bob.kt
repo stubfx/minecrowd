@@ -8,13 +8,13 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.Zombie
 import org.bukkit.inventory.ItemStack
 
-class Bob(main: Main, playerName: String) : Command(main, playerName) {
+class Bob(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "bob"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             val zombie = it.world.spawnEntity(it.location, EntityType.ZOMBIE) as Zombie
             val chicken = it.world.spawnEntity(it.location, EntityType.CHICKEN) as Chicken

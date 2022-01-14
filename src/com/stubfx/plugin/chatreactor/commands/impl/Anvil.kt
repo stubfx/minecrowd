@@ -4,13 +4,13 @@ import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import org.bukkit.Material
 
-class Anvil(main: Main, playerName: String) : Command(main, playerName) {
+class Anvil(main: Main) : Command(main) {
 
-    override fun name(): String {
+    override fun commandName(): String {
         return "Knock"
     }
 
-    override fun behavior() {
+    override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             it.location.add(0.0, 5.0, 0.0).block.type = Material.ANVIL
         }
