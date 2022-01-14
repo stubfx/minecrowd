@@ -49,6 +49,7 @@ object ConfigManager {
 
     init {
         load()
+        generate()
     }
 
     fun load() {
