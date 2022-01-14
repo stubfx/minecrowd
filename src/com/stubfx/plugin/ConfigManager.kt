@@ -71,19 +71,22 @@ object ConfigManager {
 
         commands.forEach {
             val commandName = it.commandType().toString().lowercase().replaceFirstChar { c -> c.uppercase() }
-            if (!config.contains("commands.$commandName")) {
-                val commandConfig = CommandConfig(
-                    name = it.commandType(),
-                    title = commandName,
-                    coolDownMillis = it.defaultCoolDown(),
-                    silent = false,
-                    enable = true,
-                    showSuccessMessage = false,
-                    successMessage = "You run the command $commandName"
-                )
+            val command = it.commandType().toString().lowercase()
 
-                setCommand(it.commandType(), commandConfig)
-            }
+            var cooldown = it.defaultCoolDown()
+            if (config.get("commands.$command.cooldown") != null) cooldown = config.getInt("commands.$command.cooldown")*1000L
+
+            val commandConfig = CommandConfig(
+                name = it.commandType(),
+                title = (config.get("commands.$command.title") ?: commandName) as String,
+                coolDownMillis = cooldown,
+                silent = (config.get("commands.$command.silent") ?: false) as Boolean,
+                enable = (config.get("commands.$command.silent") ?: true) as Boolean,
+                showSuccessMessage = (config.get("commands.$command.silent") ?: false) as Boolean,
+                successMessage = (config.get("commands.$command.title") ?: "You run the command $commandName") as String
+            )
+
+            setCommand(it.commandType(), commandConfig)
         }
 
         PluginUtils.log("Plugin config generated","silent")
