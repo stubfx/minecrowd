@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack
 
 object IHaveIt : Command() {
 
-    override fun commandName(): CommandType = CommandType.IHAVEIT
+    override fun commandType(): CommandType = CommandType.IHAVEIT
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {

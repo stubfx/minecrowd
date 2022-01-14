@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType
 
 object Speedy : Command() {
 
-    override fun commandName(): CommandType = CommandType.SPEEDY
+    override fun commandType(): CommandType = CommandType.SPEEDY
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

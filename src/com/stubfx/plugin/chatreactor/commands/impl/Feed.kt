@@ -6,7 +6,7 @@ import com.stubfx.plugin.chatreactor.commands.CommandType
 
 object Feed : Command() {
 
-    override fun commandName(): CommandType = CommandType.FEED
+    override fun commandType(): CommandType = CommandType.FEED
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

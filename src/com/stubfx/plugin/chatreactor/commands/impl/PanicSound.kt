@@ -9,7 +9,7 @@ import org.bukkit.Sound
 
 object PanicSound : Command() {
 
-    override fun commandName(): CommandType = CommandType.PANIC
+    override fun commandType(): CommandType = CommandType.PANIC
 
     override fun behavior(playerName: String, options: String?) {
         val sounds: List<Sound> = listOf(

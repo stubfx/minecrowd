@@ -8,7 +8,7 @@ import org.bukkit.potion.PotionEffectType
 
 object WallHack : Command() {
 
-    override fun commandName(): CommandType = CommandType.WALLHACK
+    override fun commandType(): CommandType = CommandType.WALLHACK
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer { player ->

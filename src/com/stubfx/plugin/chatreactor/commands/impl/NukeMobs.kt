@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity
 
 object NukeMobs : Command() {
 
-    override fun commandName(): CommandType = CommandType.NUKEMOBS
+    override fun commandType(): CommandType = CommandType.NUKEMOBS
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer { player ->

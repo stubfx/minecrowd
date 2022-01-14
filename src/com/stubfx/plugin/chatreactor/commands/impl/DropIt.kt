@@ -7,7 +7,7 @@ import org.bukkit.entity.Item
 
 object DropIt : Command() {
 
-    override fun commandName(): CommandType = CommandType.DROPIT
+    override fun commandType(): CommandType = CommandType.DROPIT
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

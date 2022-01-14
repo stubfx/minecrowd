@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 object Paint : Command() {
 
-    override fun commandName(): CommandType = CommandType.PAINT
+    override fun commandType(): CommandType = CommandType.PAINT
 
     override fun behavior(playerName: String, options: String?) {
         val wool: Material = listOf(

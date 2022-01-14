@@ -1,6 +1,7 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.ChatReactor
+import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender

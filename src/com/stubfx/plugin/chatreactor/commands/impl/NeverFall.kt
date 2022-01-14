@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 object NeverFall : Command() {
 
-    override fun commandName(): CommandType = CommandType.NEVERFALL
+    override fun commandType(): CommandType = CommandType.NEVERFALL
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {

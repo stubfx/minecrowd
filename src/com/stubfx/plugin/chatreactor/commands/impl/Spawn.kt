@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType
 
 object Spawn : Command() {
 
-    override fun commandName(): CommandType = CommandType.SPAWN
+    override fun commandType(): CommandType = CommandType.SPAWN
 
     override fun behavior(playerName: String, options: String?) {
         // this is what the function is supposed to do.

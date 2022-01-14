@@ -8,7 +8,7 @@ import org.bukkit.Material
 
 object ClearChunk : Command() {
 
-    override fun commandName(): CommandType = CommandType.NOCHUNKNOPARTY
+    override fun commandType(): CommandType = CommandType.NOCHUNKNOPARTY
 
     override fun defaultCoolDown(): Long {
         return 600 * 1000 // 10 secs coolDown

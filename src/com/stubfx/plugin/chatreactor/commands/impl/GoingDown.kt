@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 object GoingDown : Command() {
 
-    override fun commandName(): CommandType = CommandType.GOINGDOWN
+    override fun commandType(): CommandType = CommandType.GOINGDOWN
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startShortRecurrentTask {

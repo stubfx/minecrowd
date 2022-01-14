@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 object Anvil : Command() {
 
-    override fun commandName(): CommandType = CommandType.ANVIL
+    override fun commandType(): CommandType = CommandType.ANVIL
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

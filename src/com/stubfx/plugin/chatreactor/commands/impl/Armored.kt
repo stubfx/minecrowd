@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 
 object Armored : Command() {
 
-    override fun commandName(): CommandType = CommandType.ARMORED
+    override fun commandType(): CommandType = CommandType.ARMORED
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

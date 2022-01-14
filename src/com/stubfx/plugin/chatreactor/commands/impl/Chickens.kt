@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType
 
 object Chickens : Command() {
 
-    override fun commandName(): CommandType = CommandType.CHICKENS
+    override fun commandType(): CommandType = CommandType.CHICKENS
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

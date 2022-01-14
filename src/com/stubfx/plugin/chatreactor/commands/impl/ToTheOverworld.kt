@@ -7,7 +7,7 @@ import com.stubfx.plugin.chatreactor.commands.CommandType
 
 object ToTheOverworld : Command() {
 
-    override fun commandName(): CommandType = CommandType.TOTHEOVERWORLD
+    override fun commandType(): CommandType = CommandType.TOTHEOVERWORLD
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

@@ -6,25 +6,22 @@ import com.stubfx.plugin.chatreactor.commands.impl.*
 class CommandFactory(val main: Main) {
 
     companion object {
-        fun getAvailableCommands() : List<CommandType> {
-            val list = CommandType.values().toMutableList()
-            list.remove(CommandType.STUB)
-            return list
+        private val availableCommands = listOf(
+            Spawn, DropIt, Levitate, Anvil,
+            Fire, Diamonds, Chickens, Knock,
+            PanicSound, TreeCage, Speedy, Heal,
+            Hungry, Feed, WallHack, Superman,
+            Normalman, Water, Woollify, RandomBlock,
+            NeverFall, Armored, ToTheNether, ToTheOverworld,
+            Bob, NukeMobs, Dinnerbone, CraftingTable,
+            IHaveIt, Paint, GoingDown, ClearChunk
+        )
+        fun getAvailableCommands() : List<Command> {
+            return availableCommands
         }
     }
 
-    private val availableCommands = listOf(
-        Spawn, DropIt, Levitate, Anvil,
-        Fire, Diamonds, Chickens, Knock,
-        PanicSound, TreeCage, Speedy, Heal,
-        Hungry, Feed, WallHack, Superman,
-        Normalman, Water, Woollify, RandomBlock,
-        NeverFall, Armored, ToTheNether, ToTheOverworld,
-        Bob, NukeMobs, Dinnerbone, CraftingTable,
-        IHaveIt, Paint, GoingDown, ClearChunk
-    )
-
-    private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
+    private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandType() }
 
     fun run(commandName: String, playerName: String, options: String?): CommandResultWrapper {
         val command = try {

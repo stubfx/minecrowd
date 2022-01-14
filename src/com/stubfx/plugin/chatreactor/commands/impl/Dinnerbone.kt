@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity
 
 object Dinnerbone : Command() {
 
-    override fun commandName(): CommandType = CommandType.DINNERBONE
+    override fun commandType(): CommandType = CommandType.DINNERBONE
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer { player ->

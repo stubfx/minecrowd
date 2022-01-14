@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 
 object Bob : Command() {
 
-    override fun commandName(): CommandType = CommandType.BOB
+    override fun commandType(): CommandType = CommandType.BOB
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

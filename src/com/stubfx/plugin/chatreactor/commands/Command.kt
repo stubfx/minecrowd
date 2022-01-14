@@ -22,7 +22,7 @@ data class CommandResultWrapper(val name: CommandType, val result: Boolean, val 
 abstract class Command {
 
     var ticks = 20 // this is supposed to be a minecraft constant.
-    var commandConfig: CommandConfig = ConfigManager.getCommand(this.commandName())
+    private lateinit var commandConfig: CommandConfig
     var coolDown : Long = 0 // will be overridden by defaultCoolDown function
     var lastRunEpoch: Long = 0
 
@@ -41,7 +41,7 @@ abstract class Command {
         return location.add(x, y, z)
     }
 
-    abstract fun commandName(): CommandType
+    abstract fun commandType(): CommandType
 
     abstract fun behavior(playerName: String, options: String?)
 
@@ -59,19 +59,20 @@ abstract class Command {
     }
 
     open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean = commandConfig.silent) : CommandResultWrapper {
+        commandConfig = ConfigManager.getCommand(this.commandType())
         coolDown = commandConfig.coolDownMillis
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {
             lastRunEpoch = time
-            println("[ChatReactor] : Running command ${commandName()} - silent: $isSilent")
+            println("[ChatReactor] : Running command ${commandType()} - silent: $isSilent")
             run = true
             CommandRunner.runOnBukkit {
                 behavior(playerName, options)
             }
             if (!isSilent) showTitle(playerName)
         }
-        val msg = if (!run) "@${playerName} ,${commandName()} command is in cooldown" else successMessage() ?: ""
+        val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
         return CommandResultWrapper(commandConfig.name, run, msg)
     }
 

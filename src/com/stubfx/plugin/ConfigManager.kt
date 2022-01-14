@@ -70,19 +70,19 @@ object ConfigManager {
         val commands = CommandFactory.getAvailableCommands()
 
         commands.forEach {
-            val commandName = it.toString().lowercase()
+            val commandName = it.commandType().toString().lowercase().replaceFirstChar { c -> c.uppercase() }
             if (!config.contains("commands.$commandName")) {
                 val commandConfig = CommandConfig(
-                    name = it,
+                    name = it.commandType(),
                     title = commandName,
-                    coolDownMillis = 10_000,
+                    coolDownMillis = it.defaultCoolDown(),
                     silent = false,
                     enable = true,
                     showSuccessMessage = false,
                     successMessage = "You run the command $commandName"
                 )
 
-                setCommand(it, commandConfig)
+                setCommand(it.commandType(), commandConfig)
             }
         }
 

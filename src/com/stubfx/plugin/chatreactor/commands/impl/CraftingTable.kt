@@ -8,7 +8,7 @@ import org.bukkit.Material
 
 object CraftingTable : Command() {
 
-    override fun commandName(): CommandType = CommandType.CRAFTINGTABLE
+    override fun commandType(): CommandType = CommandType.CRAFTINGTABLE
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

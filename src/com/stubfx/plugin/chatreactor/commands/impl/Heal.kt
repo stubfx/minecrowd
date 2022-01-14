@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType
 
 object Heal : Command() {
 
-    override fun commandName(): CommandType = CommandType.HEAL
+    override fun commandType(): CommandType = CommandType.HEAL
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

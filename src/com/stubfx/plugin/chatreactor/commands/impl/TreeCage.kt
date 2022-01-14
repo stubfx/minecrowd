@@ -7,7 +7,7 @@ import org.bukkit.TreeType
 
 object TreeCage : Command() {
 
-    override fun commandName(): CommandType = CommandType.TREE
+    override fun commandType(): CommandType = CommandType.TREE
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

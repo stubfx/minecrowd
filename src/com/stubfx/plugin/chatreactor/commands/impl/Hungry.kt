@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType
 
 object Hungry : Command() {
 
-    override fun commandName(): CommandType = CommandType.HUNGRY
+    override fun commandType(): CommandType = CommandType.HUNGRY
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

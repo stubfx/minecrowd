@@ -7,7 +7,7 @@ import org.bukkit.Material
 
 object Water : Command() {
 
-    override fun commandName(): CommandType = CommandType.WATER
+    override fun commandType(): CommandType = CommandType.WATER
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

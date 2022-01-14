@@ -8,7 +8,7 @@ import org.bukkit.Material
 
 object Woollify : Command() {
 
-    override fun commandName(): CommandType = CommandType.WOOLLIFY
+    override fun commandType(): CommandType = CommandType.WOOLLIFY
 
     override fun behavior(playerName: String, options: String?) {
         val wool: List<Material> = listOf(

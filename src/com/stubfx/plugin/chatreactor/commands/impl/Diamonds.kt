@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 
 object Diamonds : Command() {
 
-    override fun commandName(): CommandType = CommandType.DIAMONDS
+    override fun commandType(): CommandType = CommandType.DIAMONDS
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

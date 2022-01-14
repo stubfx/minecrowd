@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType
 
 object Levitate : Command() {
 
-    override fun commandName(): CommandType = CommandType.LEVITATE
+    override fun commandType(): CommandType = CommandType.LEVITATE
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

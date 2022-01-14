@@ -7,7 +7,7 @@ import org.bukkit.attribute.Attribute
 
 object Normalman : Command() {
 
-    override fun commandName(): CommandType = CommandType.NORMALMAN
+    override fun commandType(): CommandType = CommandType.NORMALMAN
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

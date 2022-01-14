@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 
 object RandomBlock : Command() {
 
-    override fun commandName(): CommandType = CommandType.RANDOMBLOCK
+    override fun commandType(): CommandType = CommandType.RANDOMBLOCK
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
