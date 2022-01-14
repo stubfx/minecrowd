@@ -49,6 +49,7 @@ object ConfigManager {
 
     init {
         load()
+        generate()
     }
 
     fun load() {
@@ -57,7 +58,6 @@ object ConfigManager {
         if (!file.exists()) {
             config = YamlConfiguration()
             Utils.log("No config file", "warning")
-            generate()
             return
         }
 
