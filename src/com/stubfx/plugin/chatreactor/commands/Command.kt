@@ -58,19 +58,20 @@ abstract class Command {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
-    open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean = commandConfig.silent) : CommandResultWrapper {
+    open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean? = null) : CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
+        val isCommandSilent : Boolean = isSilent ?: commandConfig.silent
         coolDown = commandConfig.coolDownMillis
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {
             lastRunEpoch = time
-            println("[ChatReactor] : Running command ${commandType()} - silent: $isSilent")
+            println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
             run = true
             CommandRunner.runOnBukkit {
                 behavior(playerName, options)
             }
-            if (!isSilent) showTitle(playerName)
+            if (!isCommandSilent) showTitle(playerName)
         }
         val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
         return CommandResultWrapper(commandConfig.name, run, msg)

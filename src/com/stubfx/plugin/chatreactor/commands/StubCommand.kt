@@ -7,7 +7,7 @@ object StubCommand : Command() {
         // congrats, do nothing.
     }
 
-    override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
+    override fun run(playerName: String, options: String?, isSilent: Boolean?): CommandResultWrapper {
         return CommandResultWrapper(commandType(), true, "")
     }
 

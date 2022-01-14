@@ -26,7 +26,7 @@ object PanicSound : Command() {
         }
     }
 
-    override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
+    override fun run(playerName: String, options: String?, isSilent: Boolean?): CommandResultWrapper {
         return super.run(playerName, options, isSilent = true)
     }
 
