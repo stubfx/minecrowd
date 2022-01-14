@@ -8,6 +8,17 @@ import org.bukkit.entity.Player
 import java.util.*
 import kotlin.random.Random
 
+enum class CommandType {
+    SPAWN, DROPIT, LEVITATE, FIRE,
+    DIAMONDS, CHICKENS, KNOCK, PANIC,
+    TREE, SPEEDY, HEAL, HUNGRY,
+    FEED, WALLHACK, SUPERMAN, NORMALMAN,
+    WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
+    TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
+    DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
+}
+
 data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String)
 
 abstract class Command(val main: Main) {

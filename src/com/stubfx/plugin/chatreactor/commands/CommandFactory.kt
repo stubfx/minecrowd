@@ -3,53 +3,24 @@ package com.stubfx.plugin.chatreactor.commands
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.impl.*
 
-enum class CommandType {
-    SPAWN, DROPIT, LEVITATE, FIRE,
-    DIAMONDS, CHICKENS, KNOCK, PANIC,
-    TREE, SPEEDY, HEAL, HUNGRY,
-    FEED, WALLHACK, SUPERMAN, NORMALMAN,
-    WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
-    TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
-    DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
-}
-
 class CommandFactory(val main: Main) {
 
-    private val commandMap: Map<CommandType, Command> = mapOf(
-        Pair(CommandType.SPAWN, Spawn(main)),
-        Pair(CommandType.DROPIT, DropIt(main)),
-        Pair(CommandType.LEVITATE, Levitate(main)),
-        Pair(CommandType.FIRE, Fire(main)),
-        Pair(CommandType.DIAMONDS, Diamonds(main)),
-        Pair(CommandType.CHICKENS, Chickens(main)),
-        Pair(CommandType.KNOCK, Knock(main)),
-        Pair(CommandType.PANIC, PanicSound(main)),
-        Pair(CommandType.TREE, TreeCage(main)),
-        Pair(CommandType.SPEEDY, Speedy(main)),
-        Pair(CommandType.HEAL, Heal(main)),
-        Pair(CommandType.HUNGRY, Hungry(main)),
-        Pair(CommandType.FEED, Feed(main)),
-        Pair(CommandType.WALLHACK, WallHack(main)),
-        Pair(CommandType.SUPERMAN, Superman(main)),
-        Pair(CommandType.NORMALMAN, Normalman(main)),
-        Pair(CommandType.WATER, Water(main)),
-        Pair(CommandType.WOOLLIFY, Woollify(main)),
-        Pair(CommandType.RANDOMBLOCK, RandomBlock(main)),
-        Pair(CommandType.NEVERFALL, NeverFall(main)),
-        Pair(CommandType.ARMORED, Armored(main)),
-        Pair(CommandType.TOTHENETHER, ToTheNether(main)),
-        Pair(CommandType.TOTHEOVERWORLD, ToTheOverworld(main)),
-        Pair(CommandType.BOB, Bob(main)),
-        Pair(CommandType.NUKEMOBS, NukeMobs(main)),
-        Pair(CommandType.DINNERBONE, Dinnerbone(main)),
-        Pair(CommandType.CRAFTINGTABLE, CraftingTable(main)),
-        Pair(CommandType.ANVIL, Anvil(main)),
-        Pair(CommandType.IHAVEIT, IHaveIt(main)),
-        Pair(CommandType.PAINT, Paint(main)),
-        Pair(CommandType.GOINGDOWN, GoingDown(main)),
-        Pair(CommandType.NOCHUNKNOPARTY, ClearChunk(main))
+    private val availableCommands = listOf(
+        Spawn(main), DropIt(main), Levitate(main), Anvil(main),
+        Fire(main), Diamonds(main), Chickens(main), Knock(main),
+        PanicSound(main), TreeCage(main), Speedy(main), Heal(main),
+        Hungry(main), Feed(main), WallHack(main), Superman(main),
+        Normalman(main), Water(main), Woollify(main), RandomBlock(main),
+        NeverFall(main), Armored(main), ToTheNether(main), ToTheOverworld(main),
+        Bob(main), NukeMobs(main), Dinnerbone(main), CraftingTable(main),
+        IHaveIt(main), Paint(main), GoingDown(main), ClearChunk(main),
     )
+
+    private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
+
+    fun getAvailableCommands() : Set<CommandType> {
+        return commandMap.keys
+    }
 
     fun run(commandName: String, playerName: String, options: String?): CommandResultWrapper {
         val command = try {
