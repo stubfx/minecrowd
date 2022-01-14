@@ -16,11 +16,13 @@ class CommandFactory(val main: Main) {
         IHaveIt(main), Paint(main), GoingDown(main), ClearChunk(main),
     )
 
-    private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
-
-    fun getAvailableCommands() : Set<CommandType> {
-        return commandMap.keys
+    fun getAvailableCommands() : List<CommandType> {
+        val list = CommandType.values().toMutableList()
+        list.remove(CommandType.STUB)
+        return list
     }
+
+    private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
 
     fun run(commandName: String, playerName: String, options: String?): CommandResultWrapper {
         val command = try {

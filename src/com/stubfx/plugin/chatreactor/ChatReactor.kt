@@ -53,7 +53,7 @@ class ChatReactor(private val main: Main) {
             if (ref.checkApiKey(params["apiKey"])) {
                 val chatCommandResolve =
                     ref.chatCommandResolve(params["command"]!!, params["name"]!!, params["options"])
-                if (chatCommandResolve.result) {
+                if (chatCommandResolve.name == null || chatCommandResolve.result) {
                     // the command has run.
                     t.sendResponseHeaders(204, -1)
                     t.responseBody.close()

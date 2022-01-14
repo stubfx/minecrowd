@@ -19,7 +19,7 @@ enum class CommandType {
     PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
 }
 
-data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String)
+data class CommandResultWrapper(val name: CommandType?, val result: Boolean, val message: String)
 
 abstract class Command(val main: Main) {
 
