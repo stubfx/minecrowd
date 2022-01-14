@@ -5,6 +5,14 @@ import com.stubfx.plugin.chatreactor.commands.impl.*
 
 class CommandFactory(val main: Main) {
 
+    companion object {
+        fun getAvailableCommands() : List<CommandType> {
+            val list = CommandType.values().toMutableList()
+            list.remove(CommandType.STUB)
+            return list
+        }
+    }
+
     private val availableCommands = listOf(
         Spawn(main), DropIt(main), Levitate(main), Anvil(main),
         Fire(main), Diamonds(main), Chickens(main), Knock(main),
@@ -15,12 +23,6 @@ class CommandFactory(val main: Main) {
         Bob(main), NukeMobs(main), Dinnerbone(main), CraftingTable(main),
         IHaveIt(main), Paint(main), GoingDown(main), ClearChunk(main),
     )
-
-    fun getAvailableCommands() : List<CommandType> {
-        val list = CommandType.values().toMutableList()
-        list.remove(CommandType.STUB)
-        return list
-    }
 
     private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
 
