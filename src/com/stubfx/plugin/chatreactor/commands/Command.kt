@@ -68,11 +68,11 @@ abstract class Command(val main: Main) {
     }
 
     open fun run(playerName: String) : CommandResultWrapper {
-        return run(playerName, "", commandConfig.isSilent)
+        return run(playerName, "", commandConfig.silent)
     }
 
     open fun run(isSilent: Boolean) : CommandResultWrapper {
-        return run("", "", commandConfig.isSilent)
+        return run("", "", commandConfig.silent)
     }
 
     fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean) : CommandResultWrapper {
