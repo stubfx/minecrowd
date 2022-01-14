@@ -1,7 +1,5 @@
 package com.stubfx.plugin.chatreactor.commands
 
-import com.stubfx.plugin.Main
-
 object StubCommand : Command() {
     override fun commandName(): CommandType = CommandType.STUB
 

@@ -1,6 +1,5 @@
 package com.stubfx.plugin.chatreactor.commands.impl
 
-import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import com.stubfx.plugin.chatreactor.commands.CommandRunner

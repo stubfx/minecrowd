@@ -5,8 +5,6 @@ import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitRunnable
-import org.bukkit.scheduler.BukkitTask
 
 
 class Main : JavaPlugin() {

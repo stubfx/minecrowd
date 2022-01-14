@@ -3,17 +3,14 @@ package com.stubfx.plugin.chatreactor
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
-import com.stubfx.plugin.chatreactor.commands.StubCommand
-import com.stubfx.plugin.chatreactor.commands.impl.*
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import java.io.IOException
-import java.lang.Exception
 import java.net.InetSocketAddress
 
 
-class ChatReactor(private val main: Main) {
+class ChatReactor(main: Main) {
 
     private var apiKey = ""
     private var httpserver: HttpServer? = null
