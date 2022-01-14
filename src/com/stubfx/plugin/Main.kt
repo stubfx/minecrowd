@@ -29,7 +29,7 @@ class Main : JavaPlugin() {
 
     override fun onDisable() {
         chatReactor.onDisable()
-        ConfigManager.save()
+        ConfigManager.onDisable()
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {

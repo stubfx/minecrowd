@@ -11,6 +11,10 @@ class ClearChunk(main: Main) : Command(main) {
         return "clearchunk"
     }
 
+    override fun defaultCoolDown(): Long {
+        return 600 * 1000 // 10 secs coolDown
+    }
+
     override fun behavior(playerName: String, options: String?) {
         forEachPlayer {
             val chunk = it.getTargetBlockExact(100)?.chunk ?: return@forEachPlayer

@@ -1,5 +1,6 @@
 package com.stubfx.plugin.chatreactor.commands
 
+import com.stubfx.plugin.CommandConfig
 import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
 import org.bukkit.Location
@@ -23,10 +24,19 @@ data class CommandResultWrapper(val name: String, val result: Boolean, val messa
 abstract class Command(val main: Main) {
 
     var ticks = main.getTicks()
+    var commandConfig: CommandConfig = ConfigManager.getCommand(this.commandName())
 
     companion object {
-        var coolDown : Long = 10 * 1000 // standard cooldown in seconds
+        var coolDown : Long = 0 // will be overridden by defaultCoolDown function
         var lastRunEpoch: Long = 0
+    }
+
+    init {
+        coolDown = this.defaultCoolDown()
+    }
+
+    open fun defaultCoolDown() : Long {
+        return 10 * 1000 // standard coolDown in seconds
     }
 
     fun forEachPlayer(func: (player: Player) -> Unit) {
@@ -50,8 +60,8 @@ abstract class Command(val main: Main) {
         }
     }
 
-    open fun title() : String = ConfigManager.getTitle(commandName())
-    open fun successMessage() : String = ""
+    open fun title() : String = commandConfig.title
+    open fun successMessage() : String = commandConfig.successMessage
 
     fun isInCoolDown() : Boolean {
         return Date().time <= (lastRunEpoch + coolDown)

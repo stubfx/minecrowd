@@ -1,14 +1,33 @@
 package com.stubfx.plugin
 
 import org.bukkit.configuration.MemorySection
-import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
-import kotlin.math.round
+
+data class CommandConfig(var title: String,
+                         var coolDownMillis: Long,
+                         var isSilent: Boolean,
+                         val successMessage: String)
 
 object ConfigManager {
-    private const val config_path = "plugins/stubfx_plugin_config.yml"
+    private const val config_path = "plugins/stubfx_plugin/stubfx_plugin_config.yml"
     private lateinit var config: YamlConfiguration
+
+    fun getCommand(commandName: String) : CommandConfig {
+        val command = "commands.$commandName"
+        return CommandConfig(
+            config.getString("$command.commanditle") ?: commandName,
+            config.getInt("$command.commandooldown") * 1000L,
+            config.get("$command.silent") as Boolean,
+            ""
+        )
+    }
+
+    fun setCommand(commandName: String, commandConfig: CommandConfig) {
+        setTitle(commandName, commandConfig.title)
+        setCooldown(commandName, commandConfig.coolDownMillis)
+        setSilent(commandName, commandConfig.isSilent)
+    }
 
     init {
         load()
@@ -82,5 +101,9 @@ object ConfigManager {
         }
 
         Utils.log("Plugin config saved")
+    }
+
+    fun onDisable() {
+//        save()
     }
 }
