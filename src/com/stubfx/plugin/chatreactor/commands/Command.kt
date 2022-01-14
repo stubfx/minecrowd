@@ -8,18 +8,7 @@ import org.bukkit.entity.Player
 import java.util.*
 import kotlin.random.Random
 
-enum class CommandType {
-    SPAWN, DROPIT, LEVITATE, FIRE,
-    DIAMONDS, CHICKENS, KNOCK, PANIC,
-    TREE, SPEEDY, HEAL, HUNGRY,
-    FEED, WALLHACK, SUPERMAN, NORMALMAN,
-    WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
-    TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
-    DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY
-}
-
-data class CommandResultWrapper(val name: String, val result: Boolean, val message: String)
+data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String)
 
 abstract class Command(val main: Main) {
 
@@ -50,7 +39,7 @@ abstract class Command(val main: Main) {
         return location.add(x, y, z)
     }
 
-    abstract fun commandName(): String
+    abstract fun commandName(): CommandType
 
     abstract fun behavior(playerName: String, options: String?)
 
@@ -61,22 +50,22 @@ abstract class Command(val main: Main) {
     }
 
     open fun title() : String = commandConfig.title
-    open fun successMessage() : String = commandConfig.successMessage
+    open fun successMessage() : String? = commandConfig.successMessage
 
     fun isInCoolDown() : Boolean {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
     open fun run(playerName: String) : CommandResultWrapper {
-        return run(playerName, "", ConfigManager.isSilent(commandName()))
+        return run(playerName, "", commandConfig.isSilent)
     }
 
     open fun run(isSilent: Boolean) : CommandResultWrapper {
-        return run("", "", ConfigManager.isSilent(commandName()))
+        return run("", "", commandConfig.isSilent)
     }
 
     fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean) : CommandResultWrapper {
-        coolDown = ConfigManager.getCooldown(commandName())
+        coolDown = commandConfig.coolDownMillis
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {
@@ -88,8 +77,8 @@ abstract class Command(val main: Main) {
             }
             if (!isSilent) showTitle(playerName)
         }
-        val msg = if (!run) "@${playerName} ,${commandName()} command is in cooldown" else successMessage()
-        return CommandResultWrapper(commandName(), run, msg)
+        val msg = if (!run) "@${playerName} ,${commandName()} command is in cooldown" else successMessage() ?: ""
+        return CommandResultWrapper(commandConfig.name, run, msg)
     }
 
 }

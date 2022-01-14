@@ -3,13 +3,12 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.BlockReplacer
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.Material
 
 class Woollify(main: Main) : Command(main) {
 
-    override fun commandName(): String {
-        return "woollify"
-    }
+    override fun commandName(): CommandType = CommandType.WOOLLIFY
 
     override fun behavior(playerName: String, options: String?) {
         val wool: List<Material> = listOf(

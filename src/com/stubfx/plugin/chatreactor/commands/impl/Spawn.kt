@@ -2,13 +2,12 @@ package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.entity.EntityType
 
 class Spawn(main: Main) : Command(main) {
 
-    override fun commandName(): String {
-        return "Spawn"
-    }
+    override fun commandName(): CommandType = CommandType.SPAWN
 
     override fun behavior(playerName: String, options: String?) {
         // this is what the function is supposed to do.

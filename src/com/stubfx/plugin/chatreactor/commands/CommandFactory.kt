@@ -3,6 +3,17 @@ package com.stubfx.plugin.chatreactor.commands
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.impl.*
 
+enum class CommandType {
+    SPAWN, DROPIT, LEVITATE, FIRE,
+    DIAMONDS, CHICKENS, KNOCK, PANIC,
+    TREE, SPEEDY, HEAL, HUNGRY,
+    FEED, WALLHACK, SUPERMAN, NORMALMAN,
+    WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
+    TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
+    DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
+}
+
 class CommandFactory(val main: Main) {
 
     private val commandMap: Map<CommandType, Command> = mapOf(
@@ -50,7 +61,7 @@ class CommandFactory(val main: Main) {
             (commandMap[command] ?: StubCommand(main, playerName)).run(playerName, options, false)
         } catch (e: Exception) {
             e.printStackTrace()
-            CommandResultWrapper("stub", false, "wrong command.")
+            CommandResultWrapper(CommandType.STUB, false, "wrong command.")
         }
     }
 
