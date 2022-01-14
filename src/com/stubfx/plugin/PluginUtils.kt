@@ -32,10 +32,10 @@ object PluginUtils {
 
     fun log(msg: String, type: String = "") {
         val color: ChatColor = when (type) {
-            "error" -> ChatColor.RED;
-            "warning" -> ChatColor.YELLOW;
-            "silent" -> ChatColor.GRAY;
-            else -> ChatColor.AQUA;
+            "error" -> ChatColor.RED
+            "warning" -> ChatColor.YELLOW
+            "silent" -> ChatColor.GRAY
+            else -> ChatColor.AQUA
         }
 
         Bukkit.getConsoleSender().sendMessage("$color[stubFXplugin] $msg")

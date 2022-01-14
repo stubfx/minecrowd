@@ -2,9 +2,7 @@ package com.stubfx.plugin.chatreactor.commands
 
 import com.stubfx.plugin.CommandConfig
 import com.stubfx.plugin.ConfigManager
-import com.stubfx.plugin.Main
 import org.bukkit.Location
-import org.bukkit.entity.Player
 import java.util.*
 import kotlin.random.Random
 
