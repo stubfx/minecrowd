@@ -14,7 +14,8 @@ class CommandFactory(val main: Main) {
             Normalman, Water, Woollify, RandomBlock,
             NeverFall, Armored, ToTheNether, ToTheOverworld,
             Bob, NukeMobs, Dinnerbone, CraftingTable,
-            IHaveIt, Paint, GoingDown, ClearChunk
+            IHaveIt, Paint, GoingDown, ClearChunk,
+            ThatIsTNT, TunnelTime, OpenSpace, UpsideDown
         )
         fun getAvailableCommands() : List<Command> {
             return availableCommands

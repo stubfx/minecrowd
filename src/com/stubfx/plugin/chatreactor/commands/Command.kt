@@ -2,6 +2,7 @@ package com.stubfx.plugin.chatreactor.commands
 
 import com.stubfx.plugin.CommandConfig
 import com.stubfx.plugin.ConfigManager
+import com.stubfx.plugin.Main
 import org.bukkit.Location
 import java.util.*
 import kotlin.random.Random
@@ -14,7 +15,7 @@ enum class CommandType {
     WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
     TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN
 }
 
 data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String, val successMessage: String? = null)
@@ -25,6 +26,8 @@ abstract class Command {
     private lateinit var commandConfig: CommandConfig
     var coolDown : Long = 0 // will be overridden by defaultCoolDown function
     var lastRunEpoch: Long = 0
+
+    lateinit var main : Main
 
     init {
         coolDown = this.defaultCoolDown()

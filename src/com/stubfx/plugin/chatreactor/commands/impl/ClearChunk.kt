@@ -11,7 +11,7 @@ object ClearChunk : Command() {
     override fun commandType(): CommandType = CommandType.NOCHUNKNOPARTY
 
     override fun defaultCoolDown(): Long {
-        return 600 * 1000 // 10 secs coolDown
+        return 600 * 1000 // 10 min coolDown
     }
 
     override fun behavior(playerName: String, options: String?) {
