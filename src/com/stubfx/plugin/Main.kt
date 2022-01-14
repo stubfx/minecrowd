@@ -20,6 +20,8 @@ class Main : JavaPlugin() {
 //        server.pluginManager.registerEvents(EntityListener(this), this)
 //        server.pluginManager.registerEvents(ProjectileListener(this), this)
         CommandRunner.setMainRef(this)
+        BlockReplacer.setMainRef(this)
+        PluginUtils.setMainRef(this)
         ConfigManager.load()
     }
 

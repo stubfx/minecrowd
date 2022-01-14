@@ -2,15 +2,16 @@ package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.entity.LivingEntity
 
-class Dinnerbone(main: Main) : Command(main) {
+object Dinnerbone : Command() {
 
     override fun commandName(): CommandType = CommandType.DINNERBONE
 
     override fun behavior(playerName: String, options: String?) {
-        forEachPlayer { player ->
+        CommandRunner.forEachPlayer { player ->
             player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
                 if (it is LivingEntity) {
                     it.customName = "Dinnerbone"

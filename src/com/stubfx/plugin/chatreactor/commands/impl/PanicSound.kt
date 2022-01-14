@@ -3,11 +3,12 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.Particle
 import org.bukkit.Sound
 
-class PanicSound(main: Main) : Command(main) {
+object PanicSound : Command() {
 
     override fun commandName(): CommandType = CommandType.PANIC
 
@@ -20,14 +21,14 @@ class PanicSound(main: Main) : Command(main) {
             Sound.ENTITY_WITHER_SHOOT,
             Sound.ENTITY_GHAST_WARN
         )
-        forEachPlayer {
+        CommandRunner.forEachPlayer {
             it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3)
             it.world.playSound(it.location, sounds.random(), 3f, 1f)
         }
     }
 
-    override fun run(playerName: String): CommandResultWrapper {
-        return super.run(true)
+    override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
+        return super.run(playerName, options, isSilent = true)
     }
 
 }

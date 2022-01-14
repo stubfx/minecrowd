@@ -2,6 +2,7 @@ package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.Material
 import org.bukkit.entity.Chicken
@@ -9,12 +10,12 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.Zombie
 import org.bukkit.inventory.ItemStack
 
-class Bob(main: Main) : Command(main) {
+object Bob : Command() {
 
     override fun commandName(): CommandType = CommandType.BOB
 
     override fun behavior(playerName: String, options: String?) {
-        forEachPlayer {
+        CommandRunner.forEachPlayer {
             val zombie = it.world.spawnEntity(it.location, EntityType.ZOMBIE) as Zombie
             val chicken = it.world.spawnEntity(it.location, EntityType.CHICKEN) as Chicken
             zombie.setBaby()

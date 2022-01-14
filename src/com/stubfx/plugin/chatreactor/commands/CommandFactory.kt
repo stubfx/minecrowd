@@ -14,14 +14,14 @@ class CommandFactory(val main: Main) {
     }
 
     private val availableCommands = listOf(
-        Spawn(main), DropIt(main), Levitate(main), Anvil(main),
-        Fire(main), Diamonds(main), Chickens(main), Knock(main),
-        PanicSound(main), TreeCage(main), Speedy(main), Heal(main),
-        Hungry(main), Feed(main), WallHack(main), Superman(main),
-        Normalman(main), Water(main), Woollify(main), RandomBlock(main),
-        NeverFall(main), Armored(main), ToTheNether(main), ToTheOverworld(main),
-        Bob(main), NukeMobs(main), Dinnerbone(main), CraftingTable(main),
-        IHaveIt(main), Paint(main), GoingDown(main), ClearChunk(main),
+        Spawn, DropIt, Levitate, Anvil,
+        Fire, Diamonds, Chickens, Knock,
+        PanicSound, TreeCage, Speedy, Heal,
+        Hungry, Feed, WallHack, Superman,
+        Normalman, Water, Woollify, RandomBlock,
+        NeverFall, Armored, ToTheNether, ToTheOverworld,
+        Bob, NukeMobs, Dinnerbone, CraftingTable,
+        IHaveIt, Paint, GoingDown, ClearChunk
     )
 
     private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandName() }
@@ -33,7 +33,7 @@ class CommandFactory(val main: Main) {
             null
         }
         return try {
-            (commandMap[command] ?: StubCommand(main, playerName)).run(playerName, options, false)
+            commandMap[command]?.run(playerName, options) ?: StubCommand.run()
         } catch (e: Exception) {
             e.printStackTrace()
             CommandResultWrapper(CommandType.STUB, false, "wrong command.")

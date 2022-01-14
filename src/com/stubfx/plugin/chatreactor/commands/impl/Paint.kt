@@ -6,7 +6,7 @@ import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.Material
 
-class Paint(main: Main) : Command(main) {
+object Paint : Command() {
 
     override fun commandName(): CommandType = CommandType.PAINT
 
@@ -19,7 +19,7 @@ class Paint(main: Main) : Command(main) {
             Material.GRAY_WOOL,
         ).random()
         CommandRunner.startRecurrentTask {
-            forEachPlayer {
+            CommandRunner.forEachPlayer {
                 it.getTargetBlockExact(100)?.type = wool
             }
         }

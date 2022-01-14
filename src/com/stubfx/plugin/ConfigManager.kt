@@ -56,13 +56,13 @@ object ConfigManager {
         val file = File(config_path)
         if (!file.exists()) {
             config = YamlConfiguration()
-            Utils.log("No config file", "warning")
+            PluginUtils.log("No config file", "warning")
             generate()
             return
         }
 
         config = YamlConfiguration.loadConfiguration(file)
-        Utils.log("Plugin config loaded","silent")
+        PluginUtils.log("Plugin config loaded","silent")
     }
 
     private fun generate() {
@@ -85,7 +85,7 @@ object ConfigManager {
             }
         }
 
-        Utils.log("Plugin config generated","silent")
+        PluginUtils.log("Plugin config generated","silent")
     }
 
     private fun save() {
@@ -95,10 +95,10 @@ object ConfigManager {
         try {
             config.save(file)
         } catch (e: Exception) {
-            Utils.log("Error while saving", "error")
+            PluginUtils.log("Error while saving", "error")
         }
 
-        Utils.log("Plugin config saved","silent")
+        PluginUtils.log("Plugin config saved","silent")
     }
 
     fun onDisable() {

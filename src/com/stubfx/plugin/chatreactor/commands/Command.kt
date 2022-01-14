@@ -19,11 +19,11 @@ enum class CommandType {
     PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB
 }
 
-data class CommandResultWrapper(val name: CommandType?, val result: Boolean, val message: String)
+data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String, val successMessage: String? = null)
 
-abstract class Command(val main: Main) {
+abstract class Command {
 
-    var ticks = main.getTicks()
+    var ticks = 20 // this is supposed to be a minecraft constant.
     var commandConfig: CommandConfig = ConfigManager.getCommand(this.commandName())
 
     companion object {
@@ -39,10 +39,6 @@ abstract class Command(val main: Main) {
         return 10 * 1000 // standard coolDown in seconds
     }
 
-    fun forEachPlayer(func: (player: Player) -> Unit) {
-        main.server.onlinePlayers.forEach { func(it) }
-    }
-
     fun getCloseLocationFromPlayer(location: Location): Location {
         val x = Random.nextDouble(-10.0, 10.0)
         val y = Random.nextDouble(1.0, 10.0)
@@ -55,7 +51,7 @@ abstract class Command(val main: Main) {
     abstract fun behavior(playerName: String, options: String?)
 
     private fun showTitle(playerName: String) {
-        forEachPlayer {
+        CommandRunner.forEachPlayer {
             it.sendTitle(title(), playerName, 10, 70, 20) // ints are def values
         }
     }
@@ -67,15 +63,7 @@ abstract class Command(val main: Main) {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
-    open fun run(playerName: String) : CommandResultWrapper {
-        return run(playerName, "", commandConfig.silent)
-    }
-
-    open fun run(isSilent: Boolean) : CommandResultWrapper {
-        return run("", "", commandConfig.silent)
-    }
-
-    fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean) : CommandResultWrapper {
+    open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean = commandConfig.silent) : CommandResultWrapper {
         coolDown = commandConfig.coolDownMillis
         var run = false
         val time = Date().time

@@ -1,11 +1,11 @@
 package com.stubfx.plugin.chatreactor.commands.impl
 
-import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.entity.EntityType
 
-class Spawn(main: Main) : Command(main) {
+object Spawn : Command() {
 
     override fun commandName(): CommandType = CommandType.SPAWN
 
@@ -21,7 +21,7 @@ class Spawn(main: Main) : Command(main) {
         if (blacklist.contains(mobToSpawn)) {
             return
         }
-        forEachPlayer {
+        CommandRunner.forEachPlayer {
             it.world.spawnEntity(it.location, mobToSpawn)
         }
     }

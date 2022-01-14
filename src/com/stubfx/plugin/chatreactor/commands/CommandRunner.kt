@@ -1,14 +1,23 @@
 package com.stubfx.plugin.chatreactor.commands
 
 import com.stubfx.plugin.Main
+import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 
 object CommandRunner {
 
     private var currentTask: BukkitTask? = null
-    lateinit var main: Main
     private var currentTaskTickCount = 0
+    lateinit var main: Main
+
+    fun setMainRef(mainRef: Main) {
+        main = mainRef
+    }
+
+    fun forEachPlayer(func: (player: Player) -> Unit) {
+        main.server.onlinePlayers.forEach { func(it) }
+    }
 
     fun runOnBukkit(func: () -> Unit): BukkitTask {
         return object : BukkitRunnable() {
@@ -45,10 +54,6 @@ object CommandRunner {
         stopTask()
         currentTaskTickCount = 0
         currentTask = runOnBukkitEveryTick(func, 20)
-    }
-
-    fun setMainRef(mainRef: Main) {
-        main = mainRef
     }
 
 }

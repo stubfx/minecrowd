@@ -4,14 +4,18 @@ import org.bukkit.Chunk
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 
 object BlockReplacer {
 
     const val CHUNK_BLOCKS_NUMBER = 15.0
+    lateinit var main: Main
 
-    fun chunkReplace(plugin: JavaPlugin, chunk: Chunk, material: Material, excluded: List<Material>? = null) {
+    fun setMainRef(mainRef: Main) {
+        main = mainRef
+    }
+
+    fun chunkReplace(chunk: Chunk, material: Material, excluded: List<Material>? = null) {
         // get location of the chunk
         // keep in mind that chunk.x gets the chunk index, not the world index
         // so we need to extract the coordinates of the first block.
@@ -19,25 +23,25 @@ object BlockReplacer {
         val start = Location(block.world, block.x.toDouble(), -63.0, block.z.toDouble())
         val end =
             Location(block.world, block.x.toDouble() + CHUNK_BLOCKS_NUMBER, 255.0, block.z.toDouble() + CHUNK_BLOCKS_NUMBER)
-        plugin.server.consoleSender.sendMessage(start.toString())
-        plugin.server.consoleSender.sendMessage(end.toString())
-        plugin.server.consoleSender.sendMessage(material.toString())
-        replaceArea(plugin, start, end, material, excluded, true)
+        main.server.consoleSender.sendMessage(start.toString())
+        main.server.consoleSender.sendMessage(end.toString())
+        main.server.consoleSender.sendMessage(material.toString())
+        replaceArea(start, end, material, excluded, true)
     }
 
-    fun replaceAreaExAir(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null){
+    fun replaceAreaExAir(loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null){
         val materialToExclude: MutableList<Material> = ArrayList()
-        replaceArea(plugin, loc1, loc2, material, materialToExclude, true)
+        replaceArea(loc1, loc2, material, materialToExclude, true)
     }
 
-    private fun replaceArea(plugin: JavaPlugin, loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null, excludeAir: Boolean = true) {
+    private fun replaceArea(loc1: Location, loc2: Location, material: Material, excluded: List<Material>? = null, excludeAir: Boolean = true) {
         object : BukkitRunnable() {
             override fun run() {
-                Utils.checkLocationsWorld(loc1, loc2)
-                val minL = Utils.getMinLocation(loc1, loc2)
-                val maxL = Utils.getMaxLocation(loc1, loc2)
-                plugin.server.consoleSender.sendMessage(minL.toString())
-                plugin.server.consoleSender.sendMessage(maxL.toString())
+                PluginUtils.checkLocationsWorld(loc1, loc2)
+                val minL = PluginUtils.getMinLocation(loc1, loc2)
+                val maxL = PluginUtils.getMaxLocation(loc1, loc2)
+                main.server.consoleSender.sendMessage(minL.toString())
+                main.server.consoleSender.sendMessage(maxL.toString())
                 for (x in minL.x.toInt()..maxL.x.toInt()) {
                     for (z in minL.z.toInt()..maxL.z.toInt()) {
                         for (y in minL.y.toInt()..maxL.y.toInt()) {
@@ -54,7 +58,7 @@ object BlockReplacer {
                     }
                 }
             }
-        }.runTask(plugin)
+        }.runTask(main)
     }
 
 }

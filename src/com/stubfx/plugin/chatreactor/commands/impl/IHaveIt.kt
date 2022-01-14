@@ -6,13 +6,13 @@ import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.inventory.ItemStack
 
-class IHaveIt(main: Main) : Command(main) {
+object IHaveIt : Command() {
 
     override fun commandName(): CommandType = CommandType.IHAVEIT
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {
-            forEachPlayer {
+            CommandRunner.forEachPlayer {
                 val type = it.getTargetBlockExact(100)?.type ?: return@forEachPlayer
                 it.inventory.addItem(ItemStack(type))
             }
