@@ -6,12 +6,13 @@ import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 
 data class CommandConfig(
-    var name: CommandType,
-    var title: String,
-    var coolDownMillis: Long,
-    var silent: Boolean,
-    var enable: Boolean,
-    var successMessage: String?
+    val name: CommandType,
+    val title: String,
+    val coolDownMillis: Long,
+    val silent: Boolean,
+    val enable: Boolean,
+    val showSuccessMessage: Boolean,
+    val successMessage: String?
 )
 
 object ConfigManager {
@@ -27,6 +28,7 @@ object ConfigManager {
             config.getInt("$command.cooldown") * 1000L,
             config.getBoolean("$command.silent"),
             config.getBoolean("$command.enable"),
+            config.getBoolean("$command.showSuccessMessage"),
             config.getString("$command.successMessage")
         )
     }
@@ -39,6 +41,7 @@ object ConfigManager {
         config.set("$command.cooldown", (commandConfig.coolDownMillis/1000).toInt())
         config.set("$command.silent", commandConfig.silent)
         config.set("$command.enable", commandConfig.enable)
+        config.set("$command.showSuccessMessage", commandConfig.showSuccessMessage)
         config.set("$command.successMessage", commandConfig.successMessage)
 
         this.save()
@@ -66,15 +69,16 @@ object ConfigManager {
         val commands = CommandFactory.getAvailableCommands()
 
         commands.forEach {
-            val command = it.toString().lowercase()
-            if (!config.contains("commands.$command")) {
+            val commandName = it.toString().lowercase()
+            if (!config.contains("commands.$commandName")) {
                 val commandConfig = CommandConfig(
                     name = it,
-                    title = command,
+                    title = commandName,
                     coolDownMillis = 10_000,
                     silent = false,
                     enable = true,
-                    successMessage = ""
+                    showSuccessMessage = false,
+                    successMessage = "You run the command $commandName"
                 )
 
                 setCommand(it, commandConfig)
