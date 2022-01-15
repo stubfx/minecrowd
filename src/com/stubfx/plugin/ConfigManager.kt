@@ -74,16 +74,17 @@ object ConfigManager {
             val command = it.commandType().toString().lowercase()
 
             var cooldown = it.defaultCoolDown()
-            if (config.get("commands.$command.cooldown") != null) cooldown = config.getInt("commands.$command.cooldown")*1000L
+            val commandPath = "commands.$command"
+            if (config.get("$commandPath.cooldown") != null) cooldown = config.getInt("$commandPath.cooldown")*1000L
 
             val commandConfig = CommandConfig(
                 name = it.commandType(),
-                title = (config.get("commands.$command.title") ?: commandName) as String,
+                title = config.getString("$commandPath.title", commandName)!!,
                 coolDownMillis = cooldown,
-                silent = (config.get("commands.$command.silent") ?: false) as Boolean,
-                enable = (config.get("commands.$command.silent") ?: true) as Boolean,
-                showSuccessMessage = (config.get("commands.$command.silent") ?: false) as Boolean,
-                successMessage = (config.get("commands.$command.title") ?: "You run the command $commandName") as String
+                silent = (config.get("$commandPath.silent") ?: false) as Boolean,
+                enable = (config.get("$commandPath.silent") ?: true) as Boolean,
+                showSuccessMessage = (config.get("$commandPath.silent") ?: false) as Boolean,
+                successMessage = (config.get("$commandPath.title") ?: "You run the command $commandName") as String
             )
 
             setCommand(it.commandType(), commandConfig)
