@@ -20,29 +20,29 @@ object ConfigManager {
     private lateinit var config: YamlConfiguration
 
     fun getCommand(commandType: CommandType) : CommandConfig {
-        val commandName: String = commandType.toString().lowercase()
-        val command = "commands.$commandName"
+        val command: String = commandType.toString().lowercase()
+        val commandPath = "commands.$command"
         return CommandConfig(
             CommandType.NOCHUNKNOPARTY,
-            config.getString("$command.title") ?: commandName,
-            config.getInt("$command.cooldown") * 1000L,
-            config.getBoolean("$command.silent"),
-            config.getBoolean("$command.enable"),
-            config.getBoolean("$command.showSuccessMessage"),
-            config.getString("$command.successMessage")
+            config.getString("$commandPath.title") ?: command,
+            config.getInt("$commandPath.cooldown") * 1000L,
+            config.getBoolean("$commandPath.silent"),
+            config.getBoolean("$commandPath.enable"),
+            config.getBoolean("$commandPath.showSuccessMessage"),
+            config.getString("$commandPath.successMessage")
         )
     }
 
     fun setCommand(commandType: CommandType, commandConfig: CommandConfig) {
         val commandName: String = commandType.toString().lowercase()
-        val command = "commands.$commandName"
+        val commandPath = "commands.$commandName"
 
-        config.set("$command.title", commandConfig.title)
-        config.set("$command.cooldown", (commandConfig.coolDownMillis/1000).toInt())
-        config.set("$command.silent", commandConfig.silent)
-        config.set("$command.enable", commandConfig.enable)
-        config.set("$command.showSuccessMessage", commandConfig.showSuccessMessage)
-        config.set("$command.successMessage", commandConfig.successMessage)
+        config.set("$commandPath.title", commandConfig.title)
+        config.set("$commandPath.cooldown", (commandConfig.coolDownMillis/1000).toInt())
+        config.set("$commandPath.silent", commandConfig.silent)
+        config.set("$commandPath.enable", commandConfig.enable)
+        config.set("$commandPath.showSuccessMessage", commandConfig.showSuccessMessage)
+        config.set("$commandPath.successMessage", commandConfig.successMessage)
 
         this.save()
     }
@@ -70,21 +70,18 @@ object ConfigManager {
         val commands = CommandFactory.getAvailableCommands()
 
         commands.forEach {
-            val commandName = it.commandType().toString().lowercase().replaceFirstChar { c -> c.uppercase() }
             val command = it.commandType().toString().lowercase()
-
-            var cooldown = it.defaultCoolDown()
+            val commandTitle = command.replaceFirstChar { c -> c.uppercase() }
             val commandPath = "commands.$command"
-            if (config.get("$commandPath.cooldown") != null) cooldown = config.getInt("$commandPath.cooldown")*1000L
 
             val commandConfig = CommandConfig(
                 name = it.commandType(),
-                title = config.getString("$commandPath.title", commandName)!!,
-                coolDownMillis = cooldown,
-                silent = (config.get("$commandPath.silent") ?: false) as Boolean,
-                enable = (config.get("$commandPath.silent") ?: true) as Boolean,
-                showSuccessMessage = (config.get("$commandPath.silent") ?: false) as Boolean,
-                successMessage = (config.get("$commandPath.title") ?: "You run the command $commandName") as String
+                title = config.getString("$commandPath.title", commandTitle)!!,
+                coolDownMillis = config.getInt("$commandPath.cooldown", (it.defaultCoolDown()/1000).toInt()) * 1000L,
+                silent = config.getBoolean("$commandPath.silent",false),
+                enable = config.getBoolean("$commandPath.enable",true),
+                showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage",false),
+                successMessage = config.getString("$commandPath.successMessage","You run the command $commandTitle")
             )
 
             setCommand(it.commandType(), commandConfig)
