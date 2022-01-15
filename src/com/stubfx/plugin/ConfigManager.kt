@@ -23,7 +23,7 @@ object ConfigManager {
         val command: String = commandType.toString().lowercase()
         val commandPath = "commands.$command"
         return CommandConfig(
-            CommandType.NOCHUNKNOPARTY,
+            commandType,
             config.getString("$commandPath.title") ?: command,
             config.getInt("$commandPath.cooldown") * 1000L,
             config.getBoolean("$commandPath.silent"),
@@ -90,7 +90,7 @@ object ConfigManager {
         PluginUtils.log("Plugin config generated","silent")
     }
 
-    private fun save() {
+    fun save() {
         // loading config file
         val file = File(config_path)
 
