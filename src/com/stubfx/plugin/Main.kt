@@ -1,7 +1,6 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.ChatReactor
-import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -34,11 +33,7 @@ class Main : JavaPlugin() {
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-//        when (command.name.lowercase()) {
-//            "creep" -> chatReactor.creeperSpawn()
-//            "dropit" -> chatReactor.forceDropItem()
-//        }
-        return false
+        return ChatCommandExecutor.onCommand(sender, command, label, args)
     }
 
 }

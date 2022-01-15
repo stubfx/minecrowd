@@ -11,6 +11,10 @@ object BlockReplacer {
     const val CHUNK_BLOCKS_NUMBER = 15.0
     lateinit var main: Main
 
+    fun setMainRef(mainRef: Main) {
+        main = mainRef
+    }
+
     fun forEachBlock(loc1: Location, loc2: Location, func: (Block) -> Unit) {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         val minL = PluginUtils.getMinLocation(loc1, loc2)
@@ -24,10 +28,6 @@ object BlockReplacer {
                 }
             }
         }
-    }
-
-    fun setMainRef(mainRef: Main) {
-        main = mainRef
     }
 
     fun chunkReplace(chunk: Chunk, material: Material, excluded: List<Material>? = null) {
