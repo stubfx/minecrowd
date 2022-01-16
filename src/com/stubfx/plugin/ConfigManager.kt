@@ -71,7 +71,7 @@ object ConfigManager {
                 title = config.getString("$commandPath.title", commandTitle)!!,
                 coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
-                enabled = config.getBoolean("$commandPath.enable", true),
+                enabled = config.getBoolean("$commandPath.enabled", true),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")
             )
@@ -115,7 +115,7 @@ object ConfigManager {
             config.getString("$commandPath.title") ?: command,
             config.getInt("$commandPath.cooldown") * 1000L,
             config.getBoolean("$commandPath.silent"),
-            config.getBoolean("$commandPath.enable"),
+            config.getBoolean("$commandPath.enabled"),
             config.getBoolean("$commandPath.showSuccessMessage"),
             config.getString("$commandPath.successMessage")
         )
@@ -133,7 +133,7 @@ object ConfigManager {
         config.set("$commandPath.title", commandConfig.title)
         config.set("$commandPath.cooldown", (commandConfig.coolDown / 1000).toInt())
         config.set("$commandPath.silent", commandConfig.silent)
-        config.set("$commandPath.enable", commandConfig.enabled)
+        config.set("$commandPath.enabled", commandConfig.enabled)
         config.set("$commandPath.showSuccessMessage", commandConfig.showSuccessMessage)
         config.set("$commandPath.successMessage", commandConfig.successMessage)
     }

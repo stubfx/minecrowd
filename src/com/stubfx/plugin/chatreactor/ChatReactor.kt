@@ -16,7 +16,6 @@ class ChatReactor(main: Main) {
     private var apiKey = ""
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
-    private val commandFactory = CommandFactory(main)
 
     init {
         startServer()
@@ -68,7 +67,7 @@ class ChatReactor(main: Main) {
     }
 
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
-        return commandFactory.run(command, playerName, options)
+        return CommandFactory.run(command, playerName, options)
     }
 
     fun onDisable() {

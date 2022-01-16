@@ -31,7 +31,11 @@ abstract class Command {
 
     init {
         coolDown = this.defaultCoolDown()
+        // do not do this
+        // commandConfig = ConfigManager.getCommand(this.commandType())
+        // as we want fresh data on every run cause the player may have updated it.
     }
+
 
     open fun defaultCoolDown() : Long {
         return 10 * 1000 // standard coolDown in seconds
@@ -71,13 +75,24 @@ abstract class Command {
             lastRunEpoch = time
             println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
             run = true
-            CommandRunner.runOnBukkit {
-                behavior(playerName, options)
-            }
+            runBehavior(playerName, options)
             if (!isCommandSilent) showTitle(playerName)
         }
         val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
         return CommandResultWrapper(commandConfig.type, run, msg)
+    }
+
+    fun forceRun(playerName: String = "ERROR", options: String? = "") : CommandResultWrapper {
+        commandConfig = ConfigManager.getCommand(this.commandType())
+        // forceRun is not supposed to be silent
+        runBehavior(playerName, options)
+        return CommandResultWrapper(commandConfig.type, true, "")
+    }
+
+    private fun runBehavior(playerName: String, options: String?) {
+        CommandRunner.runOnBukkit {
+            behavior(playerName, options)
+        }
     }
 
 }
