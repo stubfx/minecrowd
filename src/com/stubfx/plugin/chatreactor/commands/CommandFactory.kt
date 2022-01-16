@@ -13,7 +13,8 @@ object CommandFactory {
         NeverFall, Armored, ToTheNether, ToTheOverworld,
         Bob, NukeMobs, Dinnerbone, CraftingTable,
         IHaveIt, Paint, GoingDown, ClearChunk,
-        ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon
+        ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon,
+        Cookies
     )
 
     fun getAvailableCommandsNames(): List<String> {

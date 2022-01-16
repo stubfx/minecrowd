@@ -14,7 +14,7 @@ object Superman : Command() {
             it.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue = 200.0
         }
         // let's fix it.
-        Heal.run(isSilent = true)
+        Heal.forceRun(isSilent = true)
     }
 
 }
