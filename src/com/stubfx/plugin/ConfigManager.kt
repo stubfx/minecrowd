@@ -12,7 +12,7 @@ data class CommandConfig(
     val title: String,
     val coolDownMillis: Long,
     val silent: Boolean,
-    val enable: Boolean,
+    val enabled: Boolean,
     val showSuccessMessage: Boolean,
     val successMessage: String?
 )
@@ -71,7 +71,7 @@ object ConfigManager {
                 title = config.getString("$commandPath.title", commandTitle)!!,
                 coolDownMillis = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
-                enable = config.getBoolean("$commandPath.enable", true),
+                enabled = config.getBoolean("$commandPath.enable", true),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")
             )
@@ -133,7 +133,7 @@ object ConfigManager {
         config.set("$commandPath.title", commandConfig.title)
         config.set("$commandPath.cooldown", (commandConfig.coolDownMillis / 1000).toInt())
         config.set("$commandPath.silent", commandConfig.silent)
-        config.set("$commandPath.enable", commandConfig.enable)
+        config.set("$commandPath.enable", commandConfig.enabled)
         config.set("$commandPath.showSuccessMessage", commandConfig.showSuccessMessage)
         config.set("$commandPath.successMessage", commandConfig.successMessage)
     }

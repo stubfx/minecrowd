@@ -1,15 +1,15 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
-version: 1.0.10.525
+version: 1.0.10.533
 api-version: '1.18'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx
 commands:
-  config:
+  command:
     description: An example command
-    usage: /config
-    permission: stubfxplugin.config
-    permission-message: You don't have the stubFXplugin.config permission.
+    usage: /command
+    permission: stubfxplugin.command
+    permission-message: You don't have the stubFXplugin.command permission.
 permissions:
   stubfxplugin.*:
     default: op

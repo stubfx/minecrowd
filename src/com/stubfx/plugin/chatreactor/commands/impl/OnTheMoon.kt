@@ -8,11 +8,11 @@ import org.bukkit.potion.PotionEffectType
 
 object OnTheMoon : Command() {
 
-    override fun commandType(): CommandType = CommandType.MOONGRAVITY
+    override fun commandType(): CommandType = CommandType.ONTHEMOON
 
     override fun behavior(playerName: String, options: String?) {
         val duration = ticks * 20
-        val jump = PotionEffectType.JUMP.createEffect(duration, 50)
+        val jump = PotionEffectType.JUMP.createEffect(duration, 3)
         val slowFalling = PotionEffectType.SLOW_FALLING.createEffect(duration, 50)
         CommandRunner.forEachPlayer {
             it.addPotionEffect(jump)

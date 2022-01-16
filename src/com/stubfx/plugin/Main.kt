@@ -13,7 +13,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
 //        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
-//        getCommand("chunkreplace")?.tabCompleter = MaterialTabCompleter()
+        getCommand("command")?.tabCompleter = CommandTabCompleter()
 //        server.pluginManager.registerEvents(PlayerListener(this), this)
 //        server.pluginManager.registerEvents(EntityListener(this), this)
 //        server.pluginManager.registerEvents(ProjectileListener(this), this)
