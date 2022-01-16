@@ -34,7 +34,7 @@ class CommandFactory(val main: Main) {
             commandMap[command]?.run(playerName, options) ?: StubCommand.run(playerName)
         } catch (e: Exception) {
             e.printStackTrace()
-            StubCommand.run()
+            StubCommand.run(playerName)
         }
     }
 
