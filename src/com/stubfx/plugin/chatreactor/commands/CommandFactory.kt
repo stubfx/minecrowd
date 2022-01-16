@@ -43,6 +43,7 @@ object CommandFactory {
     }
 
     fun getCommandOptions(commandName: String): List<String> {
+        println(commandName)
         return getCommandOptions(getCommandType(commandName))
     }
 

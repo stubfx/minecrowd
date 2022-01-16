@@ -38,7 +38,7 @@ class CommandTabCompleter : TabCompleter {
                     .map { it.commandType().toString() }
                     .filter { it.lowercase().contains(strings[0].lowercase()) }
                 2 -> ChatCommandProperties.values().map { it.toString().lowercase() }
-                3 -> optionByPreviousCommand(strings[1], CommandFactory.getCommandOptions(strings[2]))
+                3 -> optionByPreviousCommand(strings[2], strings[1], CommandFactory.getCommandOptions(strings[0]))
                 else -> listOf("")
             }
         } catch (_: Exception) {
@@ -47,10 +47,10 @@ class CommandTabCompleter : TabCompleter {
         }
     }
 
-    private fun optionByPreviousCommand(prevOption: String, commandOptions: List<String>): List<String> {
+    private fun optionByPreviousCommand(currentInput: String, prevOption: String, commandOptions: List<String>): List<String> {
         return when (options[ChatCommandProperties.valueOf(prevOption.uppercase())]) {
             OptionType.BOOLEAN -> listOf("true", "false")
-            OptionType.RUN -> commandOptions
+            OptionType.RUN -> commandOptions.filter { it.lowercase().contains(currentInput.lowercase()) }
             else -> listOf()
         }
     }
