@@ -64,7 +64,7 @@ abstract class Command {
     open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean? = null) : CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
         val isCommandSilent : Boolean = isSilent ?: commandConfig.silent
-        coolDown = commandConfig.coolDownMillis
+        coolDown = commandConfig.coolDown
         var run = false
         val time = Date().time
         if (!isInCoolDown()) {
@@ -77,7 +77,7 @@ abstract class Command {
             if (!isCommandSilent) showTitle(playerName)
         }
         val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
-        return CommandResultWrapper(commandConfig.name, run, msg)
+        return CommandResultWrapper(commandConfig.type, run, msg)
     }
 
 }

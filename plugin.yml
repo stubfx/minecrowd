@@ -1,6 +1,6 @@
 main: com.stubfx.plugin.Main
 name: stubFXplugin
-version: 1.0.10.533
+version: 1.0.10.541
 api-version: '1.18'
 author: stubFX
 description: A simple stream plugin made at twitch.tv/stubfx

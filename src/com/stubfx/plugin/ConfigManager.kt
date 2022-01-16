@@ -8,13 +8,13 @@ import java.security.MessageDigest
 import java.util.*
 
 data class CommandConfig(
-    val name: CommandType,
-    val title: String,
-    val coolDownMillis: Long,
-    val silent: Boolean,
-    val enabled: Boolean,
-    val showSuccessMessage: Boolean,
-    val successMessage: String?
+    val type: CommandType,
+    var title: String,
+    var coolDown: Long,
+    var silent: Boolean,
+    var enabled: Boolean,
+    var showSuccessMessage: Boolean,
+    var successMessage: String?
 )
 
 object ConfigManager {
@@ -67,16 +67,16 @@ object ConfigManager {
             val commandPath = "commands.$command"
 
             val commandConfig = CommandConfig(
-                name = it.commandType(),
+                type = it.commandType(),
                 title = config.getString("$commandPath.title", commandTitle)!!,
-                coolDownMillis = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
+                coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
                 enabled = config.getBoolean("$commandPath.enable", true),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")
             )
 
-            setCommand(it.commandType(), commandConfig)
+            setCommand(commandConfig)
         }
     }
 
@@ -121,17 +121,17 @@ object ConfigManager {
         )
     }
 
-    fun updateCommand(commandType: CommandType, commandConfig: CommandConfig) {
-        setCommand(commandType, commandConfig)
+    fun updateCommand(commandConfig: CommandConfig) {
+        setCommand(commandConfig)
         save()
     }
 
-    private fun setCommand(commandType: CommandType, commandConfig: CommandConfig) {
-        val commandName: String = commandType.toString().lowercase()
+    private fun setCommand(commandConfig: CommandConfig) {
+        val commandName: String = commandConfig.type.toString().lowercase()
         val commandPath = "commands.$commandName"
 
         config.set("$commandPath.title", commandConfig.title)
-        config.set("$commandPath.cooldown", (commandConfig.coolDownMillis / 1000).toInt())
+        config.set("$commandPath.cooldown", (commandConfig.coolDown / 1000).toInt())
         config.set("$commandPath.silent", commandConfig.silent)
         config.set("$commandPath.enable", commandConfig.enabled)
         config.set("$commandPath.showSuccessMessage", commandConfig.showSuccessMessage)
