@@ -10,17 +10,10 @@ import kotlin.random.Random
 
 object Cookies : Command() {
 
-    val cookiesCount = Random.nextInt(0, 64)
-
     override fun commandType(): CommandType = CommandType.COOKIES
-    override fun title(): String {
-        return cookiesCount.toString()
-    }
-
-
 
     override fun behavior(playerName: String, options: String?) {
-
+        val cookiesCount = Random.nextInt(32, 128)
         CommandRunner.forEachPlayer {
             val itemDropped: Item = it.world.dropItemNaturally(it.location, ItemStack(Material.COOKIE, cookiesCount))
             itemDropped.pickupDelay = 40
