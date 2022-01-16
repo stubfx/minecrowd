@@ -14,7 +14,7 @@ object ThatIsTNT: Command() {
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
             val target = it.getTargetBlockExact(50) ?: return@forEachPlayer
-            target.world.playSound(it.location, Sound.ENTITY_TNT_PRIMED, 3f, 1f)
+            target.world.playSound(target.location, Sound.ENTITY_TNT_PRIMED, 3f, 1f)
             target.world.spawnEntity(target.location, EntityType.PRIMED_TNT)
         }
     }

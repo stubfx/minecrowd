@@ -23,7 +23,6 @@ data class CommandResultWrapper(
     val name: CommandType,
     val result: Boolean,
     val message: String,
-    val successMessage: String? = null
 )
 
 abstract class Command {

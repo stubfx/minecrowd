@@ -15,7 +15,7 @@ object Spawn : Command() {
 
     override fun behavior(playerName: String, options: String?) {
         // this is what the function is supposed to do.
-        val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)
+        val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL)
         EntityType.GLOW_SQUID
         var mobToSpawn = EntityType.CREEPER
         try {

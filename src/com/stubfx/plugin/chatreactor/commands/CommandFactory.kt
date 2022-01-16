@@ -26,36 +26,36 @@ object CommandFactory {
 
     private val commandMap: Map<CommandType, Command> = availableCommands.associateBy { it.commandType() }
 
-    fun getType(commandName: String): CommandType {
+    private fun getCommandType(commandName: String): CommandType {
         return try {
             CommandType.valueOf(commandName.uppercase())
         } catch (_: Exception) {
-            CommandType.STUB // as default.
+            CommandType.STUB
         }
+    }
+
+    private fun getCommand(commandName: String): Command {
+        return getCommand(getCommandType(commandName))
+    }
+
+    private fun getCommand(commandName: CommandType): Command {
+        return commandMap[commandName] ?: StubCommand
+    }
+
+    fun getCommandOptions(commandName: String): List<String> {
+        return getCommandOptions(getCommandType(commandName))
     }
 
     fun getCommandOptions(commandType: CommandType): List<String> {
-        return commandMap[commandType]?.options() ?: listOf()
+        return commandMap[commandType]?.options() ?: StubCommand.options()
     }
 
     fun run(commandName: String, playerName: String, options: String?): CommandResultWrapper {
-        val command = getType(commandName)
-        return try {
-            commandMap[command]!!.run(playerName, options)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            StubCommand.run(playerName)
-        }
+        return getCommand(commandName).run(playerName, options)
     }
 
     fun forceRun(commandName: String, playerName: String, options: String?): CommandResultWrapper {
-        val command = getType(commandName)
-        return try {
-            commandMap[command]!!.forceRun(playerName, options)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            StubCommand.run(playerName)
-        }
+        return getCommand(commandName).forceRun(playerName, options)
     }
 
 }

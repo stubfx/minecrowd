@@ -22,7 +22,7 @@ object PanicSound : Command() {
         )
         CommandRunner.forEachPlayer {
             it.world.spawnParticle(Particle.EXPLOSION_NORMAL, it.location, 3)
-            it.world.playSound(it.location, sounds.random(), 3f, 1f)
+            it.world.playSound(it.location, sounds.random(), 10f, 1f)
         }
     }
 

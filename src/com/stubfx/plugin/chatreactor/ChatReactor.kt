@@ -43,20 +43,20 @@ class ChatReactor(main: Main) {
         override fun handle(t: HttpExchange) {
             val query = t.requestURI.query
             val params: HashMap<String, String> = HashMap()
-            query.split("&").forEach {
-                val split = it.split("=")
-                params[split[0]] = split[1]
-            }
-            if (ref.checkApiKey(params["apiKey"])) {
+            getParams(query, params)
+            if (isKeyValid(params)) {
                 var reply = ""
                 val command = params["command"]!!
+                val playerName = params["name"]!!
+                val options = params["options"]
                 if (command == "help") {
                     // then the user wants the list of commands
-                    reply = CommandFactory.getAvailableCommandsNames().joinToString(",")
+                    reply = CommandFactory.getAvailableCommandsNames().joinToString(", ").lowercase()
                 } else {
-                    val chatCommandResolve =
-                        ref.chatCommandResolve(command, params["name"]!!, params["options"])
-                    reply = chatCommandResolve.successMessage ?: ""
+                    val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
+                    if (!chatCommandResolve.result) {
+                        reply = chatCommandResolve.message
+                    }
                 }
                 if (reply.isEmpty()) {
                     // the command has run.
@@ -70,6 +70,15 @@ class ChatReactor(main: Main) {
                 t.responseBody.close()
             } else {
                 println("[ChatReactor]: wrong apiKey")
+            }
+        }
+
+        private fun isKeyValid(params: HashMap<String, String>) = ref.checkApiKey(params["apiKey"])
+
+        private fun getParams(query: String, params: HashMap<String, String>) {
+            query.split("&").forEach {
+                val split = it.split("=")
+                params[split[0]] = split[1]
             }
         }
     }
