@@ -20,7 +20,6 @@ class Main : JavaPlugin() {
         CommandRunner.setMainRef(this)
         BlockReplacer.setMainRef(this)
         PluginUtils.setMainRef(this)
-        ConfigManager.load()
     }
 
     fun getTicks(): Int {

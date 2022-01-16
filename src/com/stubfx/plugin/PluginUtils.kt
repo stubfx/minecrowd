@@ -5,6 +5,12 @@ import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 
+enum class LogType {
+    ERROR,
+    WARNING,
+    INFO
+}
+
 object PluginUtils {
 
     lateinit var main: Main
@@ -29,12 +35,11 @@ object PluginUtils {
         return Location(l1.world, maxOf(l1.x, l2.x), maxOf(l1.y, l2.y), maxOf(l1.z, l2.z))
     }
 
-    fun log(msg: String, type: String = "") {
+    fun log(msg: String, type: LogType = LogType.INFO) {
         val color: ChatColor = when (type) {
-            "error" -> ChatColor.RED
-            "warning" -> ChatColor.YELLOW
-            "silent" -> ChatColor.GRAY
-            else -> ChatColor.AQUA
+            LogType.ERROR -> ChatColor.RED
+            LogType.WARNING -> ChatColor.YELLOW
+            LogType.INFO -> ChatColor.GRAY
         }
 
         Bukkit.getConsoleSender().sendMessage("$color[stubFXplugin] $msg")
