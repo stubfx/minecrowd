@@ -15,7 +15,7 @@ enum class CommandType {
     WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
     TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON, COOKIES
 
 }
 
@@ -74,7 +74,7 @@ abstract class Command {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
-    open fun run(playerName: String = "ERROR", options: String? = "", isSilent: Boolean? = null): CommandResultWrapper {
+    open fun run(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
         val isCommandSilent: Boolean = isSilent ?: commandConfig.silent
         coolDown = commandConfig.coolDown
@@ -91,10 +91,12 @@ abstract class Command {
         return CommandResultWrapper(commandConfig.type, run, msg)
     }
 
-    fun forceRun(playerName: String = "ERROR", options: String? = ""): CommandResultWrapper {
+    fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
-        // forceRun is not supposed to be silent
         runBehavior(playerName, options)
+        if (!isSilent) {
+            showTitle(playerName)
+        }
         return CommandResultWrapper(commandConfig.type, true, "")
     }
 
