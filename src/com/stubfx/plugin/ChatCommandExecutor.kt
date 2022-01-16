@@ -28,11 +28,11 @@ object ChatCommandExecutor {
             CommandFactory.forceRun(commandType.toString(), sender.name, if (args.size > 2) args[2] else "")
             return
         }
-        if (args.size != 3) {
+        if (args.size < 3) {
             sender.sendMessage("Missing command argument")
             return
         }
-        val newValue = args[2]
+        val newValue = args.slice(2 until args.size).joinToString(" ")
         when (commandProperty) {
             ChatCommandProperties.TITLE -> commandConfig.title = newValue
             ChatCommandProperties.COOLDOWN -> commandConfig.coolDown = newValue.toInt() * 1000L
