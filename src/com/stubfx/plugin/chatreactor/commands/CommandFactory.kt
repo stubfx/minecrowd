@@ -15,7 +15,12 @@ object CommandFactory {
         IHaveIt, Paint, GoingDown, ClearChunk,
         ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon
     )
-    fun getAvailableCommands() : List<Command> {
+
+    fun getAvailableCommandsNames(): List<String> {
+        return availableCommands.map { it.commandType().toString() }
+    }
+
+    fun getAvailableCommands(): List<Command> {
         return availableCommands
     }
 

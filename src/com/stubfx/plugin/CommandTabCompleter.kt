@@ -33,13 +33,18 @@ class CommandTabCompleter : TabCompleter {
     )
 
     override fun onTabComplete(commandSender: CommandSender, command: Command, s: String, strings: Array<String>): List<String> {
-        return when (strings.size) {
-            1 -> CommandFactory.getAvailableCommands()
-                .map { it.commandType().toString() }
-                .filter { it.lowercase().contains(strings[0].lowercase()) }
-            2 -> ChatCommandProperties.values().map {it.toString().lowercase()}
-            3 -> optionByPreviousCommand(CommandFactory.getType(strings[0]), strings[1])
-            else -> listOf("")
+        return try {
+            when (strings.size) {
+                1 -> CommandFactory.getAvailableCommands()
+                    .map { it.commandType().toString() }
+                    .filter { it.lowercase().contains(strings[0].lowercase()) }
+                2 -> ChatCommandProperties.values().map { it.toString().lowercase() }
+                3 -> optionByPreviousCommand(CommandFactory.getType(strings[0]), strings[1])
+                else -> listOf("")
+            }
+        } catch (_: Exception) {
+            PluginUtils.log("[Chat Reactor] Invalid command option.", LogType.WARNING)
+            listOf()
         }
     }
 
