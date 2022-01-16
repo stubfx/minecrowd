@@ -5,7 +5,6 @@ import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.security.MessageDigest
-import java.security.Security
 import java.util.*
 
 data class CommandConfig(
@@ -20,6 +19,7 @@ data class CommandConfig(
 
 object ConfigManager {
     private const val config_path = "plugins/stubfx_plugin/stubfx_plugin_config.yml"
+    private const val apiKey = "apiKey"
     private lateinit var config: YamlConfiguration
 
     init {
@@ -86,7 +86,7 @@ object ConfigManager {
         val newKey = digest.digest(date.toByteArray()).joinToString("") {
             it.toUByte().toString(16).padStart(2, '0')
         }
-        config.set("apikey", config.getString("apiKey" , newKey))
+        config.set(apiKey, config.getString(apiKey, newKey))
     }
 
     private fun save() {
@@ -100,6 +100,11 @@ object ConfigManager {
         }
 
         PluginUtils.log("Plugin config saved")
+    }
+
+    fun getApiKey() : String {
+        // must exist.
+        return config.getString(apiKey)!!
     }
 
     fun getCommand(commandType: CommandType): CommandConfig {

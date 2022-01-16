@@ -1,5 +1,6 @@
 package com.stubfx.plugin.chatreactor
 
+import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
@@ -22,7 +23,7 @@ class ChatReactor(main: Main) {
     }
 
     private fun startServer() {
-        apiKey = System.getenv("mc_apiKey") ?: ""
+        apiKey = ConfigManager.getApiKey()
         if (apiKey.isEmpty()) {
             println("Missing apiKey, chat reactor disabled.")
             return
