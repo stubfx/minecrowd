@@ -1,6 +1,7 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
+import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
@@ -37,14 +38,15 @@ class CommandTabCompleter : TabCompleter {
                 .map { it.commandType().toString() }
                 .filter { it.lowercase().contains(strings[0].lowercase()) }
             2 -> ChatCommandProperties.values().map {it.toString().lowercase()}
-            3 -> optionByPreviousCommand(strings[1])
+            3 -> optionByPreviousCommand(CommandFactory.getType(strings[0]), strings[1])
             else -> listOf("")
         }
     }
 
-    private fun optionByPreviousCommand(prevCommand: String): List<String> {
-        return when (options[ChatCommandProperties.valueOf(prevCommand.uppercase())]) {
+    private fun optionByPreviousCommand(commandType: CommandType, prevOption: String): List<String> {
+        return when (options[ChatCommandProperties.valueOf(prevOption.uppercase())]) {
             OptionType.BOOLEAN -> listOf("true", "false")
+            OptionType.RUN -> CommandFactory.getCommandOptions(commandType)
             else -> listOf()
         }
     }

@@ -25,7 +25,7 @@ object ChatCommandExecutor {
         // are we trying to run the command?
         if (commandProperty == ChatCommandProperties.RUN) {
             // in this case the user is trying to force run the command
-            CommandFactory.forceRun(commandType.toString(), sender.name, "")
+            CommandFactory.forceRun(commandType.toString(), sender.name, if (args.size > 2) args[2] else "")
             return
         }
         if (args.size != 3) {

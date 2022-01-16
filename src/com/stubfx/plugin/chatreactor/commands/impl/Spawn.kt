@@ -9,6 +9,10 @@ object Spawn : Command() {
 
     override fun commandType(): CommandType = CommandType.SPAWN
 
+    override fun options(): List<String> {
+        return EntityType.values().map { it.toString() }
+    }
+
     override fun behavior(playerName: String, options: String?) {
         // this is what the function is supposed to do.
         val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON)

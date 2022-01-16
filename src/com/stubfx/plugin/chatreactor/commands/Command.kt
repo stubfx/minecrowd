@@ -8,26 +8,32 @@ import java.util.*
 import kotlin.random.Random
 
 enum class CommandType {
-    SPAWN, DROPIT, LEVITATE, FIRE,
+    STUB, SPAWN, DROPIT, LEVITATE, FIRE,
     DIAMONDS, CHICKENS, KNOCK, PANIC,
     TREE, SPEEDY, HEAL, HUNGRY,
     FEED, WALLHACK, SUPERMAN, NORMALMAN,
     WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
     TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY, STUB, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON
+
 }
 
-data class CommandResultWrapper(val name: CommandType, val result: Boolean, val message: String, val successMessage: String? = null)
+data class CommandResultWrapper(
+    val name: CommandType,
+    val result: Boolean,
+    val message: String,
+    val successMessage: String? = null
+)
 
 abstract class Command {
 
     var ticks = 20 // this is supposed to be a minecraft constant.
     private lateinit var commandConfig: CommandConfig
-    var coolDown : Long = 0 // will be overridden by defaultCoolDown function
+    var coolDown: Long = 0 // will be overridden by defaultCoolDown function
     var lastRunEpoch: Long = 0
 
-    lateinit var main : Main
+    lateinit var main: Main
 
     init {
         coolDown = this.defaultCoolDown()
@@ -37,7 +43,7 @@ abstract class Command {
     }
 
 
-    open fun defaultCoolDown() : Long {
+    open fun defaultCoolDown(): Long {
         return 10 * 1000 // standard coolDown in seconds
     }
 
@@ -50,6 +56,10 @@ abstract class Command {
 
     abstract fun commandType(): CommandType
 
+    open fun options(): List<String> {
+        return listOf()
+    }
+
     abstract fun behavior(playerName: String, options: String?)
 
     private fun showTitle(playerName: String) {
@@ -58,16 +68,16 @@ abstract class Command {
         }
     }
 
-    open fun title() : String = commandConfig.title
-    open fun successMessage() : String? = commandConfig.successMessage
+    open fun title(): String = commandConfig.title
+    open fun successMessage(): String? = commandConfig.successMessage
 
-    fun isInCoolDown() : Boolean {
+    fun isInCoolDown(): Boolean {
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
-    open fun run(playerName: String = "ERROR", options: String? = "", isSilent : Boolean? = null) : CommandResultWrapper {
+    open fun run(playerName: String = "ERROR", options: String? = "", isSilent: Boolean? = null): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
-        val isCommandSilent : Boolean = isSilent ?: commandConfig.silent
+        val isCommandSilent: Boolean = isSilent ?: commandConfig.silent
         coolDown = commandConfig.coolDown
         var run = false
         val time = Date().time
@@ -82,7 +92,7 @@ abstract class Command {
         return CommandResultWrapper(commandConfig.type, run, msg)
     }
 
-    fun forceRun(playerName: String = "ERROR", options: String? = "") : CommandResultWrapper {
+    fun forceRun(playerName: String = "ERROR", options: String? = ""): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
         // forceRun is not supposed to be silent
         runBehavior(playerName, options)
