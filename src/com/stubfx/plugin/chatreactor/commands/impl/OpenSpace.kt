@@ -10,6 +10,10 @@ object OpenSpace : Command() {
 
     override fun commandType(): CommandType = CommandType.OPENSPACE
 
+    override fun defaultCoolDown(): Long {
+        return 500*1000
+    }
+
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.clearAllDroppedItems()
         CommandRunner.forEachPlayer {
@@ -17,6 +21,7 @@ object OpenSpace : Command() {
             val loc2 = it.location.add(20.0, 20.0, 20.0)
             BlockReplacer.replaceAreaExAir(loc1, loc2, Material.AIR)
         }
+        CommandRunner.clearAllDroppedItems()
     }
 
 }

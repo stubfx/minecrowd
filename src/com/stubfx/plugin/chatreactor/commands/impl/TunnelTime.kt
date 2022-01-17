@@ -11,6 +11,10 @@ object TunnelTime: Command() {
 
     override fun commandType(): CommandType = CommandType.TUNNELTIME
 
+    override fun defaultCoolDown(): Long {
+        return 180*1000
+    }
+
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
             val target = it.getTargetBlockExact(50) ?: return@forEachPlayer

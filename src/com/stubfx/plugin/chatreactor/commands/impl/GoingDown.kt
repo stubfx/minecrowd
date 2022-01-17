@@ -9,6 +9,10 @@ object GoingDown : Command() {
 
     override fun commandType(): CommandType = CommandType.GOINGDOWN
 
+    override fun defaultCoolDown(): Long {
+        return 60*1000
+    }
+
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startShortRecurrentTask {
             CommandRunner.forEachPlayer {

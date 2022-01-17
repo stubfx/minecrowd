@@ -17,7 +17,7 @@ enum class CommandType {
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
     PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT,
     TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON,
-    COOKIES, SUPERTOOLS
+    COOKIES, SUPERTOOLS, MILK
 
 }
 
@@ -45,7 +45,7 @@ abstract class Command {
 
 
     open fun defaultCoolDown(): Long {
-        return 10 * 1000 // standard coolDown in seconds
+        return 30 * 1000 // standard coolDown in seconds
     }
 
     fun getCloseLocationFromPlayer(location: Location, radius: Double, below : Boolean = false): Location {
