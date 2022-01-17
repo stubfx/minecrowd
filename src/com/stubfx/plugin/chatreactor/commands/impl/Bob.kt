@@ -18,7 +18,7 @@ object Bob : Command() {
             val zombie = it.world.spawnEntity(it.location, EntityType.ZOMBIE) as Zombie
             val chicken = it.world.spawnEntity(it.location, EntityType.CHICKEN) as Chicken
             zombie.setBaby()
-            zombie.customName = "bob"
+            zombie.customName = "BoB ($playerName)"
             zombie.isCustomNameVisible = true
             zombie.equipment?.helmet = ItemStack(Material.DIAMOND_HELMET)
             zombie.equipment?.chestplate = ItemStack(Material.DIAMOND_CHESTPLATE)

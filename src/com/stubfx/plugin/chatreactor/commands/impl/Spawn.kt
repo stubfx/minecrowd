@@ -3,7 +3,9 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
+import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.LivingEntity
 
 object Spawn : Command() {
 
@@ -26,7 +28,9 @@ object Spawn : Command() {
             return
         }
         CommandRunner.forEachPlayer {
-            it.world.spawnEntity(it.location, mobToSpawn)
+            val entity = it.world.spawnEntity(it.location, mobToSpawn)
+            entity.customName = playerName
+            entity.isCustomNameVisible = true
         }
     }
 
