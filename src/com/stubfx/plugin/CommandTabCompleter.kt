@@ -48,6 +48,7 @@ class CommandTabCompleter : TabCompleter {
     }
 
     private fun optionByPreviousCommand(currentInput: String, prevOption: String, commandOptions: List<String>): List<String> {
+        println(currentInput)
         return when (options[ChatCommandProperties.valueOf(prevOption.uppercase())]) {
             OptionType.BOOLEAN -> listOf("true", "false")
             OptionType.RUN -> commandOptions.filter { it.lowercase().contains(currentInput.lowercase()) }

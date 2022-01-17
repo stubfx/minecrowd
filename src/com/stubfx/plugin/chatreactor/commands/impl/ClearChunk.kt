@@ -15,6 +15,8 @@ object ClearChunk : Command() {
     }
 
     override fun behavior(playerName: String, options: String?) {
+        // clear all the items to avoid lag
+        CommandRunner.clearAllDroppedItems()
         CommandRunner.forEachPlayer {
             val chunk = it.getTargetBlockExact(100)?.chunk ?: return@forEachPlayer
             BlockReplacer.chunkReplace(chunk, Material.AIR)

@@ -15,7 +15,9 @@ enum class CommandType {
     WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED,
     TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS,
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
-    PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON, COOKIES
+    PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT,
+    TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON,
+    COOKIES, SUPERTOOLS
 
 }
 
@@ -46,10 +48,10 @@ abstract class Command {
         return 10 * 1000 // standard coolDown in seconds
     }
 
-    fun getCloseLocationFromPlayer(location: Location): Location {
-        val x = Random.nextDouble(-10.0, 10.0)
-        val y = Random.nextDouble(1.0, 10.0)
-        val z = Random.nextDouble(-10.0, 10.0)
+    fun getCloseLocationFromPlayer(location: Location, radius: Double, below : Boolean = false): Location {
+        val x = Random.nextDouble(-radius, radius)
+        val y = Random.nextDouble(if (below) radius else 1.0, radius)
+        val z = Random.nextDouble(-radius, radius)
         return location.add(x, y, z)
     }
 

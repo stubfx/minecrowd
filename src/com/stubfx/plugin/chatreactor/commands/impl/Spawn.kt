@@ -3,9 +3,7 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
-import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.LivingEntity
 
 object Spawn : Command() {
 

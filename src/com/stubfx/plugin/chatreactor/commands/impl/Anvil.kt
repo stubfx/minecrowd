@@ -9,9 +9,16 @@ object Anvil : Command() {
 
     override fun commandType(): CommandType = CommandType.ANVIL
 
+    override fun defaultCoolDown(): Long {
+        return 120 * 1000 // 2 mins
+    }
+
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
-            it.location.add(0.0, 5.0, 0.0).block.type = Material.ANVIL
+        CommandRunner.startRecurrentTask {
+            CommandRunner.forEachPlayer {
+                val closeLocation = getCloseLocationFromPlayer(it.location, 10.0)
+                closeLocation.block.type = Material.ANVIL
+            }
         }
     }
 

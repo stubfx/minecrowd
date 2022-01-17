@@ -1,9 +1,13 @@
 package com.stubfx.plugin.chatreactor.commands
 
 import com.stubfx.plugin.Main
+import org.bukkit.World
+import org.bukkit.entity.Entity
+import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
+
 
 object CommandRunner {
 
@@ -17,6 +21,16 @@ object CommandRunner {
 
     fun forEachPlayer(func: (player: Player) -> Unit) {
         main.server.onlinePlayers.forEach { func(it) }
+    }
+
+    fun clearAllDroppedItems() {
+        main.server.worlds.forEach{ world ->
+            world.entities.forEach {
+                if (it is Item) {
+                    it.remove()
+                }
+            }
+        }
     }
 
     fun runOnBukkit(func: () -> Unit): BukkitTask {

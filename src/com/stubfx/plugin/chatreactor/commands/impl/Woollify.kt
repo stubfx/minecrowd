@@ -23,6 +23,8 @@ object Woollify : Command() {
             val loc2 = it.location.add(20.0, 20.0, 20.0)
             BlockReplacer.replaceAreaExAir(loc1, loc2, wool.random())
         }
+        // clear stuff on the ground, just to make sure.
+        CommandRunner.clearAllDroppedItems()
     }
 
 }
