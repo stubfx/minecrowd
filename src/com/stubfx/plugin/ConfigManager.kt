@@ -97,6 +97,7 @@ object ConfigManager {
             config.save(file)
         } catch (e: Exception) {
             PluginUtils.log("Error while saving", LogType.ERROR)
+            e.printStackTrace()
         }
 
         PluginUtils.log("Plugin config saved")
