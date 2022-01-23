@@ -1,8 +1,8 @@
 ---
 name: New command
 about: Suggest an idea for this project
-title: ''
-labels: enhancement
+title: 'New !command: <command name>'
+labels: command, enhancement
 assignees: stubFX
 
 ---
