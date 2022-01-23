@@ -17,7 +17,7 @@ enum class CommandType {
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
     PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT,
     TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON,
-    COOKIES, SUPERTOOLS, MILK
+    COOKIES, SUPERTOOLS, MILK, POTION
 
 }
 
@@ -78,7 +78,7 @@ abstract class Command {
 
     open fun run(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
-        val isCommandSilent: Boolean = isSilent ?: commandConfig.silent
+        val isCommandSilent: Boolean = isSilent
         coolDown = commandConfig.coolDown
         var run = false
         val time = Date().time

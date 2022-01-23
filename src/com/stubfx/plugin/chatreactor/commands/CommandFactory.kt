@@ -14,7 +14,7 @@ object CommandFactory {
         Bob, NukeMobs, Dinnerbone, CraftingTable,
         IHaveIt, Paint, GoingDown, ClearChunk,
         ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon,
-        Cookies, SuperTools, Milk
+        Cookies, SuperTools, Milk, Potion
     )
 
     fun getAvailableCommandsNames(): List<String> {

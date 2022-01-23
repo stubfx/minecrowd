@@ -14,7 +14,6 @@ object Milk : Command() {
         CommandRunner.forEachPlayer {
             it.inventory.setItemInMainHand(ItemStack(Material.MILK_BUCKET))
         }
-        CommandRunner.clearAllDroppedItems()
     }
 
 }
