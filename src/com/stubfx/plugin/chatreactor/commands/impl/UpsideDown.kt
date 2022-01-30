@@ -24,6 +24,7 @@ object UpsideDown : Command() {
                 loc.block.type = block.type
             }
         }
+        CommandRunner.clearAllDroppedItems()
     }
 
 }
