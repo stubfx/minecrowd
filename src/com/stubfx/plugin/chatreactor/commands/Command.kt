@@ -84,7 +84,7 @@ abstract class Command {
     }
 
     open fun title(): String = commandConfig.title
-    open fun successMessage(): String? = commandConfig.successMessage
+    open fun successMessage(): String = commandConfig.successMessage
 
     fun isInCoolDown(): Boolean {
         return Date().time <= (lastRunEpoch + coolDown)
@@ -94,17 +94,31 @@ abstract class Command {
         commandConfig = ConfigManager.getCommand(this.commandType())
         val isCommandSilent: Boolean = isSilent
         coolDown = commandConfig.coolDown
-        var run = false
         val time = Date().time
-        if (!isInCoolDown()) {
-            lastRunEpoch = time
-            println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
-            run = true
-            startCommandLifecycle(playerName, options)
-            if (!isCommandSilent) showTitle(playerName)
+        if (!isEnabled()) {
+            // command is not enabled.
+            val message = "@$playerName command ${commandType().name.lowercase()} is not enabled."
+            return CommandResultWrapper(commandConfig.type, false, message)
         }
-        val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
-        return CommandResultWrapper(commandConfig.type, run, msg)
+        if (isInCoolDown()) {
+            val message = "@${playerName} ,${commandType()} command is in cooldown"
+            return CommandResultWrapper(commandConfig.type, false, message)
+        }
+        // just run this command ffs
+        // update last run epoch
+        lastRunEpoch = time
+        // print in console cause why not
+        println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
+        // start this lifecycle pls!
+        startCommandLifecycle(playerName, options)
+        // is this a silent fart that will kill someone?
+        if (!isCommandSilent) showTitle(playerName)
+        // aight, package is ready!
+        return CommandResultWrapper(commandConfig.type, true, successMessage())
+    }
+
+    private fun isEnabled(): Boolean {
+        return commandConfig.enabled
     }
 
     fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
