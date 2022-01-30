@@ -73,7 +73,7 @@ object ConfigManager {
                 silent = config.getBoolean("$commandPath.silent", false),
                 enabled = config.getBoolean("$commandPath.enabled", true),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", false),
-                successMessage = config.getString("$commandPath.successMessage") ?: "You run the command $commandTitle"
+                successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")!!
             )
 
             setCommand(commandConfig)
