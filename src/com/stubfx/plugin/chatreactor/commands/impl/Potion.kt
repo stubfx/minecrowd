@@ -8,16 +8,25 @@ import org.bukkit.potion.PotionEffectType
 object Potion : Command() {
 
     private val potions = listOf(*PotionEffectType.values())
-    private lateinit var selectedPotion: PotionEffectType
+    private lateinit var selectedPotion : PotionEffectType
+    // this is here just to avoid lateinit exeptions
+    // cause we are running on a separate thread, that means that the title
 
     override fun commandType(): CommandType = CommandType.POTION
 
-    override fun title(): String = selectedPotion.toString().replace("_", " ")
+    override fun defaultCoolDown(): Long {
+        return 1000 * 60
+    }
+
+    override fun title(): String = selectedPotion.name.replace("_", " ")
+
+    override fun preBehavior(playerName: String, options: String?) {
+        selectedPotion = potions.random()
+    }
 
     override fun behavior(playerName: String, options: String?) {
-        selectedPotion = potions.random()
         CommandRunner.forEachPlayer {
-            val levitation = selectedPotion.createEffect(ticks * 5, 3)
+            val levitation = selectedPotion.createEffect(ticks * 20, 3)
             it.addPotionEffect(levitation)
         }
     }

@@ -17,13 +17,13 @@ enum class CommandType {
     DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT,
     PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT,
     TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON,
-    COOKIES, SUPERTOOLS, MILK, POTION
+    COOKIES, SUPERTOOLS, MILK, POTION, LAVA
 
 }
 
 data class CommandResultWrapper(
     val name: CommandType,
-    val result: Boolean,
+    val result: Boolean, // true if the command has/will run. False otherwise
     val message: String,
 )
 
@@ -61,6 +61,20 @@ abstract class Command {
         return listOf()
     }
 
+    /**
+     * This method is called in the main thread that the command is running into, this is because the command behavior will
+     * run in a separate one. Usually the behavior runs after the title cause is scheduled in a Bukkit thread,
+     * this means that if we try to access some lateinit variables in the title function we will get an error.
+     *
+     * Remember to use this method if there are variables shared between the title and the behavior of the same command.
+     */
+    open fun preBehavior(playerName: String, options: String?) {
+        // congrats, do nothing!
+    }
+
+    /**
+     * This method is run in a separated Bukkit thread, therefore it usually runs after the title method.
+     */
     abstract fun behavior(playerName: String, options: String?)
 
     private fun showTitle(playerName: String) {
@@ -86,7 +100,7 @@ abstract class Command {
             lastRunEpoch = time
             println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
             run = true
-            runBehavior(playerName, options)
+            startCommandLifecycle(playerName, options)
             if (!isCommandSilent) showTitle(playerName)
         }
         val msg = if (!run) "@${playerName} ,${commandType()} command is in cooldown" else successMessage() ?: ""
@@ -95,14 +109,15 @@ abstract class Command {
 
     fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
-        runBehavior(playerName, options)
+        startCommandLifecycle(playerName, options)
         if (!isSilent) {
             showTitle(playerName)
         }
         return CommandResultWrapper(commandConfig.type, true, "")
     }
 
-    private fun runBehavior(playerName: String, options: String?) {
+    private fun startCommandLifecycle(playerName: String, options: String?) {
+        preBehavior(playerName, options)
         CommandRunner.runOnBukkit {
             behavior(playerName, options)
         }

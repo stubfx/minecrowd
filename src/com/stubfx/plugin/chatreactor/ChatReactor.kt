@@ -2,13 +2,17 @@ package com.stubfx.plugin.chatreactor
 
 import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
+import com.stubfx.plugin.PluginUtils
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
+import com.stubfx.plugin.chatreactor.commands.CommandType
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import java.io.IOException
 import java.net.InetSocketAddress
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class ChatReactor(main: Main) {
@@ -16,6 +20,8 @@ class ChatReactor(main: Main) {
     private var apiKey = ""
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
+    private val defaultCoolDown = 1000*60
+    private val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
     init {
         startServer()
@@ -84,7 +90,36 @@ class ChatReactor(main: Main) {
     }
 
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
-        return CommandFactory.run(command, playerName, options)
+        var resultWrapper = CommandResultWrapper(
+            CommandType.STUB, false,
+            "im sorry @$playerName, you are still in coolDown."
+        )
+        // is the user in coolDown
+        if (!isUserInCoolDown(playerName)) {
+            resultWrapper = CommandFactory.run(command, playerName, options)
+        }
+        // we don't know if the command has actually run, cause the user may have typed an unknown command
+        // therefore we don't want to add the user in the coolDown.
+        if (resultWrapper.result) {
+            PluginUtils.log("adding $playerName to the cooldown")
+            // in this case the command has run, we need to add the user to the coolDown list
+            playerCoolDownList[playerName] = Date().time
+        }
+        return resultWrapper
+    }
+
+    private fun isUserInCoolDown(playerName: String): Boolean {
+        val time = playerCoolDownList[playerName] ?: return false
+        // if the player exists, is the time expired?
+        if ((Date().time < time + defaultCoolDown)) {
+            // the user is still in coolDown.
+            // no update to the list needed.
+            return true
+        }
+        // in this case, the user is in the list but the coolDown is expired.
+        // so we remove the user from the list, and we return false.
+        playerCoolDownList.remove(playerName)
+        return false
     }
 
     fun onDisable() {

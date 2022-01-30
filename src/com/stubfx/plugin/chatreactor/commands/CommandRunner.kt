@@ -23,6 +23,10 @@ object CommandRunner {
         main.server.onlinePlayers.forEach { func(it) }
     }
 
+    fun forRandomPlayer(func: (player: Player) -> Unit) {
+        func(main.server.onlinePlayers.random())
+    }
+
     fun clearAllDroppedItems() {
         main.server.worlds.forEach{ world ->
             world.entities.forEach {
