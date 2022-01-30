@@ -37,23 +37,18 @@ object ConfigManager {
             // if ths file does not exist, then we need to create a new one.
             config = YamlConfiguration()
             PluginUtils.log("No config file found, generating a new one", LogType.WARNING)
-            generate()
         } else {
             // in this case the file exists then we need to just patch the commands.
             config = YamlConfiguration.loadConfiguration(file)
             PluginUtils.log("Plugin config loaded")
-            // here.
-            patchCommands()
-            // and then save ffs
-            save()
         }
+        // let's make sure the file is not corrupted.
+        patchFile()
     }
 
-    private fun generate() {
-        PluginUtils.log("Generating new plugin config")
-        generateApiKey()
+    private fun patchFile() {
+        patchApiKey()
         patchCommands()
-        PluginUtils.log("Plugin config generated")
         save()
     }
 
@@ -80,7 +75,11 @@ object ConfigManager {
         }
     }
 
-    private fun generateApiKey() {
+    private fun patchApiKey() {
+        if (config.getString(apiKey) != null) {
+            // apikey already exists, leave it be.
+            return
+        }
         val digest = MessageDigest.getInstance("SHA-256")
         val date = Date().time.toString().reversed()
         val newKey = digest.digest(date.toByteArray()).joinToString("") {
