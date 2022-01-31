@@ -18,11 +18,11 @@ object UpsideDown : Command() {
             val loc1 = it.location.subtract(distance, offset, distance)
             val loc2 = it.location.add(distance, 20.0 - (offset + 1) , distance)
             val targetHeight = it.location.y + 30
-            BlockReplacer.forEachBlock(loc1, loc2) { block ->
+            BlockReplacer.forEachBlockAsync(loc1, loc2, { block ->
                 val loc = block.location.clone()
                 loc.y = targetHeight - ((block.y - loc1.y))
                 loc.block.type = block.type
-            }
+            })
         }
         CommandRunner.clearAllDroppedItems()
     }
