@@ -8,7 +8,7 @@ import java.util.*
 import kotlin.random.Random
 
 enum class CommandType {
-    STUB, SPAWN, DROPIT, LEVITATE, FIRE, DIAMONDS, CHICKENS, KNOCK, PANIC, TREE, SPEEDY, HEAL, HUNGRY, FEED, WALLHACK, SUPERMAN, NORMALMAN, WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED, TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS, DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT, PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON, COOKIES, SUPERTOOLS, MILK, POTION, LAVA, SLOWNESS
+    STUB, SPAWN, DROPIT, LEVITATE, FIRE, DIAMONDS, CHICKENS, KNOCK, PANIC, TREE, SPEEDY, HEAL, HUNGRY, FEED, WALLHACK, SUPERMAN, NORMALMAN, WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED, TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS, DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT, PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON, COOKIES, SUPERTOOLS, MILK, POTION, LAVA, SLOWNESS, BEES
 
 }
 
@@ -39,7 +39,7 @@ abstract class Command {
         return 30 * 1000 // standard coolDown in seconds
     }
 
-    fun getCloseLocationFromPlayer(location: Location, radius: Double, below: Boolean = false): Location {
+    fun getCloseLocation(location: Location, radius: Double, below: Boolean = false): Location {
         val x = Random.nextDouble(-radius, radius)
         val y = Random.nextDouble(if (below) radius else 1.0, radius)
         val z = Random.nextDouble(-radius, radius)

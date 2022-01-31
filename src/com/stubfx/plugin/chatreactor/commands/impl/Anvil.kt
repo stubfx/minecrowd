@@ -16,7 +16,7 @@ object Anvil : Command() {
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {
             CommandRunner.forEachPlayer {
-                val closeLocation = getCloseLocationFromPlayer(it.location, 10.0)
+                val closeLocation = getCloseLocation(it.location, 10.0)
                 closeLocation.block.type = Material.ANVIL
             }
         }
