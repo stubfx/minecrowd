@@ -16,12 +16,13 @@ object OpenSpace : Command() {
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.clearAllDroppedItems()
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val loc1 = it.location.subtract(20.0, 0.0, 20.0)
             val loc2 = it.location.add(20.0, 20.0, 20.0)
-            BlockReplacer.replaceAreaExAir(loc1, loc2, Material.AIR)
+            BlockReplacer.replaceAreaAsync(loc1, loc2, Material.AIR) {
+                CommandRunner.clearAllDroppedItems()
+            }
         }
-        CommandRunner.clearAllDroppedItems()
     }
 
 }

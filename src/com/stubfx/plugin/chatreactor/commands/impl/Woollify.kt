@@ -21,7 +21,7 @@ object Woollify : Command() {
         CommandRunner.forEachPlayer {
             val loc1 = it.location.subtract(20.0, 20.0, 20.0)
             val loc2 = it.location.add(20.0, 20.0, 20.0)
-            BlockReplacer.replaceAreaExAir(loc1, loc2, wool.random())
+            BlockReplacer.replaceArea(loc1, loc2, wool.random())
         }
         // clear stuff on the ground, just to make sure.
         CommandRunner.clearAllDroppedItems()
