@@ -18,6 +18,7 @@ import kotlin.collections.HashMap
 class ChatReactor(main: Main) {
 
     private var apiKey = ""
+    private var serverPort : Int = 8001
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
     private val defaultCoolDown = 1000*60
@@ -29,11 +30,12 @@ class ChatReactor(main: Main) {
 
     private fun startServer() {
         apiKey = ConfigManager.getApiKey()
+        serverPort = ConfigManager.getServerPort()
         if (apiKey.isEmpty()) {
             println("Missing apiKey, chat reactor disabled.")
             return
         }
-        httpServerSocket = InetSocketAddress(8001)
+        httpServerSocket = InetSocketAddress(serverPort)
         httpserver = HttpServer.create(httpServerSocket, 0)
         httpserver?.createContext("/command", MyHandler(this))
         httpserver?.executor = null // creates a default executor

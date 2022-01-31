@@ -1,6 +1,7 @@
 package com.stubfx.plugin.chatreactor.commands.impl
 
 import com.stubfx.plugin.chatreactor.commands.Command
+import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
 import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.potion.PotionEffectType
@@ -20,8 +21,9 @@ object Potion : Command() {
 
     override fun title(): String = selectedPotion.name.replace("_", " ")
 
-    override fun preBehavior(playerName: String, options: String?) {
+    override fun setup(playerName: String, options: String?):CommandResultWrapper {
         selectedPotion = potions.random()
+        return super.setup(playerName, options)
     }
 
     override fun behavior(playerName: String, options: String?) {

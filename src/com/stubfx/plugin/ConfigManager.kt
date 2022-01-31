@@ -20,6 +20,8 @@ data class CommandConfig(
 object ConfigManager {
     private const val config_path = "plugins/stubfx_plugin/stubfx_plugin_config.yml"
     private const val apiKey = "apiKey"
+    private const val serverPort = "serverPort"
+    private const val defaultServerPort = 8001
     private lateinit var config: YamlConfiguration
 
     init {
@@ -48,8 +50,17 @@ object ConfigManager {
 
     private fun patchFile() {
         patchApiKey()
+        patchServerPort()
         patchCommands()
         save()
+    }
+
+    private fun patchServerPort() {
+        if (config.getString(serverPort) != null) {
+            // serverPort already exists, leave it be.
+            return
+        }
+        config.set(serverPort, defaultServerPort)
     }
 
     private fun patchCommands() {
@@ -85,7 +96,7 @@ object ConfigManager {
         val newKey = digest.digest(date.toByteArray()).joinToString("") {
             it.toUByte().toString(16).padStart(2, '0')
         }
-        config.set(apiKey, config.getString(apiKey, newKey))
+        config.set(apiKey, newKey)
     }
 
     private fun save() {
@@ -105,6 +116,11 @@ object ConfigManager {
     fun getApiKey() : String {
         // must exist.
         return config.getString(apiKey)!!
+    }
+
+    fun getServerPort(): Int {
+        // must exist.
+        return config.getInt(serverPort, 8001)!!
     }
 
     fun getCommand(commandType: CommandType): CommandConfig {
@@ -141,4 +157,5 @@ object ConfigManager {
     fun onDisable() {
 
     }
+
 }

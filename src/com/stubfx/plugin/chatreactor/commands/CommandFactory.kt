@@ -48,7 +48,7 @@ object CommandFactory {
     }
 
     fun getCommandOptions(commandType: CommandType): List<String> {
-        return commandMap[commandType]?.options() ?: StubCommand.options()
+        return commandMap[commandType]?.tabCompleterOptions() ?: StubCommand.tabCompleterOptions()
     }
 
     fun run(commandName: String, playerName: String, options: String?): CommandResultWrapper {
