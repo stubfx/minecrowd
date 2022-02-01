@@ -65,7 +65,7 @@ object BlockReplacer {
         }.runTaskTimer(main, 1, 2)
     }
 
-    fun chunkReplace(chunk: Chunk, material: Material, excluded: List<Material>? = null) {
+    fun chunkReplace(chunk: Chunk, material: Material, excluded: List<Material>? = null, onFinish: () -> Unit = {}) {
         // get location of the chunk
         // keep in mind that chunk.x gets the chunk index, not the world index,
         // so we need to extract the coordinates of the first block.
@@ -81,7 +81,7 @@ object BlockReplacer {
         main.server.consoleSender.sendMessage(start.toString())
         main.server.consoleSender.sendMessage(end.toString())
         main.server.consoleSender.sendMessage(material.toString())
-        replaceAreaAsync(start, end, material, excluded, true)
+        replaceAreaAsync(start, end, material, excluded, true, onFinish)
     }
 
     fun replaceArea(

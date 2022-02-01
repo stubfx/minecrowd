@@ -19,7 +19,9 @@ object ClearChunk : Command() {
         CommandRunner.clearAllDroppedItems()
         CommandRunner.forRandomPlayer {
             val chunk = it.location.chunk
-            BlockReplacer.chunkReplace(chunk, Material.AIR)
+            BlockReplacer.chunkReplace(chunk, Material.AIR) {
+                CommandRunner.clearAllDroppedItems()
+            }
         }
     }
 
