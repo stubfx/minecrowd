@@ -9,7 +9,7 @@ import org.bukkit.entity.EntityType
 object Spawn : Command() {
 
     override fun commandType(): CommandType = CommandType.SPAWN
-    lateinit var mobToSpawn : EntityType
+    private var mobToSpawn : EntityType = EntityType.CREEPER
     private val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL)
 
     override fun tabCompleterOptions(): List<String> {

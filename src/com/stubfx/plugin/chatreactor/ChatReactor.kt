@@ -22,7 +22,7 @@ class ChatReactor(main: Main) {
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
     private val defaultCoolDown = 1000*60
-    private val playerCoolDownList: HashMap<String, Long> = hashMapOf()
+    val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
     init {
         startServer()
@@ -60,6 +60,10 @@ class ChatReactor(main: Main) {
                 if (command == "help") {
                     // then the user wants the list of commands
                     reply = CommandFactory.getAvailableCommandsNames().joinToString(", ").lowercase()
+//                } else if (command == "cooldown") {
+//                    // get the player from the list
+//                    val playerTime = ref.playerCoolDownList[playerName]
+//                    reply = "@${playerName}, your will be in coolDown for ${playerTime}"
                 } else {
                     val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
                     if (!chatCommandResolve.result) {
