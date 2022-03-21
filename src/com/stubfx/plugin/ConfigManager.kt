@@ -18,9 +18,14 @@ data class CommandConfig(
 )
 
 object ConfigManager {
+    private const val reactorPath: String = "chatreactor."
+    private const val reactorCommandPath: String = "${reactorPath}.commands."
+    private const val discordCommandPath: String = "discord."
+    private const val discordCommandEnable: String = "$discordCommandPath.discord-webook-enable"
+    private const val discordCommandWebhook: String = "$discordCommandPath.discord-webook"
     private const val config_path = "plugins/stubfx_plugin/stubfx_plugin_config.yml"
     private const val apiKey = "apiKey"
-    private const val serverPort = "serverPort"
+    private const val serverPort = "${reactorPath}.serverPort"
     private const val defaultServerPort = 8001
     private lateinit var config: YamlConfiguration
 
@@ -50,8 +55,9 @@ object ConfigManager {
 
     private fun patchFile() {
         patchApiKey()
+        patchDiscordWebhooks()
         patchServerPort()
-        patchCommands()
+        patchChatReactor()
         save()
     }
 
@@ -63,14 +69,17 @@ object ConfigManager {
         config.set(serverPort, defaultServerPort)
     }
 
-    private fun patchCommands() {
+    private fun patchChatReactor() {
+        if (config.getString(apiKey) == null) {
+            config.set("$reactorPath.enable", false)
+        }
         val commands = CommandFactory.getAvailableCommands()
         PluginUtils.log("Patching commands")
 
         commands.forEach {
             val command = it.commandType().toString().lowercase()
             val commandTitle = command.replaceFirstChar { c -> c.uppercase() }
-            val commandPath = "commands.$command"
+            val commandPath = "$reactorCommandPath$command"
 
             val commandConfig = CommandConfig(
                 type = it.commandType(),
@@ -99,6 +108,13 @@ object ConfigManager {
         config.set(apiKey, newKey)
     }
 
+    private fun patchDiscordWebhooks() {
+        if (config.getString(discordCommandEnable) == null) {
+            config.set(discordCommandEnable, false)
+            config.set(discordCommandWebhook, "https://discord.com/api/webhooks/234234234234234234/fasfsdafasdfdsafsdafadsfasd")
+        }
+    }
+
     private fun save() {
         // loading config file
         val file = File(config_path)
@@ -125,7 +141,7 @@ object ConfigManager {
 
     fun getCommand(commandType: CommandType): CommandConfig {
         val command: String = commandType.toString().lowercase()
-        val commandPath = "commands.$command"
+        val commandPath = "$reactorCommandPath$command"
         return CommandConfig(
             commandType,
             config.getString("$commandPath.title") ?: command,
@@ -144,7 +160,7 @@ object ConfigManager {
 
     private fun setCommand(commandConfig: CommandConfig) {
         val commandName: String = commandConfig.type.toString().lowercase()
-        val commandPath = "commands.$commandName"
+        val commandPath = "$reactorCommandPath$commandName"
 
         config.set("$commandPath.title", commandConfig.title)
         config.set("$commandPath.cooldown", (commandConfig.coolDown / 1000).toInt())
@@ -156,6 +172,18 @@ object ConfigManager {
 
     fun onDisable() {
 
+    }
+
+    fun isChatReactorEnabled() : Boolean {
+        return config.getBoolean("$reactorPath.enable", false)
+    }
+
+    fun isDiscordWebhookEnabled(): Boolean {
+        return config.getBoolean(discordCommandEnable, false)
+    }
+
+    fun getDiscordWebhook(): String {
+        return config.getString(discordCommandWebhook, "")!!
     }
 
 }

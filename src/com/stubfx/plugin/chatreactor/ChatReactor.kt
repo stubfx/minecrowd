@@ -15,7 +15,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-class ChatReactor(main: Main) {
+object ChatReactor {
 
     private var apiKey = ""
     private var serverPort : Int = 8001
@@ -24,9 +24,7 @@ class ChatReactor(main: Main) {
     private val defaultCoolDown = 1000*60
     val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
-    init {
-        startServer()
-    }
+
 
     private fun startServer() {
         apiKey = ConfigManager.getApiKey()
@@ -98,7 +96,7 @@ class ChatReactor(main: Main) {
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
         var resultWrapper = CommandResultWrapper(
             CommandType.STUB, false,
-            "im sorry @$playerName, you are still in coolDown."
+            "im sorry @$playerName, you are still in cooldown."
         )
         // is the user in coolDown
         if (!isUserInCoolDown(playerName)) {
@@ -126,6 +124,10 @@ class ChatReactor(main: Main) {
         // so we remove the user from the list, and we return false.
         playerCoolDownList.remove(playerName)
         return false
+    }
+
+    fun onEnable() {
+        startServer()
     }
 
     fun onDisable() {

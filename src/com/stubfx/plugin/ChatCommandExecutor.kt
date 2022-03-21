@@ -8,15 +8,18 @@ import org.bukkit.command.CommandSender
 object ChatCommandExecutor {
 
     fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
+        if (!ConfigManager.isChatReactorEnabled()) {
+            return false
+        }
         when (command.name.lowercase()) {
             "command" -> {
-                onCommandConfigUpdate(sender, command, label, args)
+                onCommandConfigUpdate(sender, args)
             }
         }
         return false
     }
 
-    private fun onCommandConfigUpdate(sender: CommandSender, command: Command, label: String, args: Array<String>) {
+    private fun onCommandConfigUpdate(sender: CommandSender, args: Array<String>) {
         val commandType = CommandType.valueOf(args[0])
         // first of all, get current command config.
         val commandConfig = ConfigManager.getCommand(commandType)

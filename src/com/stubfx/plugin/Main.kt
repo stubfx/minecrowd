@@ -2,19 +2,26 @@ package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.ChatReactor
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
+import com.stubfx.plugin.discord.DiscordModule
+import com.stubfx.plugin.listeners.ChatListener
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 
 
 class Main : JavaPlugin() {
-    private var chatReactor = ChatReactor(this)
 
     override fun onEnable() {
+        DiscordModule.onEnable()
+        ChatReactor.onEnable()
+        // shall we start the chatReactor?
+        if (ConfigManager.isChatReactorEnabled()) {
+            getCommand("command")?.tabCompleter = CommandTabCompleter()
+        }
+        // is chat reactor enabled?
 //        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
-        getCommand("command")?.tabCompleter = CommandTabCompleter()
-//        server.pluginManager.registerEvents(PlayerListener(this), this)
+        server.pluginManager.registerEvents(ChatListener(this), this)
 //        server.pluginManager.registerEvents(EntityListener(this), this)
 //        server.pluginManager.registerEvents(ProjectileListener(this), this)
         CommandRunner.setMainRef(this)
@@ -27,12 +34,14 @@ class Main : JavaPlugin() {
     }
 
     override fun onDisable() {
-        chatReactor.onDisable()
+        ChatReactor.onDisable()
+        DiscordModule.onDisable()
         ConfigManager.onDisable()
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-        return ChatCommandExecutor.onCommand(sender, command, label, args)
+        ChatCommandExecutor.onCommand(sender, command, label, args)
+        return true
     }
 
 }
