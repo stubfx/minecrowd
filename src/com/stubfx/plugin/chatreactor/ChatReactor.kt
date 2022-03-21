@@ -18,15 +18,15 @@ import kotlin.collections.HashMap
 object ChatReactor {
 
     private var apiKey = ""
-    private var serverPort : Int = 8001
+    private var serverPort: Int = 8001
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
-    private val defaultCoolDown = 1000*60
+    private val defaultCoolDown = 1000 * 60
     val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
 
-
     private fun startServer() {
+        if (!ConfigManager.isChatReactorEnabled()) return
         apiKey = ConfigManager.getApiKey()
         serverPort = ConfigManager.getServerPort()
         if (apiKey.isEmpty()) {
