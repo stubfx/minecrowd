@@ -101,7 +101,7 @@ object ChatReactor {
         )
         // is the user in coolDown
         // no, i won't be in cooldown.
-        if (!Utils.isHeAGod(playerName) && !isUserInCoolDown(playerName)) {
+        if (Utils.isHeAGod(playerName) || !isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
         }
         // we don't know if the command has actually run, cause the user may have typed an unknown command
