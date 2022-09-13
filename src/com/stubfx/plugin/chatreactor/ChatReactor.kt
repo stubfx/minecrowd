@@ -3,6 +3,7 @@ package com.stubfx.plugin.chatreactor
 import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
 import com.stubfx.plugin.PluginUtils
+import com.stubfx.plugin.Utils
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import com.stubfx.plugin.chatreactor.commands.CommandType
@@ -99,12 +100,13 @@ object ChatReactor {
             "im sorry @$playerName, you are still in cooldown."
         )
         // is the user in coolDown
-        if (!isUserInCoolDown(playerName)) {
+        // no, i won't be in cooldown.
+        if (!Utils.isHeAGod(playerName) && !isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
         }
         // we don't know if the command has actually run, cause the user may have typed an unknown command
         // therefore we don't want to add the user in the coolDown.
-        if (resultWrapper.result) {
+        if (!Utils.isHeAGod(playerName) && resultWrapper.result) {
             PluginUtils.log("adding $playerName to the cooldown")
             // in this case the command has run, we need to add the user to the coolDown list
             playerCoolDownList[playerName] = Date().time

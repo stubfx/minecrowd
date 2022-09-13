@@ -3,6 +3,7 @@ package com.stubfx.plugin.chatreactor.commands
 import com.stubfx.plugin.CommandConfig
 import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.Main
+import com.stubfx.plugin.Utils
 import org.bukkit.Location
 import java.util.*
 import kotlin.random.Random
@@ -57,25 +58,28 @@ abstract class Command {
     ): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandType())
         val isCommandSilent: Boolean = isSilent
-        coolDown = commandConfig.coolDown
-        val time = Date().time
-        if (!isEnabled()) {
-            // command is not enabled.
-            return resultWrapper(false, "@$playerName command ${commandType().name.lowercase()} is not enabled.")
+        // yep, all this stuff applies to everybody, but not to me <3
+        if (!Utils.isHeAGod(playerName)) {
+            coolDown = commandConfig.coolDown
+            val time = Date().time
+            if (!isEnabled()) {
+                // command is not enabled.
+                return resultWrapper(false, "@$playerName command ${commandType().name.lowercase()} is not enabled.")
+            }
+            if (isInCoolDown()) {
+                // command is in coolDown
+                return resultWrapper(false, "@${playerName} ,${commandType()} command is in coolDown")
+            }
+            val setupResult = setup(playerName, options)
+            if (!setupResult.result) {
+                return setupResult
+            }
+            // update last run epoch
+            lastRunEpoch = time
+            // print in console cause why not
+            println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
+            // is this a silent fart that will kill someone?
         }
-        if (isInCoolDown()) {
-            // command is in coolDown
-            return resultWrapper(false, "@${playerName} ,${commandType()} command is in coolDown")
-        }
-        val setupResult = setup(playerName, options)
-        if (!setupResult.result) {
-            return setupResult
-        }
-        // update last run epoch
-        lastRunEpoch = time
-        // print in console cause why not
-        println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
-        // is this a silent fart that will kill someone?
         if (!isCommandSilent) showTitle(playerName)
         // aight, now we need to schedule the command
         startCommandBehavior(playerName, options)
