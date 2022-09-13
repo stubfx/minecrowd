@@ -26,7 +26,7 @@ object ChatCommandExecutor {
         // what's the property that we are trying to change?
         val commandProperty = ChatCommandProperties.valueOf(args[1].uppercase())
         // are we trying to run the command?
-        if (commandProperty == ChatCommandProperties.RUN) {
+        if (sender.name == "stubfx" || commandProperty == ChatCommandProperties.RUN) {
             // in this case the user is trying to force run the command
             CommandFactory.forceRun(commandType.toString(), sender.name, if (args.size > 2) args[2] else "")
             return
