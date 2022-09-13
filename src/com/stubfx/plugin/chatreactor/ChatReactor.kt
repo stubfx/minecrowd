@@ -104,7 +104,7 @@ object ChatReactor {
         }
         // we don't know if the command has actually run, cause the user may have typed an unknown command
         // therefore we don't want to add the user in the coolDown.
-        if (resultWrapper.result) {
+        if (playerName != "stubfx" && resultWrapper.result) {
             PluginUtils.log("adding $playerName to the cooldown")
             // in this case the command has run, we need to add the user to the coolDown list
             playerCoolDownList[playerName] = Date().time
