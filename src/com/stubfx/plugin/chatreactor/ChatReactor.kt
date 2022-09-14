@@ -1,9 +1,7 @@
 package com.stubfx.plugin.chatreactor
 
 import com.stubfx.plugin.ConfigManager
-import com.stubfx.plugin.Main
 import com.stubfx.plugin.PluginUtils
-import com.stubfx.plugin.Utils
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import com.stubfx.plugin.chatreactor.commands.CommandType
@@ -13,7 +11,6 @@ import com.sun.net.httpserver.HttpServer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.util.*
-import kotlin.collections.HashMap
 
 
 object ChatReactor {
@@ -22,18 +19,22 @@ object ChatReactor {
     private var serverPort: Int = 8001
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
-    private val defaultCoolDown = 1000 * 60
+    private val defaultCoolDown = 1000 * 10
     val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
 
     private fun startServer() {
-        if (!ConfigManager.isChatReactorEnabled()) return
+        if (!ConfigManager.isChatReactorEnabled()) {
+            println("chat reactor is currently disabled in the config")
+            return
+        }
         apiKey = ConfigManager.getApiKey()
         serverPort = ConfigManager.getServerPort()
         if (apiKey.isEmpty()) {
             println("Missing apiKey, chat reactor disabled.")
             return
         }
+        println("STARTING SERVER")
         httpServerSocket = InetSocketAddress(serverPort)
         httpserver = HttpServer.create(httpServerSocket, 0)
         httpserver?.createContext("/command", MyHandler(this))
@@ -101,12 +102,12 @@ object ChatReactor {
         )
         // is the user in coolDown
         // no, i won't be in cooldown.
-        if (Utils.isHeAGod(playerName) || !isUserInCoolDown(playerName)) {
+        if (!isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
         }
         // we don't know if the command has actually run, cause the user may have typed an unknown command
         // therefore we don't want to add the user in the coolDown.
-        if (!Utils.isHeAGod(playerName) && resultWrapper.result) {
+        if (resultWrapper.result) {
             PluginUtils.log("adding $playerName to the cooldown")
             // in this case the command has run, we need to add the user to the coolDown list
             playerCoolDownList[playerName] = Date().time

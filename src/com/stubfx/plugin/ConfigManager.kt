@@ -72,6 +72,8 @@ object ConfigManager {
     private fun patchChatReactor() {
         if (config.getString(apiKey) == null) {
             config.set("$reactorPath.enable", false)
+        } else {
+            config.set("$reactorPath.enable", true)
         }
         val commands = CommandFactory.getAvailableCommands()
         PluginUtils.log("Patching commands")

@@ -45,6 +45,9 @@ object PluginUtils {
         Bukkit.getConsoleSender().sendMessage("$color[stubFXplugin] $msg")
     }
 
+    fun teleportToEnd(entity : Entity) {
+        entity.teleport(main.server.getWorld("world_end")?.spawnLocation ?: entity.location)
+    }
     fun teleportToNether(entity : Entity) {
         entity.teleport(main.server.getWorld("world_nether")?.spawnLocation ?: entity.location)
     }

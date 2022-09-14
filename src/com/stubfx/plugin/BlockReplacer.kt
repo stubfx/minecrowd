@@ -81,7 +81,7 @@ object BlockReplacer {
         main.server.consoleSender.sendMessage(start.toString())
         main.server.consoleSender.sendMessage(end.toString())
         main.server.consoleSender.sendMessage(material.toString())
-        replaceAreaAsync(start, end, material, excluded, true, onFinish)
+        replaceAreaAsync(start, end, material, excluded, excludeAir = true, onFinish = onFinish)
     }
 
     fun replaceArea(
@@ -112,11 +112,16 @@ object BlockReplacer {
         loc2: Location,
         material: Material,
         excluded: List<Material>? = null,
+        onlyIfIsTypeOf: List<Material> = mutableListOf(),
         excludeAir: Boolean = true,
         onFinish: () -> Unit = {}
     ) {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         forEachBlockAsync(loc1, loc2, { block ->
+            if (onlyIfIsTypeOf.isNotEmpty()) {
+                // in this case we must replace only if the material is in the list.
+                if (!onlyIfIsTypeOf.contains(block.type)) return@forEachBlockAsync
+            }
             if (excludeAir && block.type.isAir) return@forEachBlockAsync
             if (excluded?.contains(block.type) != true) {
                 // well, that's not even in the excluded list...
