@@ -16,7 +16,11 @@
 
     </target>
 
-
+<!--    <target name="documentation">-->
+<!--        <fileset dir="src/com/stubfx/plugin/chatreactor/commands/impl/">-->
+<!--            <include name="**/*.kt"/>-->
+<!--        </fileset>-->
+<!--    </target>-->
     <!-- set global properties for this build -->
     <!--    <property name="src" location="src"/>-->
     <!--    <property name="build" location="build"/>-->
