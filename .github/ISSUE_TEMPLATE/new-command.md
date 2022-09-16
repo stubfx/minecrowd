@@ -7,7 +7,7 @@ assignees: stubFX
 
 ---
 
-Command name : 
+Command name :
 *write here the new command name*
 Command behavior:
 *Desired behavior*

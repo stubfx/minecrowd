@@ -4,8 +4,6 @@
     </description>
 
 
-
-
     <property name="plugin" location="plugin.yml"/>
 
     <target name="init">
@@ -19,41 +17,37 @@
     </target>
 
 
-
-
-
-
     <!-- set global properties for this build -->
-<!--    <property name="src" location="src"/>-->
-<!--    <property name="build" location="build"/>-->
-<!--    <property name="dist" location="dist"/>-->
+    <!--    <property name="src" location="src"/>-->
+    <!--    <property name="build" location="build"/>-->
+    <!--    <property name="dist" location="dist"/>-->
 
-<!--    <target name="init">-->
-<!--        &lt;!&ndash; Create the time stamp &ndash;&gt;-->
-<!--        <tstamp/>-->
-<!--        &lt;!&ndash; Create the build directory structure used by compile &ndash;&gt;-->
-<!--        <mkdir dir="${build}"/>-->
-<!--    </target>-->
+    <!--    <target name="init">-->
+    <!--        &lt;!&ndash; Create the time stamp &ndash;&gt;-->
+    <!--        <tstamp/>-->
+    <!--        &lt;!&ndash; Create the build directory structure used by compile &ndash;&gt;-->
+    <!--        <mkdir dir="${build}"/>-->
+    <!--    </target>-->
 
-<!--    <target name="compile" depends="init"-->
-<!--            description="compile the source">-->
-<!--        &lt;!&ndash; Compile the Java code from ${src} into ${build} &ndash;&gt;-->
-<!--        <javac srcdir="${src}" destdir="${build}"/>-->
-<!--    </target>-->
+    <!--    <target name="compile" depends="init"-->
+    <!--            description="compile the source">-->
+    <!--        &lt;!&ndash; Compile the Java code from ${src} into ${build} &ndash;&gt;-->
+    <!--        <javac srcdir="${src}" destdir="${build}"/>-->
+    <!--    </target>-->
 
-<!--    <target name="dist" depends="compile"-->
-<!--            description="generate the distribution">-->
-<!--        &lt;!&ndash; Create the distribution directory &ndash;&gt;-->
-<!--        <mkdir dir="${dist}/lib"/>-->
+    <!--    <target name="dist" depends="compile"-->
+    <!--            description="generate the distribution">-->
+    <!--        &lt;!&ndash; Create the distribution directory &ndash;&gt;-->
+    <!--        <mkdir dir="${dist}/lib"/>-->
 
-<!--        &lt;!&ndash; Put everything in ${build} into the MyProject-${DSTAMP}.jar file &ndash;&gt;-->
-<!--        <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>-->
-<!--    </target>-->
+    <!--        &lt;!&ndash; Put everything in ${build} into the MyProject-${DSTAMP}.jar file &ndash;&gt;-->
+    <!--        <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>-->
+    <!--    </target>-->
 
-<!--    <target name="clean"-->
-<!--            description="clean up">-->
-<!--        &lt;!&ndash; Delete the ${build} and ${dist} directory trees &ndash;&gt;-->
-<!--        <delete dir="${build}"/>-->
-<!--        <delete dir="${dist}"/>-->
-<!--    </target>-->
+    <!--    <target name="clean"-->
+    <!--            description="clean up">-->
+    <!--        &lt;!&ndash; Delete the ${build} and ${dist} directory trees &ndash;&gt;-->
+    <!--        <delete dir="${build}"/>-->
+    <!--        <delete dir="${dist}"/>-->
+    <!--    </target>-->
 </project>

@@ -4,7 +4,7 @@ import com.stubfx.plugin.ConfigManager
 import com.stubfx.plugin.PluginUtils
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
-import com.stubfx.plugin.chatreactor.commands.CommandType
+import com.stubfx.plugin.chatreactor.commands.StubCommand
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
@@ -57,18 +57,9 @@ object ChatReactor {
                 val command = params["command"]!!
                 val playerName = params["name"]!!
                 val options = params["options"]
-                if (command == "help") {
-                    // then the user wants the list of commands
-                    reply = CommandFactory.getAvailableCommandsNames().joinToString(", ").lowercase()
-//                } else if (command == "cooldown") {
-//                    // get the player from the list
-//                    val playerTime = ref.playerCoolDownList[playerName]
-//                    reply = "@${playerName}, your will be in coolDown for ${playerTime}"
-                } else {
-                    val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
-                    if (!chatCommandResolve.result) {
-                        reply = chatCommandResolve.message
-                    }
+                val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
+                if (chatCommandResolve.showResultMessage) {
+                    reply = chatCommandResolve.message
                 }
                 if (reply.isEmpty()) {
                     // the command has run.
@@ -97,11 +88,10 @@ object ChatReactor {
 
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
         var resultWrapper = CommandResultWrapper(
-            CommandType.STUB, false,
+            StubCommand.commandName(), false,
             "im sorry @$playerName, you are still in cooldown."
         )
         // is the user in coolDown
-        // no, i won't be in cooldown.
         if (!isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
         }

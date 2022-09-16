@@ -3,14 +3,14 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandResultWrapper
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
-import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.entity.EntityType
 
 object Spawn : Command() {
 
-    override fun commandType(): CommandType = CommandType.SPAWN
-    private var mobToSpawn : EntityType = EntityType.CREEPER
-    private val blacklist = listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN)
+
+    private var mobToSpawn: EntityType = EntityType.CREEPER
+    private val blacklist =
+        listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN)
 
     override fun tabCompleterOptions(): List<String> {
         return EntityType.values().map { it.toString() }

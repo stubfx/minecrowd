@@ -7,18 +7,15 @@ import org.bukkit.Location
 import java.util.*
 import kotlin.random.Random
 
-enum class CommandType {
-    STUB, SPAWN, DROPIT, LEVITATE, FIRE, DIAMONDS, CHICKENS, KNOCK, PANIC, TREE, SPEEDY, HEAL, HUNGRY, FEED, WALLHACK, SUPERMAN, NORMALMAN, WATER, WOOLLIFY, RANDOMBLOCK, NEVERFALL, ARMORED, TOTHENETHER, TOTHEOVERWORLD, BOB, NUKEMOBS, DINNERBONE, CRAFTINGTABLE, ANVIL, IHAVEIT, PAINT, GOINGDOWN, NOCHUNKNOPARTY, THATSTNT, TUNNELTIME, OPENSPACE, UPSIDEDOWN, ONTHEMOON, COOKIES, SUPERTOOLS, MILK, POTION, LAVA, SLOWNESS, BEES, ENDFRAME, WATERISLAVA
-}
-
 data class CommandResultWrapper(
-    val name: CommandType,
+    val name: String,
     val result: Boolean, // true if the command has/will run. False otherwise
     val message: String,
+    val showResultMessage: Boolean = false,
 )
 
 abstract class Command {
-
+    open val showSuccessMessage: Boolean? = null
     var ticks = 20 // this is supposed to be a minecraft constant.
     private lateinit var commandConfig: CommandConfig
     var coolDown: Long = 0 // will be overridden by defaultCoolDown function
@@ -33,6 +30,10 @@ abstract class Command {
         // as we want fresh data on every run cause the player may have updated it.
     }
 
+    fun commandName(): String {
+        return this::class.toString().substringAfterLast(".")
+    }
+
 
     open fun defaultCoolDown(): Long {
         return 30 * 1000 // standard coolDown in seconds
@@ -45,8 +46,6 @@ abstract class Command {
         return location.add(x, y, z)
     }
 
-    abstract fun commandType(): CommandType
-
     open fun tabCompleterOptions(): List<String> {
         return listOf()
     }
@@ -54,17 +53,17 @@ abstract class Command {
     private fun checkAndSchedule(
         playerName: String, options: String?, isSilent: Boolean = false
     ): CommandResultWrapper {
-        commandConfig = ConfigManager.getCommand(this.commandType())
+        commandConfig = ConfigManager.getCommand(this.commandName())
         val isCommandSilent: Boolean = isSilent
         coolDown = commandConfig.coolDown
         val time = Date().time
         if (!isEnabled()) {
             // command is not enabled.
-            return resultWrapper(false, "@$playerName command ${commandType().name.lowercase()} is not enabled.")
+            return resultWrapper(false, "@$playerName command ${commandName().lowercase()} is not enabled.")
         }
         if (isInCoolDown()) {
             // command is in coolDown
-            return resultWrapper(false, "@${playerName} ,${commandType()} command is in coolDown")
+            return resultWrapper(false, "@${playerName} ,${commandName()} command is in coolDown")
         }
         val setupResult = setup(playerName, options)
         if (!setupResult.result) {
@@ -73,13 +72,14 @@ abstract class Command {
         // update last run epoch
         lastRunEpoch = time
         // print in console cause why not
-        println("[ChatReactor] : Running command ${commandType()} - silent: $isCommandSilent")
+        println("[ChatReactor] : Running command ${commandName()} - silent: $isCommandSilent")
         // is this a silent fart that will kill someone?
         if (!isCommandSilent) showTitle(playerName)
         // aight, now we need to schedule the command
         startCommandBehavior(playerName, options)
         // command will run in the next tick (usually 1/20 of a sec)
-        return CommandResultWrapper(commandConfig.type, true, successMessage())
+        return CommandResultWrapper(commandConfig.name, true, successMessage(),
+            showSuccessMessage ?: commandConfig.showSuccessMessage)
     }
 
     /**
@@ -121,13 +121,13 @@ abstract class Command {
     }
 
     fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
-        commandConfig = ConfigManager.getCommand(this.commandType())
+        commandConfig = ConfigManager.getCommand(this.commandName())
         // no checks, just party up!
         startCommandBehavior(playerName, options)
         if (!isSilent) {
             showTitle(playerName)
         }
-        return CommandResultWrapper(commandConfig.type, true, "")
+        return CommandResultWrapper(commandConfig.name, true, "")
     }
 
     private fun startCommandBehavior(playerName: String, options: String?) {
@@ -137,7 +137,7 @@ abstract class Command {
     }
 
     fun resultWrapper(result: Boolean, msg: String): CommandResultWrapper {
-        return CommandResultWrapper(commandType(), result, msg)
+        return CommandResultWrapper(commandName(), result, msg)
     }
 
 }

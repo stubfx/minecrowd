@@ -1,14 +1,13 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
-import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.security.MessageDigest
 import java.util.*
 
 data class CommandConfig(
-    val type: CommandType,
+    val name: String,
     var title: String,
     var coolDown: Long,
     var silent: Boolean,
@@ -32,7 +31,7 @@ object ConfigManager {
     init {
         try {
             load()
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -79,17 +78,17 @@ object ConfigManager {
         PluginUtils.log("Patching commands")
 
         commands.forEach {
-            val command = it.commandType().toString().lowercase()
+            val command = it.commandName()
             val commandTitle = command.replaceFirstChar { c -> c.uppercase() }
             val commandPath = "$reactorCommandPath$command"
 
             val commandConfig = CommandConfig(
-                type = it.commandType(),
+                name = it.commandName(),
                 title = config.getString("$commandPath.title", commandTitle)!!,
                 coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
                 enabled = config.getBoolean("$commandPath.enabled", true),
-                showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", false),
+                showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", it.showSuccessMessage ?: false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")!!
             )
 
@@ -113,7 +112,10 @@ object ConfigManager {
     private fun patchDiscordWebhooks() {
         if (config.getString(discordCommandEnable) == null) {
             config.set(discordCommandEnable, false)
-            config.set(discordCommandWebhook, "https://discord.com/api/webhooks/234234234234234234/fasfsdafasdfdsafsdafadsfasd")
+            config.set(
+                discordCommandWebhook,
+                "https://discord.com/api/webhooks/234234234234234234/fasfsdafasdfdsafsdafadsfasd"
+            )
         }
     }
 
@@ -131,18 +133,18 @@ object ConfigManager {
         PluginUtils.log("Plugin config saved")
     }
 
-    fun getApiKey() : String {
+    fun getApiKey(): String {
         // must exist.
         return config.getString(apiKey)!!
     }
 
     fun getServerPort(): Int {
         // must exist.
-        return config.getInt(serverPort, 8001)!!
+        return config.getInt(serverPort, 8001)
     }
 
-    fun getCommand(commandType: CommandType): CommandConfig {
-        val command: String = commandType.toString().lowercase()
+    fun getCommand(commandType: String): CommandConfig {
+        val command: String = commandType.lowercase()
         val commandPath = "$reactorCommandPath$command"
         return CommandConfig(
             commandType,
@@ -161,7 +163,7 @@ object ConfigManager {
     }
 
     private fun setCommand(commandConfig: CommandConfig) {
-        val commandName: String = commandConfig.type.toString().lowercase()
+        val commandName: String = commandConfig.name.lowercase()
         val commandPath = "$reactorCommandPath$commandName"
 
         config.set("$commandPath.title", commandConfig.title)
@@ -176,7 +178,7 @@ object ConfigManager {
 
     }
 
-    fun isChatReactorEnabled() : Boolean {
+    fun isChatReactorEnabled(): Boolean {
         return config.getBoolean("$reactorPath.enable", false)
     }
 

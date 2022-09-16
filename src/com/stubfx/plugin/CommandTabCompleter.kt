@@ -31,12 +31,18 @@ class CommandTabCompleter : TabCompleter {
         Pair(ChatCommandProperties.SUCCESSMESSAGE, OptionType.STRING),
     )
 
-    override fun onTabComplete(commandSender: CommandSender, command: Command, s: String, strings: Array<String>): List<String> {
+    override fun onTabComplete(
+        commandSender: CommandSender,
+        command: Command,
+        s: String,
+        strings: Array<String>
+    ): List<String> {
         return try {
             when (strings.size) {
                 1 -> CommandFactory.getAvailableCommands()
-                    .map { it.commandType().toString() }
+                    .map { it.commandName().toString() }
                     .filter { it.lowercase().contains(strings[0].lowercase()) }
+
                 2 -> ChatCommandProperties.values().map { it.toString().lowercase() }
                 3 -> optionByPreviousCommand(strings[2], strings[1], CommandFactory.getCommandOptions(strings[0]))
                 else -> listOf("")
@@ -47,7 +53,11 @@ class CommandTabCompleter : TabCompleter {
         }
     }
 
-    private fun optionByPreviousCommand(currentInput: String, prevOption: String, commandOptions: List<String>): List<String> {
+    private fun optionByPreviousCommand(
+        currentInput: String,
+        prevOption: String,
+        commandOptions: List<String>
+    ): List<String> {
         return when (options[ChatCommandProperties.valueOf(prevOption.uppercase())]) {
             OptionType.BOOLEAN -> listOf("true", "false")
             OptionType.RUN -> commandOptions.filter { it.lowercase().contains(currentInput.lowercase()) }

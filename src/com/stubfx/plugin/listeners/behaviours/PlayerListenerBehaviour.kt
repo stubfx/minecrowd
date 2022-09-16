@@ -30,6 +30,7 @@ object PlayerListenerBehaviour {
                     if (player.gameMode != GameMode.CREATIVE) player.inventory.itemInMainHand.amount -= 1
                 }
             }
+
             else -> {
                 // just do nothing for the moment.
             }

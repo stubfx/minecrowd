@@ -1,7 +1,6 @@
 package com.stubfx.plugin
 
 import com.stubfx.plugin.chatreactor.commands.CommandFactory
-import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
@@ -20,15 +19,15 @@ object ChatCommandExecutor {
     }
 
     private fun onCommandConfigUpdate(sender: CommandSender, args: Array<String>) {
-        val commandType = CommandType.valueOf(args[0])
+        val commandName = args[0]
         // first of all, get current command config.
-        val commandConfig = ConfigManager.getCommand(commandType)
+        val commandConfig = ConfigManager.getCommand(commandName)
         // what's the property that we are trying to change?
         val commandProperty = ChatCommandProperties.valueOf(args[1].uppercase())
         // are we trying to run the command?
         if (commandProperty == ChatCommandProperties.RUN) {
             // in this case the user is trying to force run the command
-            CommandFactory.forceRun(commandType.toString(), sender.name, if (args.size > 2) args[2] else "")
+            CommandFactory.forceRun(commandName.toString(), sender.name, if (args.size > 2) args[2] else "")
             return
         }
         if (args.size < 3) {

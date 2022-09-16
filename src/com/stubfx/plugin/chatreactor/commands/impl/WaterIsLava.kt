@@ -3,12 +3,10 @@ package com.stubfx.plugin.chatreactor.commands.impl
 import com.stubfx.plugin.BlockReplacer
 import com.stubfx.plugin.chatreactor.commands.Command
 import com.stubfx.plugin.chatreactor.commands.CommandRunner
-import com.stubfx.plugin.chatreactor.commands.CommandType
 import org.bukkit.Material
 
 object WaterIsLava : Command() {
 
-    override fun commandType(): CommandType = CommandType.WATERISLAVA
 
     override fun defaultCoolDown(): Long {
         return 600 * 1000 // 10 min coolDown
@@ -20,7 +18,7 @@ object WaterIsLava : Command() {
         CommandRunner.forRandomPlayer {
             val loc1 = it.location.subtract(70.0, 70.0, 70.0)
             val loc2 = it.location.add(70.0, 70.0, 70.0)
-            val material = if(it.world.name == "world") Material.LAVA else Material.WATER
+            val material = if (it.world.name == "world") Material.LAVA else Material.WATER
             val toChange = if (material == Material.WATER) Material.LAVA else Material.WATER
             println(material)
             println(toChange)

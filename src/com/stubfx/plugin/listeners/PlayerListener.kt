@@ -15,7 +15,7 @@ import java.util.*
 @Suppress("unused")
 class PlayerListener(private val main: Main) : Listener {
 
-    private val safeDrop : HashMap<Player, Date> = HashMap()
+    private val safeDrop: HashMap<Player, Date> = HashMap()
 
     // Here im trying to make a workaround for a problem that spigot has.
     // Take a look at this link pls.
