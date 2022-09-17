@@ -1,6 +1,7 @@
 <script setup>
 import Command from "@/components/command.vue";
 </script>
+
 <template>
   <command name="help"/>
   <command name="spawn"/>
