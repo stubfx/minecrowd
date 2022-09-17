@@ -3,237 +3,237 @@
     "help": {
       "usage": "!mc help",
       "desc": "This command uses points to this page.",
-      "options":""
+      "details":""
     },
     "spawn": {
       "usage": "!mc spawn <mob>",
       "desc": "This command spawns a specific mob at player coordinates",
-      "options": "Replace <mob> with any given entity found here: "
+      "details": "Replace <mob> with any given entity found here: "
     },
     "dropit": {
       "usage": "!mc dropit",
-      "desc": "Dropit command",
-      "options": ""
+      "desc": "Makes the player drop the item in the left hand",
+      "details": ""
     },
     "levitate": {
       "usage": "!mc levitate",
-      "desc": "Levitate command",
-      "options": ""
+      "desc": "Make the player fly",
+      "details": ""
     },
     "anvil": {
       "usage": "!mc anvil",
-      "desc": "Anvil command",
-      "options": ""
+      "desc": "Drops random anvils around the player",
+      "details": ""
     },
     "fire": {
       "usage": "!mc fire",
-      "desc": "Fire command",
-      "options": ""
+      "desc": "Sets the player on fire",
+      "details": ""
     },
     "diamonds": {
       "usage": "!mc diamonds",
-      "desc": "Diamonds command",
-      "options": ""
+      "desc": "Drop a random amount of diamonds",
+      "details": ""
     },
     "chickens": {
       "usage": "!mc chickens",
-      "desc": "Chickens command",
-      "options": ""
+      "desc": "CHICKENS!",
+      "details": ""
     },
     "knock": {
       "usage": "!mc knock",
-      "desc": "Knock command",
-      "options": ""
+      "desc": "Knock the player outta nowhere",
+      "details": ""
     },
     "panicsound": {
       "usage": "!mc panicsound",
-      "desc": "Panicsound command",
-      "options": ""
+      "desc": "Emits a loud sound that scares the player",
+      "details": "This command is not shown on screen"
     },
     "treecage": {
       "usage": "!mc treecage",
-      "desc": "Treecage command",
-      "options": ""
+      "desc": "Spawns a tree on the player location to jail the player",
+      "details": ""
     },
     "speedy": {
       "usage": "!mc speedy",
-      "desc": "Speedy command",
-      "options": ""
+      "desc": "I AM SPEED.",
+      "details": "May be an awesome combo with 'neverfall'"
     },
     "heal": {
       "usage": "!mc heal",
-      "desc": "Heal command",
-      "options": ""
+      "desc": "Heals the player",
+      "details": "This command lasts 20 in-game ticks (usually 1 second), during this time the player may be immortal"
     },
     "hungry": {
       "usage": "!mc hungry",
-      "desc": "Hungry command",
-      "options": ""
+      "desc": "Sets the player in a hungry status",
+      "details": ""
     },
     "feed": {
       "usage": "!mc feed",
-      "desc": "Feed command",
-      "options": ""
+      "desc": "Feeds the player",
+      "details": ""
     },
     "wallhack": {
       "usage": "!mc wallhack",
-      "desc": "Wallhack command",
-      "options": ""
+      "desc": "The player will be able to see all the mobs around itself for a limited amount of time",
+      "details": ""
     },
     "superman": {
       "usage": "!mc superman",
-      "desc": "Superman command",
-      "options": ""
+      "desc": "Gives a stupid amount of HPs to the player",
+      "details": "Can be countered with the command 'normalman'"
     },
     "normalman": {
       "usage": "!mc normalman",
-      "desc": "Normalman command",
-      "options": ""
+      "desc": "Sets the player on a normal amount of HPs",
+      "details": "Useful to counter the 'superman' command"
     },
     "water": {
       "usage": "!mc water",
-      "desc": "Water command",
-      "options": ""
+      "desc": "Places a block of water on the player location",
+      "details": "Works in the nether as well"
     },
     "woollify": {
       "usage": "!mc woollify",
-      "desc": "Woollify command",
-      "options": ""
+      "desc": "Everything around the player will be swapped to wool",
+      "details": ""
     },
     "randomblock": {
       "usage": "!mc randomblock",
-      "desc": "Randomblock command",
-      "options": ""
+      "desc": "Drops a random block close to the player",
+      "details": "May be ANY obtainable/unobtainable block in all minecraft"
     },
     "neverfall": {
       "usage": "!mc neverfall",
-      "desc": "Neverfall command",
-      "options": ""
+      "desc": "Spawns a block below the player at all time",
+      "details": "Useful if used with speedy to travel long distances with ease"
     },
     "armored": {
       "usage": "!mc armored",
-      "desc": "Armored command",
-      "options": ""
+      "desc": "Gives the player full Netherite armor and sword",
+      "details": ""
     },
     "tothenether": {
       "usage": "!mc tothenether",
-      "desc": "Tothenether command",
-      "options": ""
+      "desc": "Teleports the player to the Nether",
+      "details": ""
     },
     "totheoverworld": {
       "usage": "!mc totheoverworld",
-      "desc": "Totheoverworld command",
-      "options": ""
+      "desc": "Teleports the player to the Overworld",
+      "details": ""
     },
     "bob": {
       "usage": "!mc bob",
-      "desc": "Bob command",
-      "options": ""
+      "desc": "Spawns the famous yet infamous bob",
+      "details": ""
     },
     "nukemobs": {
       "usage": "!mc nukemobs",
-      "desc": "Nukemobs command",
-      "options": ""
+      "desc": "Nukes all the entities around the player, no discriminations.",
+      "details": ""
     },
     "dinnerbone": {
       "usage": "!mc dinnerbone",
-      "desc": "Dinnerbone command",
-      "options": ""
+      "desc": "Applies the 'dinnerbone' nametag to all the entities around the player",
+      "details": ""
     },
     "craftingtable": {
       "usage": "!mc craftingtable",
-      "desc": "Craftingtable command",
-      "options": ""
+      "desc": "Did u ask for a crafting table?",
+      "details": ""
     },
     "ihaveit": {
       "usage": "!mc ihaveit",
-      "desc": "Ihaveit command",
-      "options": ""
+      "desc": "Adds the block pointed by the player in the inventory, 1 per tick.",
+      "details": ""
     },
     "paint": {
       "usage": "!mc paint",
-      "desc": "Paint command",
-      "options": ""
+      "desc": "Player will be able to draw anywhere.",
+      "details": ""
     },
     "goingdown": {
       "usage": "!mc goingdown",
-      "desc": "Goingdown command",
-      "options": ""
+      "desc": "Simple yet powerful command to remove blocks below the player",
+      "details": "Useful in combo with the 'treecage' command"
     },
     "clearchunk": {
       "usage": "!mc clearchunk",
-      "desc": "Clearchunk command",
-      "options": ""
+      "desc": "One of my favourite commands so far.",
+      "details": ""
     },
     "thatistnt": {
       "usage": "!mc thatistnt",
-      "desc": "Thatistnt command",
-      "options": ""
+      "desc": "Turns the block that the player is facing into primed tnt",
+      "details": ""
     },
     "tunneltime": {
       "usage": "!mc tunneltime",
-      "desc": "Tunneltime command",
-      "options": ""
+      "desc": "Time to dig, just wait a sec",
+      "details": ""
     },
     "openspace": {
       "usage": "!mc openspace",
-      "desc": "Openspace command",
-      "options": ""
+      "desc": "Feeling a bit claustrophobic? I got you.",
+      "details": ""
     },
     "upsidedown": {
       "usage": "!mc upsidedown",
-      "desc": "Upsidedown command",
-      "options": ""
+      "desc": "Land below the player will be mirrored above it but upside down",
+      "details": ""
     },
     "onthemoon": {
       "usage": "!mc onthemoon",
-      "desc": "Onthemoon command",
-      "options": ""
+      "desc": "Player will be able to jump higher and fall slower",
+      "details": ""
     },
     "cookies": {
       "usage": "!mc cookies",
-      "desc": "Cookies command",
-      "options": ""
+      "desc": "Drops a random amount of cookies around the player",
+      "details": ""
     },
     "supertools": {
       "usage": "!mc supertools",
-      "desc": "Supertools command",
-      "options": ""
+      "desc": "Adds powerful tools to the player inventory",
+      "details": ""
     },
     "milk": {
       "usage": "!mc milk",
-      "desc": "Milk command",
-      "options": ""
+      "desc": "Gives the player a bucket of milk, useful in case of poison",
+      "details": ""
     },
     "potion": {
       "usage": "!mc potion",
-      "desc": "Potion command",
-      "options": ""
+      "desc": "Adds a random potion effect to the player",
+      "details": ""
     },
     "lava": {
       "usage": "!mc lava",
-      "desc": "Lava command",
-      "options": ""
+      "desc": "Spawns a block of lava at the player position",
+      "details": ""
     },
     "slowness": {
       "usage": "!mc slowness",
-      "desc": "Slowness command",
-      "options": ""
+      "desc": "Applies slowness to the player",
+      "details": ""
     },
     "bees": {
       "usage": "!mc bees",
-      "desc": "Bees command",
-      "options": ""
+      "desc": "Spawns a bunch of angry bees",
+      "details": ""
     },
     "endframe": {
       "usage": "!mc endframe",
-      "desc": "Endframe command",
-      "options": ""
+      "desc": "Spawns an endframe portal around the player",
+      "details": ""
     },
     "waterislava": {
       "usage": "!mc waterislava",
-      "desc": "Waterislava command",
-      "options": ""
+      "desc": "...and lava is water.",
+      "details": ""
     }
   }
 }
