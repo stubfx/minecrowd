@@ -1,0 +1,192 @@
+{
+  "command": {
+    "help": {
+      "desc": "This command is useless.",
+      "usage": "!mc help"
+    },
+    "spawn": {
+      "desc": "This command is useless.",
+      "usage": "!mc spawn"
+    },
+    "dropit": {
+      "desc": "This command is useless.",
+      "usage": "!mc dropit"
+    },
+    "levitate": {
+      "desc": "This command is useless.",
+      "usage": "!mc levitate"
+    },
+    "anvil": {
+      "desc": "This command is useless.",
+      "usage": "!mc anvil"
+    },
+    "fire": {
+      "desc": "This command is useless.",
+      "usage": "!mc fire"
+    },
+    "diamonds": {
+      "desc": "This command is useless.",
+      "usage": "!mc diamonds"
+    },
+    "chickens": {
+      "desc": "This command is useless.",
+      "usage": "!mc chickens"
+    },
+    "knock": {
+      "desc": "This command is useless.",
+      "usage": "!mc knock"
+    },
+    "panicsound": {
+      "desc": "This command is useless.",
+      "usage": "!mc panicsound"
+    },
+    "treecage": {
+      "desc": "This command is useless.",
+      "usage": "!mc treecage"
+    },
+    "speedy": {
+      "desc": "This command is useless.",
+      "usage": "!mc speedy"
+    },
+    "heal": {
+      "desc": "This command is useless.",
+      "usage": "!mc heal"
+    },
+    "hungry": {
+      "desc": "This command is useless.",
+      "usage": "!mc hungry"
+    },
+    "feed": {
+      "desc": "This command is useless.",
+      "usage": "!mc feed"
+    },
+    "wallhack": {
+      "desc": "This command is useless.",
+      "usage": "!mc wallhack"
+    },
+    "superman": {
+      "desc": "This command is useless.",
+      "usage": "!mc superman"
+    },
+    "normalman": {
+      "desc": "This command is useless.",
+      "usage": "!mc normalman"
+    },
+    "water": {
+      "desc": "This command is useless.",
+      "usage": "!mc water"
+    },
+    "woollify": {
+      "desc": "This command is useless.",
+      "usage": "!mc woollify"
+    },
+    "randomblock": {
+      "desc": "This command is useless.",
+      "usage": "!mc randomblock"
+    },
+    "neverfall": {
+      "desc": "This command is useless.",
+      "usage": "!mc neverfall"
+    },
+    "armored": {
+      "desc": "This command is useless.",
+      "usage": "!mc armored"
+    },
+    "tothenether": {
+      "desc": "This command is useless.",
+      "usage": "!mc tothenether"
+    },
+    "totheoverworld": {
+      "desc": "This command is useless.",
+      "usage": "!mc totheoverworld"
+    },
+    "bob": {
+      "desc": "This command is useless.",
+      "usage": "!mc bob"
+    },
+    "nukemobs": {
+      "desc": "This command is useless.",
+      "usage": "!mc nukemobs"
+    },
+    "dinnerbone": {
+      "desc": "This command is useless.",
+      "usage": "!mc dinnerbone"
+    },
+    "craftingtable": {
+      "desc": "This command is useless.",
+      "usage": "!mc craftingtable"
+    },
+    "ihaveit": {
+      "desc": "This command is useless.",
+      "usage": "!mc ihaveit"
+    },
+    "paint": {
+      "desc": "This command is useless.",
+      "usage": "!mc paint"
+    },
+    "goingdown": {
+      "desc": "This command is useless.",
+      "usage": "!mc goingdown"
+    },
+    "clearchunk": {
+      "desc": "This command is useless.",
+      "usage": "!mc clearchunk"
+    },
+    "thatistnt": {
+      "desc": "This command is useless.",
+      "usage": "!mc thatistnt"
+    },
+    "tunneltime": {
+      "desc": "This command is useless.",
+      "usage": "!mc tunneltime"
+    },
+    "openspace": {
+      "desc": "This command is useless.",
+      "usage": "!mc openspace"
+    },
+    "upsidedown": {
+      "desc": "This command is useless.",
+      "usage": "!mc upsidedown"
+    },
+    "onthemoon": {
+      "desc": "This command is useless.",
+      "usage": "!mc onthemoon"
+    },
+    "cookies": {
+      "desc": "This command is useless.",
+      "usage": "!mc cookies"
+    },
+    "supertools": {
+      "desc": "This command is useless.",
+      "usage": "!mc supertools"
+    },
+    "milk": {
+      "desc": "This command is useless.",
+      "usage": "!mc milk"
+    },
+    "potion": {
+      "desc": "This command is useless.",
+      "usage": "!mc potion"
+    },
+    "lava": {
+      "desc": "This command is useless.",
+      "usage": "!mc lava"
+    },
+    "slowness": {
+      "desc": "This command is useless.",
+      "usage": "!mc slowness"
+    },
+    "bees": {
+      "desc": "This command is useless.",
+      "usage": "!mc bees"
+    },
+    "endframe": {
+      "desc": "This command is useless.",
+      "usage": "!mc endframe"
+    },
+    "waterislava": {
+      "desc": "This command is useless.",
+      "usage": "!mc waterislava"
+    }
+  }
+}
