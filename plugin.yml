@@ -1,15 +1,15 @@
-main: com.stubfx.plugin.Main
-name: stubFXplugin
-version: 1.0.10.775
+main: com.minecrowd.plugin.Main
+name: minecrowd
+version: 1.0.10.807
 api-version: '1.19'
 author: stubFX
-description: A simple stream plugin made at twitch.tv/stubfx
+description: A simple stream plugin made by me.
 commands:
   command:
     description: An example command
     usage: /command
-    permission: stubfxplugin.command
-    permission-message: You don't have the stubFXplugin.command permission.
+    permission: minecrowd.command
+    permission-message: You don't have the minecrowd.command permission.
 permissions:
   stubfxplugin.*:
     default: op
