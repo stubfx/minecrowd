@@ -12,6 +12,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: "../docs"
+    emptyOutDir: true,
+    outDir: "../public/documentation"
   }
 })
