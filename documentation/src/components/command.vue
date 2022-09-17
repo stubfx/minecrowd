@@ -8,9 +8,11 @@ defineProps({
 </script>
 
 <template>
-  <p>{{ $t(`command.${name}.desc`) }}</p>
-  <br/>
-  <p>{{ $t(`command.${name}.usage`) }}</p>
+  <div class="command">
+    <h1>{{ name }}</h1>
+    <p>{{ $t(`command.${name}.desc`) }}</p>
+    <pre>{{ $t(`command.${name}.usage`) }}</pre>
+  </div>
 </template>
 
 <style scoped>
