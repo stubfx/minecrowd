@@ -1,192 +1,239 @@
 {
   "command": {
     "help": {
-      "desc": "Help command",
-      "usage": "!mc help"
+      "usage": "!mc help",
+      "desc": "This command uses points to this page.",
+      "options":""
     },
     "spawn": {
-      "desc": "Spawn command",
-      "usage": "!mc spawn"
+      "usage": "!mc spawn <mob>",
+      "desc": "This command spawns a specific mob at player coordinates",
+      "options": "Replace <mob> with any given entity found here: "
     },
     "dropit": {
+      "usage": "!mc dropit",
       "desc": "Dropit command",
-      "usage": "!mc dropit"
+      "options": ""
     },
     "levitate": {
+      "usage": "!mc levitate",
       "desc": "Levitate command",
-      "usage": "!mc levitate"
+      "options": ""
     },
     "anvil": {
+      "usage": "!mc anvil",
       "desc": "Anvil command",
-      "usage": "!mc anvil"
+      "options": ""
     },
     "fire": {
+      "usage": "!mc fire",
       "desc": "Fire command",
-      "usage": "!mc fire"
+      "options": ""
     },
     "diamonds": {
+      "usage": "!mc diamonds",
       "desc": "Diamonds command",
-      "usage": "!mc diamonds"
+      "options": ""
     },
     "chickens": {
+      "usage": "!mc chickens",
       "desc": "Chickens command",
-      "usage": "!mc chickens"
+      "options": ""
     },
     "knock": {
+      "usage": "!mc knock",
       "desc": "Knock command",
-      "usage": "!mc knock"
+      "options": ""
     },
     "panicsound": {
+      "usage": "!mc panicsound",
       "desc": "Panicsound command",
-      "usage": "!mc panicsound"
+      "options": ""
     },
     "treecage": {
+      "usage": "!mc treecage",
       "desc": "Treecage command",
-      "usage": "!mc treecage"
+      "options": ""
     },
     "speedy": {
+      "usage": "!mc speedy",
       "desc": "Speedy command",
-      "usage": "!mc speedy"
+      "options": ""
     },
     "heal": {
+      "usage": "!mc heal",
       "desc": "Heal command",
-      "usage": "!mc heal"
+      "options": ""
     },
     "hungry": {
+      "usage": "!mc hungry",
       "desc": "Hungry command",
-      "usage": "!mc hungry"
+      "options": ""
     },
     "feed": {
+      "usage": "!mc feed",
       "desc": "Feed command",
-      "usage": "!mc feed"
+      "options": ""
     },
     "wallhack": {
+      "usage": "!mc wallhack",
       "desc": "Wallhack command",
-      "usage": "!mc wallhack"
+      "options": ""
     },
     "superman": {
+      "usage": "!mc superman",
       "desc": "Superman command",
-      "usage": "!mc superman"
+      "options": ""
     },
     "normalman": {
+      "usage": "!mc normalman",
       "desc": "Normalman command",
-      "usage": "!mc normalman"
+      "options": ""
     },
     "water": {
+      "usage": "!mc water",
       "desc": "Water command",
-      "usage": "!mc water"
+      "options": ""
     },
     "woollify": {
+      "usage": "!mc woollify",
       "desc": "Woollify command",
-      "usage": "!mc woollify"
+      "options": ""
     },
     "randomblock": {
+      "usage": "!mc randomblock",
       "desc": "Randomblock command",
-      "usage": "!mc randomblock"
+      "options": ""
     },
     "neverfall": {
+      "usage": "!mc neverfall",
       "desc": "Neverfall command",
-      "usage": "!mc neverfall"
+      "options": ""
     },
     "armored": {
+      "usage": "!mc armored",
       "desc": "Armored command",
-      "usage": "!mc armored"
+      "options": ""
     },
     "tothenether": {
+      "usage": "!mc tothenether",
       "desc": "Tothenether command",
-      "usage": "!mc tothenether"
+      "options": ""
     },
     "totheoverworld": {
+      "usage": "!mc totheoverworld",
       "desc": "Totheoverworld command",
-      "usage": "!mc totheoverworld"
+      "options": ""
     },
     "bob": {
+      "usage": "!mc bob",
       "desc": "Bob command",
-      "usage": "!mc bob"
+      "options": ""
     },
     "nukemobs": {
+      "usage": "!mc nukemobs",
       "desc": "Nukemobs command",
-      "usage": "!mc nukemobs"
+      "options": ""
     },
     "dinnerbone": {
+      "usage": "!mc dinnerbone",
       "desc": "Dinnerbone command",
-      "usage": "!mc dinnerbone"
+      "options": ""
     },
     "craftingtable": {
+      "usage": "!mc craftingtable",
       "desc": "Craftingtable command",
-      "usage": "!mc craftingtable"
+      "options": ""
     },
     "ihaveit": {
+      "usage": "!mc ihaveit",
       "desc": "Ihaveit command",
-      "usage": "!mc ihaveit"
+      "options": ""
     },
     "paint": {
+      "usage": "!mc paint",
       "desc": "Paint command",
-      "usage": "!mc paint"
+      "options": ""
     },
     "goingdown": {
+      "usage": "!mc goingdown",
       "desc": "Goingdown command",
-      "usage": "!mc goingdown"
+      "options": ""
     },
     "clearchunk": {
+      "usage": "!mc clearchunk",
       "desc": "Clearchunk command",
-      "usage": "!mc clearchunk"
+      "options": ""
     },
     "thatistnt": {
+      "usage": "!mc thatistnt",
       "desc": "Thatistnt command",
-      "usage": "!mc thatistnt"
+      "options": ""
     },
     "tunneltime": {
+      "usage": "!mc tunneltime",
       "desc": "Tunneltime command",
-      "usage": "!mc tunneltime"
+      "options": ""
     },
     "openspace": {
+      "usage": "!mc openspace",
       "desc": "Openspace command",
-      "usage": "!mc openspace"
+      "options": ""
     },
     "upsidedown": {
+      "usage": "!mc upsidedown",
       "desc": "Upsidedown command",
-      "usage": "!mc upsidedown"
+      "options": ""
     },
     "onthemoon": {
+      "usage": "!mc onthemoon",
       "desc": "Onthemoon command",
-      "usage": "!mc onthemoon"
+      "options": ""
     },
     "cookies": {
+      "usage": "!mc cookies",
       "desc": "Cookies command",
-      "usage": "!mc cookies"
+      "options": ""
     },
     "supertools": {
+      "usage": "!mc supertools",
       "desc": "Supertools command",
-      "usage": "!mc supertools"
+      "options": ""
     },
     "milk": {
+      "usage": "!mc milk",
       "desc": "Milk command",
-      "usage": "!mc milk"
+      "options": ""
     },
     "potion": {
+      "usage": "!mc potion",
       "desc": "Potion command",
-      "usage": "!mc potion"
+      "options": ""
     },
     "lava": {
+      "usage": "!mc lava",
       "desc": "Lava command",
-      "usage": "!mc lava"
+      "options": ""
     },
     "slowness": {
+      "usage": "!mc slowness",
       "desc": "Slowness command",
-      "usage": "!mc slowness"
+      "options": ""
     },
     "bees": {
+      "usage": "!mc bees",
       "desc": "Bees command",
-      "usage": "!mc bees"
+      "options": ""
     },
     "endframe": {
+      "usage": "!mc endframe",
       "desc": "Endframe command",
-      "usage": "!mc endframe"
+      "options": ""
     },
     "waterislava": {
+      "usage": "!mc waterislava",
       "desc": "Waterislava command",
-      "usage": "!mc waterislava"
+      "options": ""
     }
   }
 }
