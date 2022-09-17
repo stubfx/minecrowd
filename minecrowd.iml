@@ -11,5 +11,6 @@
     <orderEntry type="library" exported="" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" exported="" name="spigot-api-1.19.2-R0.1-SNAPSHOT-shaded" level="project" />
     <orderEntry type="library" exported="" name="jetbrains.kotlin.reflect" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>

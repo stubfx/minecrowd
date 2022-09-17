@@ -12,7 +12,7 @@ object Help : Command() {
     }
 
     override fun successMessage(): String {
-        return "You can find the list of commands here: https://mineplugin.stubfx.com/"
+        return "You can find the list of commands here: https://minecrowd.stubfx.com/"
     }
 
     override fun behavior(playerName: String, options: String?) {
