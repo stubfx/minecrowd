@@ -1,6 +1,7 @@
 package com.minecrowd.plugin.chatreactor.commands.impl
 
 import com.minecrowd.plugin.chatreactor.commands.Command
+import com.minecrowd.plugin.chatreactor.commands.CommandResultWrapper
 
 object Help : Command() {
 
@@ -17,6 +18,10 @@ object Help : Command() {
 
     override fun behavior(playerName: String, options: String?) {
 
+    }
+
+    override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
+        return super.run(playerName, options, isSilent = true)
     }
 
 }

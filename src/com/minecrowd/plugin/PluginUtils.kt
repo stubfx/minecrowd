@@ -42,7 +42,7 @@ object PluginUtils {
             LogType.INFO -> ChatColor.GRAY
         }
 
-        Bukkit.getConsoleSender().sendMessage("$color[stubFXplugin] $msg")
+        Bukkit.getConsoleSender().sendMessage("$color[minecrowd] $msg")
     }
 
     fun teleportToEnd(entity: Entity) {

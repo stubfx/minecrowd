@@ -23,11 +23,12 @@ object ChatCommandExecutor {
         // first of all, get current command config.
         val commandConfig = ConfigManager.getCommand(commandName)
         // what's the property that we are trying to change?
-        val commandProperty = ChatCommandProperties.valueOf(args[1].uppercase())
+        // void index out of bound exception
+        val commandProperty = if (args.size > 1) ChatCommandProperties.valueOf(args[1].uppercase()) else null
         // are we trying to run the command?
-        if (commandProperty == ChatCommandProperties.RUN) {
+        if (commandProperty == null || commandProperty == ChatCommandProperties.RUN) {
             // in this case the user is trying to force run the command
-            CommandFactory.forceRun(commandName.toString(), sender.name, if (args.size > 2) args[2] else "")
+            CommandFactory.forceRun(commandName, sender.name, if (args.size > 2) args[2] else "")
             return
         }
         if (args.size < 3) {

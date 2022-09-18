@@ -14,7 +14,6 @@ object Armored : Command() {
             it.inventory.chestplate = ItemStack(Material.NETHERITE_CHESTPLATE)
             it.inventory.leggings = ItemStack(Material.NETHERITE_LEGGINGS)
             it.inventory.boots = ItemStack(Material.NETHERITE_BOOTS)
-            it.inventory.setItemInMainHand(ItemStack(Material.NETHERITE_SWORD))
         }
     }
 

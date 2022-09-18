@@ -8,7 +8,7 @@ object StubCommand : Command() {
     }
 
     override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
-        return CommandResultWrapper(commandName(), false, "@$playerName Wrong command")
+        return CommandResultWrapper(commandName(), false, "@$playerName Wrong command", true)
     }
 
 }

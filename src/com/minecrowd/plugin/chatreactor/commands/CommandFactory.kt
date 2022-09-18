@@ -1,6 +1,8 @@
 package com.minecrowd.plugin.chatreactor.commands
 
 import com.minecrowd.plugin.chatreactor.commands.impl.*
+import com.minecrowd.plugin.chatreactor.commands.impl.goldenItems.GoldenHoe
+import com.minecrowd.plugin.chatreactor.commands.impl.goldenItems.GoldenSword
 
 object CommandFactory {
 
@@ -14,7 +16,7 @@ object CommandFactory {
         Bob, NukeMobs, Dinnerbone, CraftingTable,
         IHaveIt, Paint, GoingDown, ClearChunk,
         ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon,
-        Cookies, SuperTools, Milk, Potion, Lava, Slowness, Bees, EndFrame, WaterIsLava
+        Cookies, SuperTools, Milk, Potion, Lava, Slowness, Bees, EndFrame, WaterIsLava, LaserView, GoldenSword, GoldenHoe, Clear, CreepyLand
     )
 
     fun getAvailableCommands(): List<Command> {

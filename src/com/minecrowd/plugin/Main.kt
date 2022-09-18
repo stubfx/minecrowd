@@ -4,6 +4,8 @@ import com.minecrowd.plugin.chatreactor.ChatReactor
 import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import com.minecrowd.plugin.discord.DiscordModule
 import com.minecrowd.plugin.listeners.ChatListener
+import com.minecrowd.plugin.listeners.EntityListener
+import com.minecrowd.plugin.listeners.PlayerListener
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
@@ -22,8 +24,8 @@ class Main : JavaPlugin() {
 //        getCommand("clearchunk")?.tabCompleter = MaterialTabCompleter()
 //        getCommand("sectionreplace")?.tabCompleter = MaterialTabCompleter()
         server.pluginManager.registerEvents(ChatListener(this), this)
-//        server.pluginManager.registerEvents(EntityListener(this), this)
-//        server.pluginManager.registerEvents(ProjectileListener(this), this)
+        server.pluginManager.registerEvents(EntityListener(this), this)
+        server.pluginManager.registerEvents(PlayerListener(this), this)
         CommandRunner.setMainRef(this)
         BlockReplacer.setMainRef(this)
         PluginUtils.setMainRef(this)

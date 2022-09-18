@@ -24,7 +24,7 @@ object PlayerListenerBehaviour {
     fun onPlayerInteractEvent(main: Plugin, event: PlayerInteractEvent) {
         val player = event.player
         when (player.inventory.itemInMainHand.type) {
-            Material.FIRE_CHARGE -> {
+            Material.GOLDEN_HOE -> {
                 if (event.action == Action.LEFT_CLICK_AIR) {
                     player.launchProjectile(Fireball::class.java).velocity = player.location.direction.multiply(0.5)
                     if (player.gameMode != GameMode.CREATIVE) player.inventory.itemInMainHand.amount -= 1

@@ -234,6 +234,31 @@
       "usage": "!mc waterislava",
       "desc": "...and lava is water.",
       "details": ""
+    },
+    "laserview": {
+      "usage": "!mc laserview",
+      "desc": "Deletes the block the player is looking at",
+      "details": ""
+    },
+    "goldensword": {
+      "usage": "!mc goldensword",
+      "desc": "Gives the player a golden sword",
+      "details": ""
+    },
+    "goldenhoe": {
+      "usage": "!mc goldenhoe",
+      "desc": "Gives the player a golden hoe",
+      "details": ""
+    },
+    "clear": {
+      "usage": "!mc clear",
+      "desc": "Clears the player inventory",
+      "details": ""
+    },
+    "creepyland": {
+      "usage": "!mc creepyland",
+      "desc": "This is dangerous. Very dangerous.",
+      "details": ""
     }
   }
 }
