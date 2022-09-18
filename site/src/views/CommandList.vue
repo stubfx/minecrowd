@@ -51,6 +51,12 @@ import Command from "@/components/command.vue";
     <command name="bees"/>
     <command name="endframe"/>
     <command name="waterislava"/>
+    <command name="laserview"/>
+    <command name="goldensword"/>
+    <command name="goldenhoe"/>
+    <command name="clear"/>
+    <command name="creepyland"/>
+    <command name="diamondsword"/>
   </div>
 </template>
 
