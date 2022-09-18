@@ -2,8 +2,8 @@
   "name": "documentation",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "site-dev": "vite",
+    "build-docs": "vite build",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
