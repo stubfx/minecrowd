@@ -2,7 +2,7 @@
   "command": {
     "help": {
       "usage": "!mc help",
-      "desc": "This command uses points to this page.",
+      "desc": "This command redirects to this page.",
       "details":""
     },
     "spawn": {
