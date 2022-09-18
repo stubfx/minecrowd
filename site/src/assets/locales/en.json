@@ -259,6 +259,11 @@
       "usage": "!mc creepyland",
       "desc": "This is dangerous. Very dangerous.",
       "details": ""
+    },
+    "diamondsword": {
+      "usage": "!mc diamondsword",
+      "desc": "Gives the player a diamond sword",
+      "details": ""
     }
   }
 }
