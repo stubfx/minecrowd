@@ -34,7 +34,7 @@ object ChatReactor {
             println("Missing apiKey, chat reactor disabled.")
             return
         }
-        println("STARTING SERVER")
+        PluginUtils.log("Starting chatreactor server at $serverPort")
         httpServerSocket = InetSocketAddress(serverPort)
         httpserver = HttpServer.create(httpServerSocket, 0)
         httpserver?.createContext("/command", MyHandler(this))
