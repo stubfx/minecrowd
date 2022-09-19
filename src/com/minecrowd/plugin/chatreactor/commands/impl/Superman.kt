@@ -6,6 +6,9 @@ import org.bukkit.attribute.Attribute
 
 object Superman : Command() {
 
+    override fun defaultCoolDown(): Long {
+        return 300 * 1000
+    }
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
