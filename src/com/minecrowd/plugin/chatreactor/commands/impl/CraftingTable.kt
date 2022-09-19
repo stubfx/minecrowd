@@ -14,6 +14,7 @@ object CraftingTable : Command() {
             val loc2 = it.location.add(20.0, 20.0, 20.0)
             BlockReplacer.replaceArea(loc1, loc2, Material.CRAFTING_TABLE)
         }
+        CommandRunner.clearAllDroppedItems()
     }
 
 }

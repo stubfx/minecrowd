@@ -46,15 +46,15 @@ object PluginUtils {
     }
 
     fun teleportToEnd(entity: Entity) {
-        entity.teleport(main.server.getWorld("world_end")?.spawnLocation ?: entity.location)
+        entity.teleport(Bukkit.getWorld("world_the_end")?.spawnLocation ?: entity.location)
     }
 
     fun teleportToNether(entity: Entity) {
-        entity.teleport(main.server.getWorld("world_nether")?.spawnLocation ?: entity.location)
+        entity.teleport(Bukkit.getWorld("world_nether")?.spawnLocation ?: entity.location)
     }
 
     fun teleportToOverworld(entity: Entity) {
-        entity.teleport(main.server.getWorld("world")?.spawnLocation ?: entity.location)
+        entity.teleport(Bukkit.getWorld("world")?.spawnLocation ?: entity.location)
     }
 
 }

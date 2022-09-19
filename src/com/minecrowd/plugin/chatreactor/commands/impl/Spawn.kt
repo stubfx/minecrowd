@@ -10,7 +10,7 @@ object Spawn : Command() {
 
     private var mobToSpawn: EntityType = EntityType.CREEPER
     private val blacklist =
-        listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN)
+        listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN, EntityType.PLAYER, EntityType.UNKNOWN)
 
     override fun tabCompleterOptions(): List<String> {
         return EntityType.values().map { it.toString() }
@@ -25,7 +25,7 @@ object Spawn : Command() {
             return resultWrapper(false, "@$playerName, entity not found.")
         }
         if (blacklist.contains(mobToSpawn)) {
-            return resultWrapper(false, "@$playerName, this entity is in a blacklist.")
+            return resultWrapper(false, "@$playerName, this entity cannot be spawned.")
         }
         return super.setup(playerName, options)
     }

@@ -27,7 +27,8 @@ object PlayerListenerBehaviour {
             Material.GOLDEN_HOE -> {
                 if (event.action == Action.LEFT_CLICK_AIR) {
                     player.launchProjectile(Fireball::class.java).velocity = player.location.direction.multiply(0.5)
-                    if (player.gameMode != GameMode.CREATIVE) player.inventory.itemInMainHand.amount -= 1
+                    // do not destroy it.
+//                    if (player.gameMode != GameMode.CREATIVE) player.inventory.itemInMainHand.amount -= 1
                 }
             }
 

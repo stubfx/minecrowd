@@ -3,7 +3,7 @@
     "help": {
       "usage": "!mc help",
       "desc": "This command redirects to this page.",
-      "details":""
+      "details": ""
     },
     "spawn": {
       "usage": "!mc spawn <mob>",
@@ -263,6 +263,31 @@
     "diamondsword": {
       "usage": "!mc diamondsword",
       "desc": "Gives the player a diamond sword",
+      "details": ""
+    },
+    "NightVision": {
+      "usage": "!mc NightVision",
+      "desc": "",
+      "details": ""
+    },
+    "Roll": {
+      "usage": "!mc Roll",
+      "desc": "",
+      "details": ""
+    },
+    "Cat": {
+      "usage": "!mc Cat",
+      "desc": "",
+      "details": ""
+    },
+    "ToTheEnd": {
+      "usage": "!mc ToTheEnd",
+      "desc": "",
+      "details": ""
+    },
+    "Horse": {
+      "usage": "!mc Horse",
+      "desc": "",
       "details": ""
     }
   }

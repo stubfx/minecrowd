@@ -89,8 +89,7 @@ object ChatReactor {
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
         var resultWrapper = CommandResultWrapper(
             StubCommand.commandName(), false,
-            "im sorry @$playerName, you are still in cooldown."
-        )
+            "im sorry @$playerName, you are still in cooldown.", true)
         // is the user in coolDown
         if (!isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
@@ -102,6 +101,7 @@ object ChatReactor {
             // in this case the command has run, we need to add the user to the coolDown list
             playerCoolDownList[playerName] = Date().time
         }
+        println(resultWrapper.message)
         return resultWrapper
     }
 

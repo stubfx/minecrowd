@@ -136,8 +136,8 @@ abstract class Command {
         }
     }
 
-    fun resultWrapper(result: Boolean, msg: String): CommandResultWrapper {
-        return CommandResultWrapper(commandName(), result, msg)
+    fun resultWrapper(result: Boolean, msg: String, showSuccessMessage: Boolean = true): CommandResultWrapper {
+        return CommandResultWrapper(commandName(), result, msg, showSuccessMessage)
     }
 
 }
