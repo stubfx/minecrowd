@@ -31,13 +31,20 @@
 </template>
 
 <script>
-import entities from '@/assets/minecraft_items/entities.json'
 export default {
   data: ()=> {
     return {
       search: '',
-      entities: entities.entities
+      entities: []
     }
+  },
+  methods: {
+    async retrieveEntities() {
+      this.entities = (await import('@/assets/minecraft_items/entities.json')).entities
+    }
+  },
+  mounted() {
+    this.retrieveEntities()
   }
 }
 </script>

@@ -17,7 +17,7 @@ defineProps({
         <br>
         <hr class="col-3 col-md-2 mb-5">
 
-        <div class="row g-5">
+        <div class="col-12 g-5">
           <div class="col-12">
             <pre style="width: fit-content; min-width: 200px !important;">{{$t(`command.${selectedCommand}.usage`)}}</pre>
             <p>{{$t(`command.${selectedCommand}.details`)}}</p>

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CommandView from "@/views/commandView.vue";
+import HomeView from "@/views/HomeView.vue";
+import SpawnCommandView from "@/views/specificCommands/spawnCommandView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,12 +15,12 @@ const router = createRouter({
     {
       path: "/spawn",
       name: 'spawn',
-      component: () => import('../views/specificCommands/spawnCommandView.vue')
+      component: SpawnCommandView
     },
     {
       path: "/documentation",
       name: 'homepage',
-      component: CommandView,
+      component: HomeView,
       props: true
     },
     // {
