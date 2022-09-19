@@ -1,10 +1,6 @@
 <script setup>
 import en from '@/assets/locales/en.json'
 defineProps({
-  search: {
-    type: String,
-    required: false
-  },
   selected: {
     type: String,
     required: false
@@ -43,6 +39,7 @@ export default {
     return {
       // terrible practice.
       commands: Object.keys(en.command),
+      search: '',
       selectedCommand: ""
     }
   },
