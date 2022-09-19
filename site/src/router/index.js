@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: "/:selectedCommand",
-      name: 'command',
+      name: 'genericCommand',
       component: CommandView,
       props: true
     },
@@ -14,6 +14,12 @@ const router = createRouter({
       path: "/spawn",
       name: 'spawn',
       component: () => import('../views/specificCommands/spawnCommandView.vue')
+    },
+    {
+      path: "/documentation",
+      name: 'homepage',
+      component: CommandView,
+      props: true
     },
     // {
     //   path: '/about',
