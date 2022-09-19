@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 import en from '@/assets/locales/en.json'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
 import { createI18n } from 'vue-i18n'
 
 const messages = {

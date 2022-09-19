@@ -116,8 +116,6 @@
     "TADPOLE",
     "WARDEN",
     "FISHING_HOOK",
-    "LIGHTNING",
-    "PLAYER",
-    "UNKNOWN"
+    "LIGHTNING"
   ]
 }

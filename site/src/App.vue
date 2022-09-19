@@ -1,23 +1,40 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
+import Navigation from "@/components/Navigation.vue";</script>
 
 <template>
-<!--  <header>-->
-<!--    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />-->
-
-<!--    <div class="wrapper">-->
-
-<!--&lt;!&ndash;      <nav>&ndash;&gt;-->
-<!--&lt;!&ndash;        <RouterLink to="/">{{ $t("command.anvil.desc") }}</RouterLink>&ndash;&gt;-->
-<!--&lt;!&ndash;        <RouterLink to="/about">{{ $t("command.anvil.usage") }}</RouterLink>&ndash;&gt;-->
-<!--&lt;!&ndash;      </nav>&ndash;&gt;-->
-<!--    </div>-->
-<!--  </header>-->
-
-  <RouterView />
+  <div id="page-wrapper">
+    <navigation id='navigation' @selectedCommand="onSelectedCommand"/>
+    <RouterView/>
+  </div>
 </template>
 
-<style scoped>
+<script>
+import router from "@/router";
+
+export default {
+  data: () => {
+    return {
+      selectedCommand: ''
+    }
+  },
+  methods: {
+    onSelectedCommand(value) {
+      this.selectedCommand = value
+      router.push({path: `/${value}`})
+    }
+  }
+}
+</script>
+
+<style>
+#page-wrapper {
+  display: flex;
+  width: 100vw !important;
+  flex-direction: row;
+}
+
+#navigation {
+  width: 380px !important;
+}
 
 </style>
