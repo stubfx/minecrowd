@@ -20,7 +20,7 @@ export default {
   methods: {
     onSelectedCommand(value) {
       this.selectedCommand = value
-      router.push({path: `${value}`})
+      router.push({path: `/${value}`})
     }
   }
 }
