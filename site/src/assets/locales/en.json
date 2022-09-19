@@ -112,7 +112,7 @@
     },
     "armored": {
       "usage": "!mc armored",
-      "desc": "Gives the player full Netherite armor and sword",
+      "desc": "Gives the player full Netherite armor",
       "details": ""
     },
     "tothenether": {
