@@ -1,6 +1,7 @@
 package com.minecrowd.plugin
 
 import com.minecrowd.plugin.chatreactor.ChatReactor
+import com.minecrowd.plugin.chatreactor.PointsManager
 import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import com.minecrowd.plugin.discord.DiscordModule
 import com.minecrowd.plugin.listeners.ChatListener
@@ -29,6 +30,8 @@ class Main : JavaPlugin() {
         CommandRunner.setMainRef(this)
         BlockReplacer.setMainRef(this)
         PluginUtils.setMainRef(this)
+        PointsManager.setMainRef(this)
+        PointsManager.start()
     }
 
     fun getTicks(): Int {

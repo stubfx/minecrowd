@@ -8,7 +8,7 @@ object Lava : Command() {
 
 
     override fun defaultCoolDown(): Long {
-        return 1000 * 600 // 10 mins
+        return 1000 * 500
     }
 
     override fun behavior(playerName: String, options: String?) {

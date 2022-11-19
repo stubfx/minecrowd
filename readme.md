@@ -20,7 +20,7 @@ This key will be useful in any chatbot like StreamElements to be able to interac
 
 ## StreamElements custom command setup:
 
-`${urlfetch http://<server_ip_address>:<server_port>/command?apiKey=<config_apiKey>&name=${user}&command=${1}&options=${2:|''}}`
+`${urlfetch http://<server_ip_address>:<server_port>/command?apiKey=<config_apiKey>&name=${user}&command=${1}&options=${2:|'cat'}}`
 
 **Remember to replace**
 

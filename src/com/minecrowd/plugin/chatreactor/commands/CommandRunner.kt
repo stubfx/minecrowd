@@ -73,4 +73,12 @@ object CommandRunner {
         currentTask = runOnBukkitEveryTick(func, 20)
     }
 
+    public fun startPersistentTask(func: () -> Unit, tickPeriod: Long = 1L): BukkitTask {
+        return object : BukkitRunnable() {
+            override fun run() {
+                func()
+            }
+        }.runTaskTimer(main, 1, tickPeriod)
+    }
+
 }

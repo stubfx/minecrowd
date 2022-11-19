@@ -12,6 +12,7 @@ data class CommandConfig(
     var coolDown: Long,
     var silent: Boolean,
     var enabled: Boolean,
+    var cost: Int,
     var showSuccessMessage: Boolean,
     var successMessage: String
 )
@@ -88,6 +89,7 @@ object ConfigManager {
                 coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
                 enabled = config.getBoolean("$commandPath.enabled", true),
+                cost = config.getInt("$commandPath.cost", (it.defaultCoolDown() / 1000).toInt()),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", it.showSuccessMessage ?: false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")!!
             )
@@ -152,6 +154,7 @@ object ConfigManager {
             config.getInt("$commandPath.cooldown") * 1000L,
             config.getBoolean("$commandPath.silent"),
             config.getBoolean("$commandPath.enabled"),
+            config.getInt("$commandPath.cost"),
             config.getBoolean("$commandPath.showSuccessMessage"),
             config.getString("$commandPath.successMessage") ?: ""
         )
@@ -170,6 +173,7 @@ object ConfigManager {
         config.set("$commandPath.cooldown", (commandConfig.coolDown / 1000).toInt())
         config.set("$commandPath.silent", commandConfig.silent)
         config.set("$commandPath.enabled", commandConfig.enabled)
+        config.set("$commandPath.cost", commandConfig.cost)
         config.set("$commandPath.showSuccessMessage", commandConfig.showSuccessMessage)
         config.set("$commandPath.successMessage", commandConfig.successMessage)
     }

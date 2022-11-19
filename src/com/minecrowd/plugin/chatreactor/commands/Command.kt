@@ -3,6 +3,7 @@ package com.minecrowd.plugin.chatreactor.commands
 import com.minecrowd.plugin.CommandConfig
 import com.minecrowd.plugin.ConfigManager
 import com.minecrowd.plugin.Main
+import com.minecrowd.plugin.chatreactor.PointsManager
 import org.bukkit.Location
 import java.util.*
 import kotlin.random.Random
@@ -78,6 +79,8 @@ abstract class Command {
         // aight, now we need to schedule the command
         startCommandBehavior(playerName, options)
         // command will run in the next tick (usually 1/20 of a sec)
+        // remember to adjust the score!
+        PointsManager.changeScore(-commandConfig.cost)
         return CommandResultWrapper(commandConfig.name, true, successMessage(),
             showSuccessMessage ?: commandConfig.showSuccessMessage)
     }
@@ -133,6 +136,7 @@ abstract class Command {
     }
 
     private fun startCommandBehavior(playerName: String, options: String?) {
+        PointsManager.changeScore(-commandConfig.cost)
         CommandRunner.runOnBukkit {
             CommandRunner.clearAllDroppedItems()
             behavior(playerName, options)
