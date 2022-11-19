@@ -26,7 +26,7 @@ object Potion : Command() {
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
-            val levitation = selectedPotion.createEffect(ticks * 20, 3)
+            val levitation = selectedPotion.createEffect(ticks * 60, 3)
             it.addPotionEffect(levitation)
         }
     }

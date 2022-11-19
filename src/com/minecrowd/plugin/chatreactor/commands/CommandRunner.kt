@@ -3,6 +3,7 @@ package com.minecrowd.plugin.chatreactor.commands
 import com.minecrowd.plugin.Main
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
+import org.bukkit.entity.Trident
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 

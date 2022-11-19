@@ -4,6 +4,7 @@ import com.minecrowd.plugin.Main
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Fireball
+import org.bukkit.entity.Trident
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.Plugin
@@ -31,7 +32,6 @@ object PlayerListenerBehaviour {
 //                    if (player.gameMode != GameMode.CREATIVE) player.inventory.itemInMainHand.amount -= 1
                 }
             }
-
             else -> {
                 // just do nothing for the moment.
             }

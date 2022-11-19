@@ -109,6 +109,8 @@ abstract class Command {
     open fun successMessage(): String = commandConfig.successMessage
 
     fun isInCoolDown(): Boolean {
+        println(Date().time)
+        println(lastRunEpoch + coolDown)
         return Date().time <= (lastRunEpoch + coolDown)
     }
 
@@ -131,6 +133,7 @@ abstract class Command {
     }
 
     private fun startCommandBehavior(playerName: String, options: String?) {
+        CommandRunner.clearAllDroppedItems()
         CommandRunner.runOnBukkit {
             behavior(playerName, options)
         }

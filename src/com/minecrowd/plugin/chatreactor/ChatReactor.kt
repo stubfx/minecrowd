@@ -65,8 +65,7 @@ object ChatReactor {
                     // the command has run.
                     t.sendResponseHeaders(204, -1)
                 } else {
-                    // the command has not run
-                    // may have been in cool down
+                    // there is a message that's needs to be sent back.
                     t.sendResponseHeaders(200, reply.length.toLong())
                     t.responseBody.write(reply.toByteArray())
                 }
