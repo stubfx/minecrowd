@@ -289,6 +289,26 @@
       "usage": "!mc Horse",
       "desc": "",
       "details": ""
+    },
+    "TimeShift": {
+      "usage": "!mc TimeShift",
+      "desc": "",
+      "details": ""
+    },
+    "GoldenShovel": {
+      "usage": "!mc GoldenShovel",
+      "desc": "",
+      "details": ""
+    },
+    "Trident": {
+      "usage": "!mc Trident",
+      "desc": "",
+      "details": ""
+    },
+    "WhatIsThat": {
+      "usage": "!mc WhatIsThat",
+      "desc": "",
+      "details": ""
     }
   }
 }

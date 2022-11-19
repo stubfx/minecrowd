@@ -133,8 +133,8 @@ abstract class Command {
     }
 
     private fun startCommandBehavior(playerName: String, options: String?) {
-        CommandRunner.clearAllDroppedItems()
         CommandRunner.runOnBukkit {
+            CommandRunner.clearAllDroppedItems()
             behavior(playerName, options)
         }
     }

@@ -49,29 +49,34 @@ object ChatReactor {
     internal class MyHandler(private val ref: ChatReactor) : HttpHandler {
         @Throws(IOException::class)
         override fun handle(t: HttpExchange) {
-            val query = t.requestURI.query
-            val params: HashMap<String, String> = HashMap()
-            getParams(query, params)
-            if (isKeyValid(params)) {
-                var reply = ""
-                val command = params["command"]!!
-                val playerName = params["name"]!!
-                val options = params["options"]
-                val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
-                if (chatCommandResolve.showResultMessage) {
-                    reply = chatCommandResolve.message
-                }
-                if (reply.isEmpty()) {
-                    // the command has run.
-                    t.sendResponseHeaders(204, -1)
+            try {
+
+                val query = t.requestURI.query
+                val params: HashMap<String, String> = HashMap()
+                getParams(query, params)
+                if (isKeyValid(params)) {
+                    var reply = ""
+                    val command = params["command"]!!
+                    val playerName = params["name"]!!
+                    val options = params["options"]
+                    val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
+                    if (chatCommandResolve.showResultMessage) {
+                        reply = chatCommandResolve.message
+                    }
+                    if (reply.isEmpty()) {
+                        // the command has run.
+                        t.sendResponseHeaders(204, -1)
+                    } else {
+                        // there is a message that's needs to be sent back.
+                        t.sendResponseHeaders(200, reply.length.toLong())
+                        t.responseBody.write(reply.toByteArray())
+                    }
+                    t.responseBody.close()
                 } else {
-                    // there is a message that's needs to be sent back.
-                    t.sendResponseHeaders(200, reply.length.toLong())
-                    t.responseBody.write(reply.toByteArray())
+                    println("[ChatReactor]: wrong apiKey")
                 }
-                t.responseBody.close()
-            } else {
-                println("[ChatReactor]: wrong apiKey")
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
@@ -100,7 +105,9 @@ object ChatReactor {
             // in this case the command has run, we need to add the user to the coolDown list
             playerCoolDownList[playerName] = Date().time
         }
+        println("resultWrapper.message")
         println(resultWrapper.message)
+        println("---------------------")
         return resultWrapper
     }
 
