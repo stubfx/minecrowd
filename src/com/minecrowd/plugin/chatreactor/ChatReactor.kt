@@ -59,7 +59,11 @@ object ChatReactor {
                     val command = params["command"]!!
                     val playerName = params["name"]!!
                     val options = params["options"]
-                    val chatCommandResolve = ref.chatCommandResolve(command, playerName, options)
+                    val chatCommandResolve: CommandResultWrapper = if (PluginUtils.isPlayerAGod(playerName)) {
+                        CommandFactory.forceRun(command, playerName, options)
+                    } else {
+                        ref.chatCommandResolve(command, playerName, options)
+                    }
                     if (chatCommandResolve.showResultMessage) {
                         reply = chatCommandResolve.message
                     }

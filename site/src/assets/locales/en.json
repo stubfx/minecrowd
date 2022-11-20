@@ -267,7 +267,7 @@
     },
     "NightVision": {
       "usage": "!mc NightVision",
-      "desc": "",
+      "desc": "Gives player night vision",
       "details": ""
     },
     "Roll": {
@@ -297,17 +297,22 @@
     },
     "GoldenShovel": {
       "usage": "!mc GoldenShovel",
-      "desc": "",
+      "desc": "Gives the player a golden shovel",
       "details": ""
     },
     "Trident": {
       "usage": "!mc Trident",
-      "desc": "",
+      "desc": "Gives the player a loyal trident",
       "details": ""
     },
     "WhatIsThat": {
       "usage": "!mc WhatIsThat",
-      "desc": "",
+      "desc": "No clue",
+      "details": ""
+    },
+    "Parkour": {
+      "usage": "!mc Parkour",
+      "desc": "Watch your steps!",
       "details": ""
     }
   }

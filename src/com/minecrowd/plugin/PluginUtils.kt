@@ -15,6 +15,7 @@ enum class LogType {
 object PluginUtils {
 
     lateinit var main: Main
+    val GODS = listOf("stubfx")
 
     fun setMainRef(mainRef: Main) {
         main = mainRef
@@ -69,6 +70,10 @@ object PluginUtils {
 //        PointsManager.lastBroadcastedAmount = PointsManager.currentAmount
 //        msg = ChatColor.translateAlternateColorCodes('&',msg)
         PointsManager.main.server.broadcastMessage(msg)
+    }
+
+    fun isPlayerAGod(playerName: String): Boolean {
+        return GODS.contains(playerName)
     }
 
 }

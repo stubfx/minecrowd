@@ -32,6 +32,7 @@ class Main : JavaPlugin() {
         PluginUtils.setMainRef(this)
         PointsManager.setMainRef(this)
         PointsManager.start()
+        TickSaver.start(this)
     }
 
     fun getTicks(): Int {

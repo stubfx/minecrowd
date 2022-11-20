@@ -25,7 +25,7 @@ object CommandFactory {
         IHaveIt, Paint, GoingDown, ClearChunk,
         ThatIsTNT, TunnelTime, OpenSpace, UpsideDown, OnTheMoon,
         Cookies, SuperTools, Milk, Potion, Lava, Slowness, Bees, EndFrame, WaterIsLava, LaserView, GoldenSword, GoldenHoe, Clear, CreepyLand, DiamondSword,
-        NightVision, Roll, Cat, ToTheEnd, Horse, TimeShift, GoldenShovel, Trident, WhatIsThat
+        NightVision, Roll, Cat, ToTheEnd, Horse, TimeShift, GoldenShovel, Trident, WhatIsThat, Parkour
     )
 
     fun getAvailableCommands(): List<Command> {
