@@ -64,12 +64,18 @@ abstract class Command {
         }
         if (isInCoolDown()) {
             // command is in coolDown
-            return resultWrapper(false, "@${playerName} ,${commandName()} command is in coolDown")
+            return resultWrapper(false, "@${playerName} - ${commandName()} command is in coolDown")
         }
         val setupResult = setup(playerName, options)
         if (!setupResult.result) {
             return setupResult
         }
+        if (!checkEnoughPoints(commandConfig.cost)) {
+            // not enough points to run the command
+            return resultWrapper(false, "@${playerName} - You need ${commandConfig.cost} points to run ${commandName()}")
+        }
+        // there are enough points let's remember to adjust the score!
+        PointsManager.changeScore(-commandConfig.cost)
         // update last run epoch
         lastRunEpoch = time
         // print in console cause why not
@@ -79,10 +85,12 @@ abstract class Command {
         // aight, now we need to schedule the command
         startCommandBehavior(playerName, options)
         // command will run in the next tick (usually 1/20 of a sec)
-        // remember to adjust the score!
-        PointsManager.changeScore(-commandConfig.cost)
         return CommandResultWrapper(commandConfig.name, true, successMessage(),
             showSuccessMessage ?: commandConfig.showSuccessMessage)
+    }
+
+    private fun checkEnoughPoints(cost: Int): Boolean {
+        return cost <= PointsManager.getCurrentAmount()
     }
 
     /**
@@ -127,6 +135,7 @@ abstract class Command {
 
     fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandName())
+        PointsManager.changeScore(-commandConfig.cost)
         // no checks, just party up!
         startCommandBehavior(playerName, options)
         if (!isSilent) {
