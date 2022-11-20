@@ -19,8 +19,8 @@ object ChatReactor {
     private var serverPort: Int = 8001
     private var httpserver: HttpServer? = null
     private var httpServerSocket: InetSocketAddress? = null
-    private val defaultCoolDown = 1000 * 10
-    val playerCoolDownList: HashMap<String, Long> = hashMapOf()
+    private const val userCooldown = 1000 * 10
+    private val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
 
     private fun startServer() {
@@ -93,7 +93,7 @@ object ChatReactor {
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
         var resultWrapper = CommandResultWrapper(
             StubCommand.commandName(), false,
-            "im sorry @$playerName, you are still in cooldown.", true)
+            "im sorry @$playerName you are still in cooldown.", true)
         // is the user in coolDown
         if (!isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)
@@ -114,7 +114,7 @@ object ChatReactor {
     private fun isUserInCoolDown(playerName: String): Boolean {
         val time = playerCoolDownList[playerName] ?: return false
         // if the player exists, is the time expired?
-        if ((Date().time < time + defaultCoolDown)) {
+        if ((Date().time < time + userCooldown)) {
             // the user is still in coolDown.
             // no update to the list needed.
             return true

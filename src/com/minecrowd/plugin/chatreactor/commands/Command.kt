@@ -3,6 +3,7 @@ package com.minecrowd.plugin.chatreactor.commands
 import com.minecrowd.plugin.CommandConfig
 import com.minecrowd.plugin.ConfigManager
 import com.minecrowd.plugin.Main
+import com.minecrowd.plugin.PluginUtils
 import com.minecrowd.plugin.chatreactor.PointsManager
 import org.bukkit.Location
 import java.util.*
@@ -76,6 +77,7 @@ abstract class Command {
         }
         // there are enough points let's remember to adjust the score!
         PointsManager.changeScore(-commandConfig.cost)
+        PluginUtils.log(commandConfig.cost.toString())
         // update last run epoch
         lastRunEpoch = time
         // print in console cause why not
@@ -111,9 +113,7 @@ abstract class Command {
     abstract fun behavior(playerName: String, options: String?)
 
     private fun showTitle(playerName: String) {
-        CommandRunner.forEachPlayer {
-            it.sendTitle(title(), playerName, 10, 70, 20) // ints are def values
-        }
+        PluginUtils.broadcastMessage("$playerName has run ${title()}")
     }
 
     open fun title(): String = commandConfig.title
@@ -135,7 +135,6 @@ abstract class Command {
 
     fun forceRun(playerName: String = "ERROR", options: String? = "", isSilent: Boolean = false): CommandResultWrapper {
         commandConfig = ConfigManager.getCommand(this.commandName())
-        PointsManager.changeScore(-commandConfig.cost)
         // no checks, just party up!
         startCommandBehavior(playerName, options)
         if (!isSilent) {
@@ -145,7 +144,6 @@ abstract class Command {
     }
 
     private fun startCommandBehavior(playerName: String, options: String?) {
-        PointsManager.changeScore(-commandConfig.cost)
         CommandRunner.runOnBukkit {
             CommandRunner.clearAllDroppedItems()
             behavior(playerName, options)

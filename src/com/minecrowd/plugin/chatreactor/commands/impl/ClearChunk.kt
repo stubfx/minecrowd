@@ -7,7 +7,6 @@ import org.bukkit.Material
 
 object ClearChunk : Command() {
 
-
     override fun defaultCoolDown(): Long {
         return 600 * 1000 // 10 min coolDown
     }

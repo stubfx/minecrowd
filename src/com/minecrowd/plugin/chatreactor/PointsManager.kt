@@ -3,9 +3,7 @@ package com.minecrowd.plugin.chatreactor
 import com.minecrowd.plugin.Main
 import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
 import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
@@ -15,9 +13,9 @@ object BlocksToFind {
     var blocks = listOf<Material>(
         Material.WOODEN_SHOVEL,
         Material.SUGAR_CANE,
-    Material.COBBLESTONE,
-    Material.DIRT,
-    Material.NETHERRACK,
+        Material.COBBLESTONE,
+        Material.DIRT,
+        Material.NETHERRACK,
         Material.IRON_INGOT,
         Material.COAL,
         Material.WATER_BUCKET,
@@ -38,9 +36,8 @@ object PointsManager {
     lateinit var main: Main
     private var currentAmount = 0
     private var addPointsEvery = 3 // secs
-    private var pointsToAdd = 10
-    private var lastBroadcastedAmount = 0
-    private var valuePerItem = 2
+    private var pointsToAdd = 5
+    private var playerPointsMultiplayer = 1
     private var minPointCap = -20
 
     private lateinit var board: Scoreboard
@@ -100,15 +97,19 @@ object PointsManager {
                     it.sendTitle("Block has been found!", currentRndBlock.name, 10, 70, 20) // ints are def values
                 }
                 // someone has found the given block.
-                changeScore(-20)
+                resetPoints()
                 generateRandomBlock()
             }
         })
     }
 
+    private fun resetPoints() {
+        changeScore(-currentAmount)
+    }
+
     private fun startClock() {
         CommandRunner.startPersistentTask({
-            changeScore(pointsToAdd)
+            changeScore(pointsToAdd * main.server.onlinePlayers.size * playerPointsMultiplayer)
         }, addPointsEvery * 20L)
     }
 

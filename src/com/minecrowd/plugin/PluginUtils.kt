@@ -1,5 +1,6 @@
 package com.minecrowd.plugin
 
+import com.minecrowd.plugin.chatreactor.PointsManager
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Location
@@ -55,6 +56,19 @@ object PluginUtils {
 
     fun teleportToOverworld(entity: Entity) {
         entity.teleport(Bukkit.getWorld("world")?.spawnLocation ?: entity.location)
+    }
+
+    fun broadcastMessage(msg: String) {
+//        var msg = if (PointsManager.lastBroadcastedAmount < PointsManager.currentAmount) {
+//            // in this case points should be red
+//            "Points : &c${PointsManager.currentAmount}"
+//        } else {
+//            // in this other case they should be green
+//            "Points : &a${PointsManager.currentAmount}"
+//        }
+//        PointsManager.lastBroadcastedAmount = PointsManager.currentAmount
+//        msg = ChatColor.translateAlternateColorCodes('&',msg)
+        PointsManager.main.server.broadcastMessage(msg)
     }
 
 }

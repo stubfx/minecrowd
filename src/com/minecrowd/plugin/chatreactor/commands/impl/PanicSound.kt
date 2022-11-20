@@ -8,7 +8,10 @@ import org.bukkit.Sound
 
 object PanicSound : Command() {
 
-
+    override fun defaultCoolDown(): Long {
+        return 10 * 1000
+    }
+    
     override fun behavior(playerName: String, options: String?) {
         val sounds: List<Sound> = listOf(
             Sound.ENTITY_CREEPER_PRIMED,
