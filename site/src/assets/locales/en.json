@@ -314,6 +314,13 @@
       "usage": "!mc Parkour",
       "desc": "Watch your steps!",
       "details": ""
+    },
+    "BrokenXray": {
+      "usage": "!mc BrokenXray",
+      "desc": "Is literally broken. It works, just in its own (fancy) way."
+    }, "Elytra": {
+      "usage":  "!mc Elytra",
+      "desc":  "Yes?"
     }
   }
 }

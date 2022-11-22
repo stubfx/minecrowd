@@ -13,7 +13,7 @@ object TickSaver {
         CommandRunner.startPersistentTask({
             val timeDiff = Date().time - lastTickEpoch
             if (timeDiff > 100) PluginUtils.broadcastMessage("This tick took ${timeDiff}ms.")
-            CommandRunner.clearAllDroppedItems()
+//            CommandRunner.clearAllDroppedItems()
             lastTickEpoch = Date().time
         }, 1L)
     }

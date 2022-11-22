@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable
 
 object BlockReplacer {
 
-    const val CHUNK_BLOCKS_NUMBER = 15.0
+    private const val CHUNK_BLOCKS_NUMBER = 15.0
     lateinit var main: Main
     const val threadBlockY = 10
 
@@ -20,8 +20,6 @@ object BlockReplacer {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         val minL = PluginUtils.getMinLocation(loc1, loc2)
         val maxL = PluginUtils.getMaxLocation(loc1, loc2)
-        main.server.consoleSender.sendMessage(minL.toString())
-        main.server.consoleSender.sendMessage(maxL.toString())
         for (y in minL.y.toInt()..maxL.y.toInt()) {
             for (x in minL.x.toInt()..maxL.x.toInt()) {
                 for (z in minL.z.toInt()..maxL.z.toInt()) {
@@ -35,8 +33,6 @@ object BlockReplacer {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         val minL = PluginUtils.getMinLocation(loc1, loc2)
         val maxL = PluginUtils.getMaxLocation(loc1, loc2)
-        main.server.consoleSender.sendMessage(minL.toString())
-        main.server.consoleSender.sendMessage(maxL.toString())
         // let the y be first, so we know that the number of blocks (and threads)
         // that can be modified is limited.
         var zero = minL.y.toInt()
@@ -78,9 +74,6 @@ object BlockReplacer {
                 255.0,
                 block.z.toDouble() + CHUNK_BLOCKS_NUMBER
             )
-        main.server.consoleSender.sendMessage(start.toString())
-        main.server.consoleSender.sendMessage(end.toString())
-        main.server.consoleSender.sendMessage(material.toString())
         replaceAreaAsync(
             start,
             end,

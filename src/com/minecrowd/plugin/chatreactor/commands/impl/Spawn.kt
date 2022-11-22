@@ -10,7 +10,8 @@ object Spawn : Command() {
 
     private var mobToSpawn: EntityType = EntityType.CREEPER
     private val blacklist =
-        listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN, EntityType.PLAYER, EntityType.UNKNOWN)
+        listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN, EntityType.PLAYER, EntityType.UNKNOWN,
+        EntityType.PRIMED_TNT, EntityType.WITHER_SKULL, EntityType.LIGHTNING, EntityType.FIREBALL)
 
     override fun tabCompleterOptions(): List<String> {
         return EntityType.values().map { it.toString() }
