@@ -1,6 +1,7 @@
 package com.minecrowd.plugin.chatreactor.commands.impl
 
 import com.minecrowd.plugin.chatreactor.commands.Command
+import com.minecrowd.plugin.chatreactor.commands.CommandResultWrapper
 import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.entity.EntityType
 
@@ -19,6 +20,10 @@ object WhatIsThat : Command() {
                 it.world.spawnEntity(spawnPosition, EntityType.PRIMED_TNT)
             }
         }
+    }
+
+    override fun run(playerName: String, options: String?, isSilent: Boolean): CommandResultWrapper {
+        return super.run(playerName, options, isSilent = true)
     }
 
 }

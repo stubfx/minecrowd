@@ -14,7 +14,6 @@ object BlocksToFind {
         Material.WOODEN_SHOVEL,
         Material.SUGAR_CANE,
         Material.COBBLESTONE,
-        Material.DIRT,
         Material.NETHERRACK,
         Material.IRON_INGOT,
         Material.COAL,
