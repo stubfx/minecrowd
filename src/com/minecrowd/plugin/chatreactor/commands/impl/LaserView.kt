@@ -7,9 +7,7 @@ import org.bukkit.Material
 object LaserView : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 1000 * 600 // 10 mins
-    }
+    override val defaultCoolDown: Long = 1000 * 600 // 10 mins
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {

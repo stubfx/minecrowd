@@ -7,9 +7,7 @@ import org.bukkit.entity.EntityType
 object TunnelTime : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 180 * 1000
-    }
+    override val defaultCoolDown: Long = 180 * 1000
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

@@ -8,6 +8,7 @@ import org.bukkit.entity.EntityType
 object Spawn : Command() {
 
 
+    override var cost : Int = 29
     private var mobToSpawn: EntityType = EntityType.CREEPER
     private val blacklist =
         listOf(EntityType.WITHER, EntityType.ENDER_DRAGON, EntityType.ENDER_CRYSTAL, EntityType.WARDEN, EntityType.PLAYER, EntityType.UNKNOWN,

@@ -7,9 +7,7 @@ import org.bukkit.TreeType
 object TreeCage : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 60 * 1000
-    }
+    override val defaultCoolDown: Long = 60 * 1000
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

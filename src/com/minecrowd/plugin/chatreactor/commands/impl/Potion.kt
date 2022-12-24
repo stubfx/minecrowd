@@ -13,9 +13,7 @@ object Potion : Command() {
     // cause we are running on a separate thread, that means that the title
 
 
-    override fun defaultCoolDown(): Long {
-        return 1000 * 60
-    }
+    override val defaultCoolDown: Long = 1000 * 60
 
     override fun title(): String = selectedPotion.name.replace("_", " ")
 

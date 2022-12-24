@@ -9,9 +9,7 @@ import org.bukkit.entity.EntityType
 object Bees : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 1000 * 300
-    }
+    override val defaultCoolDown: Long = 1000 * 300
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

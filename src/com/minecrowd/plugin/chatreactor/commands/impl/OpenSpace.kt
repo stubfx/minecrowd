@@ -8,9 +8,7 @@ import org.bukkit.Material
 object OpenSpace : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 500 * 1000
-    }
+    override val defaultCoolDown: Long = 500 * 1000
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.clearAllDroppedItems()

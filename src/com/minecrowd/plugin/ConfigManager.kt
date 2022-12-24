@@ -86,10 +86,10 @@ object ConfigManager {
             val commandConfig = CommandConfig(
                 name = it.commandName(),
                 title = config.getString("$commandPath.title", commandTitle)!!,
-                coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown() / 1000).toInt()) * 1000L,
+                coolDown = config.getInt("$commandPath.cooldown", (it.defaultCoolDown / 1000).toInt()) * 1000L,
                 silent = config.getBoolean("$commandPath.silent", false),
                 enabled = config.getBoolean("$commandPath.enabled", true),
-                cost = config.getInt("$commandPath.cost", (it.defaultCoolDown() / 1000).toInt()),
+                cost = config.getInt("$commandPath.cost", it.cost),
                 showSuccessMessage = config.getBoolean("$commandPath.showSuccessMessage", it.showSuccessMessage ?: false),
                 successMessage = config.getString("$commandPath.successMessage", "You run the command $commandTitle")!!
             )

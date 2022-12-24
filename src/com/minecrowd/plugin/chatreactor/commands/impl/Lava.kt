@@ -7,9 +7,7 @@ import org.bukkit.Material
 object Lava : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 1000 * 500
-    }
+    override val defaultCoolDown: Long = 1000 * 500
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

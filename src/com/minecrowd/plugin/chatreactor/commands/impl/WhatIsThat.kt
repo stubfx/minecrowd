@@ -8,9 +8,7 @@ import org.bukkit.entity.EntityType
 object WhatIsThat : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 120 * 1000 // 2 mins
-    }
+    override val defaultCoolDown: Long = 120 * 1000 // 2 mins
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startShortRecurrentTask {

@@ -7,9 +7,7 @@ import org.bukkit.Material
 object GoingDown : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 60 * 1000
-    }
+    override val defaultCoolDown: Long = 60 * 1000
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startShortRecurrentTask {

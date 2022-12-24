@@ -20,25 +20,14 @@ abstract class Command {
     open val showSuccessMessage: Boolean? = null
     var ticks = 20 // this is supposed to be a minecraft constant.
     private lateinit var commandConfig: CommandConfig
-    var coolDown: Long = 0 // will be overridden by defaultCoolDown function
-    var lastRunEpoch: Long = 0
-
+    private var coolDown: Long = 30 // will be overridden by defaultCoolDown function
+    private var lastRunEpoch: Long = 0
+    open val cost: Int = 50
+    open val defaultCoolDown: Long = 30 * 1000 // standard coolDown in seconds
     lateinit var main: Main
-
-    init {
-        coolDown = this.defaultCoolDown()
-        // do not do this
-        // commandConfig = ConfigManager.getCommand(this.commandType())
-        // as we want fresh data on every run cause the player may have updated it.
-    }
 
     fun commandName(): String {
         return this::class.toString().substringAfterLast(".")
-    }
-
-
-    open fun defaultCoolDown(): Long {
-        return 30 * 1000 // standard coolDown in seconds
     }
 
     fun getCloseLocation(location: Location, radius: Double, below: Boolean = false): Location {

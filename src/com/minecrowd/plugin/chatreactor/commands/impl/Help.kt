@@ -5,12 +5,9 @@ import com.minecrowd.plugin.chatreactor.commands.CommandResultWrapper
 
 object Help : Command() {
 
-    override val showSuccessMessage: Boolean
-        get() = true
+    override val showSuccessMessage: Boolean = true
 
-    override fun defaultCoolDown(): Long {
-        return 10 * 1000 // 10 sec
-    }
+    override val defaultCoolDown: Long = 10 * 1000 // 10 sec
 
     override fun successMessage(): String {
         return "You can find the list of commands here: https://minecrowd.stubfx.com/"

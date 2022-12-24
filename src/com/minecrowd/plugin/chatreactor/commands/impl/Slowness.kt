@@ -7,9 +7,7 @@ import org.bukkit.potion.PotionEffectType
 object Slowness : Command() {
 
 
-    override fun defaultCoolDown(): Long {
-        return 1000 * 120
-    }
+    override val defaultCoolDown: Long = 1000 * 120
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

@@ -7,9 +7,7 @@ import org.bukkit.Material
 
 object BrokenXray : Command() {
 
-    override fun defaultCoolDown(): Long {
-        return 200 * 1000
-    }
+    override val defaultCoolDown: Long = 200 * 1000
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
