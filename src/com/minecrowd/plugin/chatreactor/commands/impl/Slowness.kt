@@ -8,6 +8,7 @@ object Slowness : Command() {
 
 
     override val defaultCoolDown: Long = 1000 * 120
+    override val cost: Int = 100
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

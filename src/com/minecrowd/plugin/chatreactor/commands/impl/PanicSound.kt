@@ -9,6 +9,7 @@ import org.bukkit.Sound
 object PanicSound : Command() {
 
     override val defaultCoolDown: Long = 10 * 1000
+    override val cost: Int = 30
 
     override fun behavior(playerName: String, options: String?) {
         val sounds: List<Sound> = listOf(

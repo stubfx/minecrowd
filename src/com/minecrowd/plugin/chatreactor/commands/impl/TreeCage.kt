@@ -8,6 +8,7 @@ object TreeCage : Command() {
 
 
     override val defaultCoolDown: Long = 60 * 1000
+    override val cost: Int = 150
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

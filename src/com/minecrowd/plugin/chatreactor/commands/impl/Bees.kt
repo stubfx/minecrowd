@@ -10,6 +10,7 @@ object Bees : Command() {
 
 
     override val defaultCoolDown: Long = 1000 * 300
+    override val cost: Int = 150
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

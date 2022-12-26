@@ -8,7 +8,8 @@ import org.bukkit.Material
 object WaterIsLava : Command() {
 
 
-    override val defaultCoolDown: Long = 600 * 1000 // 10 min coolDown
+    override val defaultCoolDown: Long = 600 * 1000
+    override val cost: Int = 400
 
     override fun behavior(playerName: String, options: String?) {
         // clear all the items to avoid lag

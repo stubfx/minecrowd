@@ -9,6 +9,7 @@ object OpenSpace : Command() {
 
 
     override val defaultCoolDown: Long = 500 * 1000
+    override val cost: Int = 350
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.clearAllDroppedItems()

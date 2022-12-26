@@ -14,6 +14,7 @@ object Potion : Command() {
 
 
     override val defaultCoolDown: Long = 1000 * 60
+    override val cost: Int = 80
 
     override fun title(): String = selectedPotion.name.replace("_", " ")
 

@@ -8,6 +8,7 @@ object Help : Command() {
     override val showSuccessMessage: Boolean = true
 
     override val defaultCoolDown: Long = 10 * 1000 // 10 sec
+    override val cost: Int = 20
 
     override fun successMessage(): String {
         return "You can find the list of commands here: https://minecrowd.stubfx.com/"

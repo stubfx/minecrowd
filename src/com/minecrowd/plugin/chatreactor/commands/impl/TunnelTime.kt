@@ -8,6 +8,7 @@ object TunnelTime : Command() {
 
 
     override val defaultCoolDown: Long = 180 * 1000
+    override val cost: Int = 250
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
