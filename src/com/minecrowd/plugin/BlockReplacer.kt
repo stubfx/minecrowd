@@ -84,6 +84,7 @@ object BlockReplacer {
         )
     }
 
+    @Deprecated("Use replaceAreaAsync instead.")
     fun replaceArea(
         loc1: Location,
         loc2: Location,

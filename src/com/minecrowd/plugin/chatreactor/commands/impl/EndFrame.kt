@@ -8,7 +8,7 @@ object EndFrame : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             it.location.block.type = Material.END_GATEWAY
         }
     }

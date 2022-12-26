@@ -10,7 +10,7 @@ object Clear : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             it.inventory.clear()
         }
     }

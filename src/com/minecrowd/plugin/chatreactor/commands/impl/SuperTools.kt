@@ -11,7 +11,7 @@ object SuperTools : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val pick = ItemStack(Material.NETHERITE_PICKAXE, 1)
             pick.addEnchantment(Enchantment.DIG_SPEED, 5)
             it.inventory.addItem(pick)

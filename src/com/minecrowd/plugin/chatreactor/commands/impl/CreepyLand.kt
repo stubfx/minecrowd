@@ -13,7 +13,7 @@ object CreepyLand : Command() {
     override val cost: Int = 400
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer { player ->
+        CommandRunner.forRandomPlayer { player ->
             player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
                 val creeper = it.world.spawnEntity(it.location, EntityType.CREEPER) as Creeper
                 creeper.isPowered = true

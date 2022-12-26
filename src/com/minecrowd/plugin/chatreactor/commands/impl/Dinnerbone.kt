@@ -8,7 +8,7 @@ object Dinnerbone : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer { player ->
+        CommandRunner.forRandomPlayer { player ->
             player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
                 if (it is LivingEntity) {
                     it.customName = "Dinnerbone"

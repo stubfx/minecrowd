@@ -8,7 +8,7 @@ object Chickens : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             for (i in 0..20) {
                 it.world.spawnEntity(it.location, EntityType.CHICKEN)
             }

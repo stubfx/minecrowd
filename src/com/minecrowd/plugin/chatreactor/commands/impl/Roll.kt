@@ -10,10 +10,8 @@ object Roll : Command() {
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
-            CommandRunner.forEachPlayer {
-                val rndMaterial = ItemStack(listOf(*Material.values()).random(), 1)
-                it.inventory.setItemInMainHand(rndMaterial)
-            }
+            val rndMaterial = ItemStack(listOf(*Material.values()).random(), 1)
+            it.inventory.setItemInMainHand(rndMaterial)
         }
     }
 

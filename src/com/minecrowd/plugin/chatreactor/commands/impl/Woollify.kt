@@ -16,10 +16,10 @@ object Woollify : Command() {
             Material.CYAN_WOOL,
             Material.GRAY_WOOL,
         )
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val loc1 = it.location.subtract(20.0, 20.0, 20.0)
             val loc2 = it.location.add(20.0, 20.0, 20.0)
-            BlockReplacer.replaceArea(loc1, loc2, wool.random())
+            BlockReplacer.replaceAreaAsync(loc1, loc2, wool.random())
         }
         // clear stuff on the ground, just to make sure.
         CommandRunner.clearAllDroppedItems()

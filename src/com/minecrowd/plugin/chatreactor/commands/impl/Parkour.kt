@@ -11,7 +11,7 @@ object Parkour : Command() {
     override val cost: Int = 200
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val distance = 20.0
             val offset = 20.0
             val loc1 = it.location.subtract(distance, offset, distance)
