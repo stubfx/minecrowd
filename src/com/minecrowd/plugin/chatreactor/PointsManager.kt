@@ -108,7 +108,7 @@ object PointsManager {
 
     private fun startClock() {
         CommandRunner.startPersistentTask({
-            changeScore(pointsToAdd * main.server.onlinePlayers.size * playerPointsMultiplayer)
+            changeScore(pointsToAdd * CommandRunner.getRealPlayers().size * playerPointsMultiplayer)
         }, addPointsEvery * 20L)
     }
 

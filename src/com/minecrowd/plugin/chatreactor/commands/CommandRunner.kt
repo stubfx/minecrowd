@@ -3,7 +3,6 @@ package com.minecrowd.plugin.chatreactor.commands
 import com.minecrowd.plugin.Main
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
-import org.bukkit.entity.Trident
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 
@@ -19,11 +18,11 @@ object CommandRunner {
     }
 
     fun forEachPlayer(func: (player: Player) -> Unit) {
-        main.server.onlinePlayers.forEach { func(it) }
+        getRealPlayers().forEach { func(it) }
     }
 
     fun forRandomPlayer(func: (player: Player) -> Unit) {
-        func(main.server.onlinePlayers.random())
+        func(getRealPlayers().random())
     }
 
     fun clearAllDroppedItems() {
@@ -73,12 +72,19 @@ object CommandRunner {
         currentTask = runOnBukkitEveryTick(func, 20)
     }
 
-    public fun startPersistentTask(func: () -> Unit, tickPeriod: Long = 1L): BukkitTask {
+    fun startPersistentTask(func: () -> Unit, tickPeriod: Long = 1L): BukkitTask {
         return object : BukkitRunnable() {
             override fun run() {
                 func()
             }
         }.runTaskTimer(main, 1, tickPeriod)
+    }
+
+    /**
+     * returns the list of effective players excluding OPs
+     */
+    fun getRealPlayers(): List<Player> {
+        return main.server.onlinePlayers.filter { !it.isOp }
     }
 
 }

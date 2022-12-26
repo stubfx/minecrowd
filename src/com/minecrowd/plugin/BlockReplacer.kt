@@ -9,13 +9,24 @@ import org.bukkit.scheduler.BukkitRunnable
 object BlockReplacer {
 
     private const val CHUNK_BLOCKS_NUMBER = 15.0
+    private const val SPAWN_SAFE_RADIUS = 15.0
     lateinit var main: Main
     const val threadBlockY = 10
+
+    fun isBlockCloseToSpawnArea(block: Block): Boolean {
+        val spawnLocation = block.world.spawnLocation
+        val blockLocation = block.location
+        return blockLocation.x > spawnLocation.x - SPAWN_SAFE_RADIUS &&
+                blockLocation.x < spawnLocation.x + SPAWN_SAFE_RADIUS &&
+                blockLocation.z > spawnLocation.z - SPAWN_SAFE_RADIUS &&
+                blockLocation.z < spawnLocation.z + SPAWN_SAFE_RADIUS
+    }
 
     fun setMainRef(mainRef: Main) {
         main = mainRef
     }
 
+    @Deprecated("Use forEachBlockAsync instead.")
     fun forEachBlock(loc1: Location, loc2: Location, func: (Block) -> Unit) {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         val minL = PluginUtils.getMinLocation(loc1, loc2)
@@ -51,7 +62,11 @@ object BlockReplacer {
                     ////////////////////////////
                     for (x in minL.x.toInt()..maxL.x.toInt()) {
                         for (z in minL.z.toInt()..maxL.z.toInt()) {
-                            func(Location(loc1.world, x.toDouble(), y.toDouble(), z.toDouble()).block)
+                            // check for spawn!!
+                            val block = Location(loc1.world, x.toDouble(), y.toDouble(), z.toDouble()).block
+                            if (!isBlockCloseToSpawnArea(block)) {
+                                func(block)
+                            }
                         }
                     }
                 }
@@ -95,6 +110,7 @@ object BlockReplacer {
         object : BukkitRunnable() {
             override fun run() {
                 PluginUtils.checkLocationsWorld(loc1, loc2)
+                @Suppress("DEPRECATION")
                 forEachBlock(loc1, loc2) { block ->
                     if (excludeAir && block.type.isAir) return@forEachBlock
                     if (excluded?.contains(block.type) != true) {
@@ -126,8 +142,10 @@ object BlockReplacer {
             if (excludeAir && block.type.isAir) return@forEachBlockAsync
             if (excluded?.contains(block.type) != true) {
                 // well, that's not even in the excluded list...
-                // what a poor block.
-                block.type = material
+                if (!isBlockCloseToSpawnArea(block)) {
+                    // what a poor block.
+                    block.type = material
+                }
             }
         }, onFinish)
     }
