@@ -14,9 +14,9 @@ object BrokenXray : Command() {
         CommandRunner.forRandomPlayer {
             val distance = 30.0
             val loc1 = it.location.clone().subtract(distance, 0.0, distance)
-            loc1.y = -63.0
+            loc1.y = it.location.y - 50.0
             val loc2 = it.location.clone().add(distance, 0.0, distance)
-            loc2.y = 255.0
+            loc2.y = it.location.y
             BlockReplacer.forEachBlockAsync(loc1, loc2, { block ->
                 if (!block.type.isAir &&
                     block.type != Material.IRON_ORE &&

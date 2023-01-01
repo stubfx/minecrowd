@@ -321,6 +321,9 @@
     }, "Elytra": {
       "usage":  "!mc Elytra",
       "desc":  "Yes?"
+    }, "Wolves": {
+      "usage":  "!mc Wolves",
+      "desc":  "Spawn a bunch of wolves loyal to the player."
     }
   }
 }

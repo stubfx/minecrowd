@@ -22,7 +22,9 @@ object CommandRunner {
     }
 
     fun forRandomPlayer(func: (player: Player) -> Unit) {
-        func(getRealPlayers().random())
+        if (getRealPlayers().isNotEmpty()) {
+            func(getRealPlayers().random())
+        }
     }
 
     fun clearAllDroppedItems() {
@@ -84,7 +86,7 @@ object CommandRunner {
      * returns the list of effective players excluding OPs
      */
     fun getRealPlayers(): List<Player> {
-        return main.server.onlinePlayers.filter { !it.isOp }
+        return main.server.onlinePlayers.toList()//.filter { !it.isOp }
     }
 
 }
