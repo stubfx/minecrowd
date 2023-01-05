@@ -5,6 +5,7 @@ import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.entity.Creeper
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Player
 
 object CreepyLand : Command() {
 
@@ -17,7 +18,7 @@ object CreepyLand : Command() {
             player.getNearbyEntities(100.0, 100.0, 100.0).forEach {
                 val creeper = it.world.spawnEntity(it.location, EntityType.CREEPER) as Creeper
                 creeper.isPowered = true
-                if (it is LivingEntity) {
+                if (it is LivingEntity && it !is Player) {
                     it.health = 0.0
                 }
             }

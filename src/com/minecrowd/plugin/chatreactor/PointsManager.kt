@@ -36,7 +36,9 @@ object BlocksToFind {
         Material.HAY_BLOCK,
         Material.BOOKSHELF,
         Material.ENCHANTING_TABLE,
-        Material.ENDER_PEARL
+        Material.ENDER_PEARL,
+        Material.TNT,
+        Material.DIAMOND_ORE
     )
 }
 
