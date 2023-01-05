@@ -8,7 +8,7 @@ object Anvil : Command() {
 
 
     override val defaultCoolDown: Long = 120 * 1000 // 2 mins
-    override val cost: Int = 200
+    override val cost: Int = 300
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.startRecurrentTask {

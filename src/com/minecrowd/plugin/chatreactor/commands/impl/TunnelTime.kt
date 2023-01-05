@@ -11,8 +11,8 @@ object TunnelTime : Command() {
     override val cost: Int = 250
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
-            val target = it.getTargetBlockExact(50) ?: return@forEachPlayer
+        CommandRunner.forRandomPlayer {
+            val target = it.getTargetBlockExact(50) ?: return@forRandomPlayer
             val world = it.world
             for (i in 0..50) {
                 val location = target.location.add(it.location.direction.multiply(i))

@@ -10,7 +10,7 @@ object Wolves : Command() {
     override val cost: Int = 100
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             for (i in 1..5) {
                 val wolf = it.world.spawnEntity(it.location, EntityType.WOLF) as org.bukkit.entity.Wolf
                 wolf.owner = it

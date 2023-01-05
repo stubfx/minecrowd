@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 object GoldenHoe : Command() {
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val goldenHoe = ItemStack(Material.GOLDEN_HOE)
             it.inventory.setItemInMainHand(goldenHoe)
         }

@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 object GoldenShovel : Command() {
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val weapon = ItemStack(Material.GOLDEN_SHOVEL)
             it.inventory.setItemInMainHand(weapon)
         }

@@ -9,7 +9,7 @@ object WallHack : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer { player ->
+        CommandRunner.forRandomPlayer { player ->
             player.getNearbyEntities(200.0, 200.0, 200.0).forEach {
                 if (it is LivingEntity) {
                     it.addPotionEffect(PotionEffectType.GLOWING.createEffect(ticks * 20, 1))

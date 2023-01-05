@@ -22,7 +22,7 @@ abstract class Command {
     private lateinit var commandConfig: CommandConfig
     private var coolDown: Long = 30 // will be overridden by defaultCoolDown function
     private var lastRunEpoch: Long = 0
-    open val cost: Int = 50
+    open val cost: Int = 100
     open val defaultCoolDown: Long = 30 * 1000 // standard coolDown in seconds
     lateinit var main: Main
 

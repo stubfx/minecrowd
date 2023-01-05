@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack
 object Trident : Command() {
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val weapon = ItemStack(Material.TRIDENT)
             weapon.addEnchantment(Enchantment.LOYALTY, 3)
             it.inventory.setItemInMainHand(weapon)

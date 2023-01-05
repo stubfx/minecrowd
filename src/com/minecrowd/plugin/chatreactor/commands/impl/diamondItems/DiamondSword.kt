@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 object DiamondSword : Command() {
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val weapon = ItemStack(Material.DIAMOND_SWORD)
             it.inventory.setItemInMainHand(weapon)
         }

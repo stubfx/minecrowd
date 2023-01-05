@@ -33,7 +33,7 @@ object Spawn : Command() {
     }
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val entity = it.world.spawnEntity(it.location, mobToSpawn)
             entity.customName = playerName
             entity.isCustomNameVisible = true

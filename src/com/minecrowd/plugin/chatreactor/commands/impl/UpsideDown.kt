@@ -8,7 +8,7 @@ object UpsideDown : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             val distance = 20.0
             val offset = 10.0
             val loc1 = it.location.subtract(distance, offset, distance)

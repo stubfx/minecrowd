@@ -9,7 +9,7 @@ object Armored : Command() {
 
 
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
+        CommandRunner.forRandomPlayer {
             it.inventory.helmet = ItemStack(Material.NETHERITE_HELMET)
             it.inventory.chestplate = ItemStack(Material.NETHERITE_CHESTPLATE)
             it.inventory.leggings = ItemStack(Material.NETHERITE_LEGGINGS)

@@ -34,7 +34,7 @@ object BlocksToFind {
 object PointsManager {
     lateinit var main: Main
     private var currentAmount = 0
-    private var addPointsEvery = 1 // secs
+    private var addPointsEvery = 3 // secs
     private var pointsToAdd = 5
     private var playerPointsMultiplayer = 1
     private var minPointCap = -20
@@ -108,7 +108,7 @@ object PointsManager {
 
     private fun startClock() {
         CommandRunner.startPersistentTask({
-            changeScore(pointsToAdd * CommandRunner.getRealPlayers().size * playerPointsMultiplayer)
+            changeScore(pointsToAdd + CommandRunner.getRealPlayers().size * playerPointsMultiplayer)
         }, addPointsEvery * 20L)
     }
 
