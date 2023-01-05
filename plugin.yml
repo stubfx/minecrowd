@@ -1,6 +1,6 @@
 main: com.minecrowd.plugin.Main
 name: minecrowd
-version: 1.0.10.1069
+version: 1.0.10.1071
 api-version: '1.19'
 author: stubFX
 description: A simple stream plugin made by me.

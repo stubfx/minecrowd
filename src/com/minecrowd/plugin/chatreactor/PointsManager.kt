@@ -15,6 +15,10 @@ object BlocksToFind {
         Material.SUGAR_CANE,
         Material.COBBLESTONE,
         Material.NETHERRACK,
+        Material.OBSIDIAN,
+        Material.DIAMOND,
+        Material.MILK_BUCKET,
+        Material.WHEAT,
         Material.IRON_INGOT,
         Material.COAL,
         Material.WATER_BUCKET,
@@ -27,7 +31,12 @@ object BlocksToFind {
         Material.POPPY,
         Material.DANDELION,
         Material.CORNFLOWER,
-        Material.PUMPKIN
+        Material.PUMPKIN,
+        Material.CAKE,
+        Material.HAY_BLOCK,
+        Material.BOOKSHELF,
+        Material.ENCHANTING_TABLE,
+        Material.ENDER_PEARL
     )
 }
 
