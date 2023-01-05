@@ -8,6 +8,8 @@ import org.bukkit.entity.EntityType
 object ThatIsTNT : Command() {
 
 
+    override val cost: Int = super.cost + 100
+
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {
             val target = it.getTargetBlockExact(50) ?: return@forEachPlayer

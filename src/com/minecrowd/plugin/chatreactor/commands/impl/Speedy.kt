@@ -6,10 +6,10 @@ import org.bukkit.potion.PotionEffectType
 
 object Speedy : Command() {
 
-
+    override val cost: Int = super.cost + 100
     override fun behavior(playerName: String, options: String?) {
-        CommandRunner.forEachPlayer {
-            val speed = PotionEffectType.SPEED.createEffect(ticks * 20, 50)
+        CommandRunner.forRandomPlayer {
+            val speed = PotionEffectType.SPEED.createEffect(ticks * 40, 50)
             it.addPotionEffect(speed)
         }
     }

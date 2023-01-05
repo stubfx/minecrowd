@@ -6,6 +6,7 @@ import org.bukkit.attribute.Attribute
 
 object Normalman : Command() {
 
+    override val cost: Int = 300
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forEachPlayer {

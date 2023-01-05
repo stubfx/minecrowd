@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack
 
 object GoldenSword : Command() {
 
+    override val cost: Int = 300
+
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forRandomPlayer {
             val goldSword = ItemStack(Material.GOLDEN_SWORD)

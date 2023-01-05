@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType
 object Wolves : Command() {
 
     override val defaultCoolDown: Long = 100 * 1000
-    override val cost: Int = 100
+    override val cost: Int = super.cost + 100
 
     override fun behavior(playerName: String, options: String?) {
         CommandRunner.forRandomPlayer {
