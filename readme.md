@@ -26,7 +26,7 @@ This key will be useful in any chatbot like StreamElements to be able to interac
 
 **<server_ip_address>** with your personal server address (i.e. mine.stubfx.com)
 
-**<server_port>** with your custom server port (default 8001)
+**<server_port>** with your custom server port that you can find in the plugin file (default 8001)
 
 **<config_apiKey>** with your apiKey found in the plugin config
 
