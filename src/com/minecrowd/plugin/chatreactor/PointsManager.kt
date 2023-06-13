@@ -139,6 +139,9 @@ object PointsManager {
     }
 
     fun changeScore(amount: Int) {
+        if (!this.enabled) {
+            return
+        }
         currentAmount += amount
         // cap at -100
         if (currentAmount < minPointCap) currentAmount = minPointCap
