@@ -81,7 +81,8 @@ abstract class Command {
     }
 
     private fun checkEnoughPoints(cost: Int): Boolean {
-        return cost <= PointsManager.getCurrentAmount()
+        return PointsManager.checkEnoughPoints(cost)
+//        return cost <= PointsManager.getCurrentAmount()
     }
 
     /**

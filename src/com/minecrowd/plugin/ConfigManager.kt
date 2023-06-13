@@ -25,6 +25,7 @@ object ConfigManager {
     private const val discordCommandWebhook: String = "$discordCommandPath.discord-webook"
     private const val config_path = "plugins/minecrowd/minecrowd_config.yml"
     private const val apiKey = "apiKey"
+    private const val pointsManager = "pointsManager"
     private const val serverPort = "${reactorPath}.serverPort"
     private const val defaultServerPort = 8001
     private lateinit var config: YamlConfiguration
@@ -74,6 +75,10 @@ object ConfigManager {
             config.set("$reactorPath.enable", false)
         } else {
             config.set("$reactorPath.enable", true)
+        }
+        if (config.getString("$reactorPath.$pointsManager") == null) {
+            // make it true if it does not exist.
+            config.set("$reactorPath.$pointsManager", true)
         }
         val commands = CommandFactory.getAvailableCommands()
         PluginUtils.log("Patching commands")
@@ -184,6 +189,10 @@ object ConfigManager {
 
     fun isChatReactorEnabled(): Boolean {
         return config.getBoolean("$reactorPath.enable", false)
+    }
+
+    fun isPointManagerEnabled(): Boolean {
+        return config.getBoolean("$reactorPath.$pointsManager", false)
     }
 
     fun isDiscordWebhookEnabled(): Boolean {

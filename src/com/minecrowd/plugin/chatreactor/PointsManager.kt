@@ -1,5 +1,6 @@
 package com.minecrowd.plugin.chatreactor
 
+import com.minecrowd.plugin.ConfigManager
 import com.minecrowd.plugin.Main
 import com.minecrowd.plugin.chatreactor.commands.CommandRunner
 import org.bukkit.Bukkit
@@ -53,16 +54,20 @@ object PointsManager {
     private lateinit var board: Scoreboard
     private lateinit var objective: Objective
     private lateinit var currentRndBlock: Material
+    private var enabled = true
 
     fun setMainRef(mainRef: Main) {
         main = mainRef
     }
 
     fun start() {
-        startClock()
-        initScoreboard()
-        startStats()
-        startInventoryChecker()
+        this.enabled = ConfigManager.isPointManagerEnabled()
+        if (enabled) {
+            startClock()
+            initScoreboard()
+            startStats()
+            startInventoryChecker()
+        }
     }
 
     private fun initScoreboard() {
@@ -82,6 +87,16 @@ object PointsManager {
     }
 
     fun getCurrentAmount(): Int = currentAmount
+
+    fun checkEnoughPoints(points: Int): Boolean {
+        return if (!this.enabled) {
+            // if pointsManager is not enabled, always return true.
+            true
+        } else {
+            // check otherwise!
+            (getCurrentAmount() - points) > 0
+        }
+    }
 
     private fun generateRandomBlock() {
         currentRndBlock = BlocksToFind.blocks.random()
