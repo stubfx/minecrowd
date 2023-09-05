@@ -13,7 +13,7 @@ data class CommandResultWrapper(
     val name: String,
     val result: Boolean, // true if the command has/will run. False otherwise
     val message: String,
-    val showResultMessage: Boolean = false,
+    val showResultMessage: Boolean = false
 )
 
 abstract class Command {

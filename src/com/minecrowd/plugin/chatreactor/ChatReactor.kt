@@ -1,5 +1,7 @@
 package com.minecrowd.plugin.chatreactor
 
+import com.github.twitch4j.TwitchClientBuilder
+import com.github.twitch4j.chat.events.channel.ChannelMessageEvent
 import com.minecrowd.plugin.ConfigManager
 import com.minecrowd.plugin.PluginUtils
 import com.minecrowd.plugin.chatreactor.commands.CommandFactory
@@ -22,24 +24,48 @@ object ChatReactor {
     private const val userCooldown = 1000 * 10
     private val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
+    private fun checkAndRunChatMessage(userName: String, message: String) {
+        val regex = """mc\s+(.+?)(\s+(.+))?""".toRegex()
+        val match = regex.matchEntire(message)
+        val command = match?.groups?.get(1)?.value ?: ""
+        val options = match?.groups?.get(2)?.value?.trim() ?: ""
+        val chatCommandResolve: CommandResultWrapper = if (PluginUtils.isPlayerAGod(userName)) {
+            CommandFactory.forceRun(command, userName, options)
+        } else {
+            chatCommandResolve(command, userName, options)
+        }
+        if (chatCommandResolve.showResultMessage) {
+            PluginUtils.broadcastMessage(chatCommandResolve.message)
+        }
+    }
+
 
     private fun startServer() {
+
         if (!ConfigManager.isChatReactorEnabled()) {
-            println("chat reactor is currently disabled in the config")
+            PluginUtils.log("chat reactor is currently disabled in the config")
             return
         }
         apiKey = ConfigManager.getApiKey()
         serverPort = ConfigManager.getServerPort()
         if (apiKey.isEmpty()) {
-            println("Missing apiKey, chat reactor disabled.")
+            PluginUtils.log("Missing apiKey, chat reactor disabled.")
             return
         }
-        PluginUtils.log("Starting chatreactor server at $serverPort")
-        httpServerSocket = InetSocketAddress(serverPort)
-        httpserver = HttpServer.create(httpServerSocket, 0)
-        httpserver?.createContext("/command", MyHandler(this))
-        httpserver?.executor = null // creates a default executor
-        httpserver?.start()
+//        PluginUtils.log("Starting chatreactor server at $serverPort")
+//        httpServerSocket = InetSocketAddress(serverPort)
+//        httpserver = HttpServer.create(httpServerSocket, 0)
+//        httpserver?.createContext("/command", MyHandler(this))
+//        httpserver?.executor = null // creates a default executor
+//        httpserver?.start()
+        val twitchClient = TwitchClientBuilder.builder()
+            .withEnableChat(true)
+            .build()
+        twitchClient.chat.joinChannel("stubfx")
+        twitchClient.eventManager.onEvent(ChannelMessageEvent::class.java) { event ->
+            PluginUtils.log("[${event.channel.name}] ${event.user.name}: ${event.message}")
+            checkAndRunChatMessage(event.user.name, event.message)
+        }
     }
 
     private fun checkApiKey(apiKey: String?): Boolean {
@@ -71,6 +97,7 @@ object ChatReactor {
                         // the command has run.
                         t.sendResponseHeaders(204, -1)
                     } else {
+                        PluginUtils.broadcastMessage(reply)
                         // there is a message that's needs to be sent back.
                         t.sendResponseHeaders(200, reply.length.toLong())
                         t.responseBody.write(reply.toByteArray())
@@ -97,7 +124,8 @@ object ChatReactor {
     private fun chatCommandResolve(command: String, playerName: String, options: String?): CommandResultWrapper {
         var resultWrapper = CommandResultWrapper(
             StubCommand.commandName(), false,
-            "im sorry @$playerName you are still in cooldown.", true)
+            "im sorry @$playerName you are still in cooldown.", true
+        )
         // is the user in coolDown
         if (!isUserInCoolDown(playerName)) {
             resultWrapper = CommandFactory.run(command, playerName, options)

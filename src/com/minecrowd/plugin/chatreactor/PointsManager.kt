@@ -47,7 +47,7 @@ object PointsManager {
     lateinit var main: Main
     private var currentAmount = 0
     private var addPointsEvery = 3 // secs
-    private var pointsToAdd = 5
+    private var pointsToAdd = 30
     private var playerPointsMultiplayer = 1
     private var minPointCap = -20
 
