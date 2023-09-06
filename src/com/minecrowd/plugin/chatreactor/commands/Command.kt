@@ -70,7 +70,7 @@ abstract class Command {
         // update last run epoch
         lastRunEpoch = time
         // print in console cause why not
-        println("[ChatReactor] : Running command ${commandName()} - silent: $isCommandSilent")
+        PluginUtils.log("[ChatReactor] : Running command ${commandName()} - silent: $isCommandSilent")
         // is this a silent fart that will kill someone?
         if (!isCommandSilent) showTitle(playerName)
         // aight, now we need to schedule the command

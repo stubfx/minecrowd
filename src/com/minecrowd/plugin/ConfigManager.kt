@@ -25,6 +25,7 @@ object ConfigManager {
     private const val discordCommandWebhook: String = "$discordCommandPath.discord-webook"
     private const val config_path = "plugins/minecrowd/minecrowd_config.yml"
     private const val apiKey = "apiKey"
+    private const val twitchChannel = "twitchChannel"
     private const val pointsManager = "pointsManager"
     private const val serverPort = "${reactorPath}.serverPort"
     private const val defaultServerPort = 8001
@@ -55,6 +56,7 @@ object ConfigManager {
     }
 
     private fun patchFile() {
+        patchTwitchChannel()
         patchApiKey()
         patchDiscordWebhooks()
         patchServerPort()
@@ -73,9 +75,11 @@ object ConfigManager {
     private fun patchChatReactor() {
         if (config.getString(apiKey) == null) {
             config.set("$reactorPath.enable", false)
-        } else {
-            config.set("$reactorPath.enable", true)
         }
+        // server should not be enabled by default, will be useful later for future implementations.
+        /* else {
+            config.set("$reactorPath.enable", true)
+        }*/
         if (config.getString("$reactorPath.$pointsManager") == null) {
             // make it true if it does not exist.
             config.set("$reactorPath.$pointsManager", true)
@@ -101,6 +105,14 @@ object ConfigManager {
 
             setCommand(commandConfig)
         }
+    }
+
+    private fun patchTwitchChannel() {
+        if (config.getString(twitchChannel) != null) {
+            // twitchChannel already exists, leave it be.
+            return
+        }
+        config.set(twitchChannel, "stubfx")
     }
 
     private fun patchApiKey() {
@@ -140,9 +152,12 @@ object ConfigManager {
         PluginUtils.log("Plugin config saved")
     }
 
-    fun getApiKey(): String {
-        // must exist.
-        return config.getString(apiKey)!!
+    fun getTwitchChannel(): String? {
+        return config.getString(twitchChannel)
+    }
+
+    fun getApiKey(): String? {
+        return config.getString(apiKey)
     }
 
     fun getServerPort(): Int {

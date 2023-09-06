@@ -41,17 +41,18 @@ object ChatReactor {
 
 
     private fun startServer() {
-
-        if (!ConfigManager.isChatReactorEnabled()) {
-            PluginUtils.log("chat reactor is currently disabled in the config")
-            return
-        }
-        apiKey = ConfigManager.getApiKey()
-        serverPort = ConfigManager.getServerPort()
-        if (apiKey.isEmpty()) {
-            PluginUtils.log("Missing apiKey, chat reactor disabled.")
-            return
-        }
+        // DO NOT REMOVE, THIS SECTION WILL BE USEFUL LATER FOR FUTURE IMPLEMENTATIONS.
+        // MAYBE A TWITCH EXTENSION CALLING THE API? DUNNO <3
+//        if (!ConfigManager.isChatReactorEnabled()) {
+//            PluginUtils.log("chat reactor is currently disabled in the config")
+//            return
+//        }
+//        apiKey = ConfigManager.getApiKey() ?: ""
+//        serverPort = ConfigManager.getServerPort()
+//        if (apiKey.isEmpty()) {
+//            PluginUtils.log("Missing apiKey, chat reactor disabled.")
+//            return
+//        }
 //        PluginUtils.log("Starting chatreactor server at $serverPort")
 //        httpServerSocket = InetSocketAddress(serverPort)
 //        httpserver = HttpServer.create(httpServerSocket, 0)
@@ -61,7 +62,7 @@ object ChatReactor {
         val twitchClient = TwitchClientBuilder.builder()
             .withEnableChat(true)
             .build()
-        twitchClient.chat.joinChannel("stubfx")
+        twitchClient.chat.joinChannel(ConfigManager.getTwitchChannel()!!)
         twitchClient.eventManager.onEvent(ChannelMessageEvent::class.java) { event ->
             PluginUtils.log("[${event.channel.name}] ${event.user.name}: ${event.message}")
             checkAndRunChatMessage(event.user.name, event.message)
