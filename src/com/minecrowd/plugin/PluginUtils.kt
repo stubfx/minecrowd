@@ -15,7 +15,7 @@ enum class LogType {
 object PluginUtils {
 
     lateinit var main: Main
-    val GODS = listOf("stubfx")
+    val GODS = listOf("stubfx", "itsthemoyai")
 
     fun setMainRef(mainRef: Main) {
         main = mainRef

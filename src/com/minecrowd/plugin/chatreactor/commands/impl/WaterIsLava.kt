@@ -17,7 +17,8 @@ object WaterIsLava : Command() {
         CommandRunner.forRandomPlayer {
             val loc1 = it.location.subtract(70.0, 70.0, 70.0)
             val loc2 = it.location.add(70.0, 70.0, 70.0)
-            val material = if (it.world.name == "world") Material.LAVA else Material.WATER
+            // gotta check with the nether cause the player may be in a different world created by a player.
+            val material = if (it.world.name == "world_nether") Material.WATER else Material.LAVA
             val toChange = if (material == Material.WATER) Material.LAVA else Material.WATER
             println(material)
             println(toChange)

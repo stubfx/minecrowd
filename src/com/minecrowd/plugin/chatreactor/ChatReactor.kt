@@ -25,6 +25,9 @@ object ChatReactor {
     private val playerCoolDownList: HashMap<String, Long> = hashMapOf()
 
     private fun checkAndRunChatMessage(userName: String, message: String) {
+        if (!message.startsWith("mc")) {
+            return
+        }
         val regex = """mc\s+(.+?)(\s+(.+))?""".toRegex()
         val match = regex.matchEntire(message)
         val command = match?.groups?.get(1)?.value ?: ""

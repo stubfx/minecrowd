@@ -54,7 +54,7 @@ abstract class Command {
         }
         if (isInCoolDown()) {
             // command is in coolDown
-            return resultWrapper(false, "@${playerName} - ${commandName()} command is in coolDown")
+            return resultWrapper(false, "@${playerName} - ${commandName()} command is in coolDown for ${getRemainingCooldownSeconds()} seconds")
         }
         val setupResult = setup(playerName, options)
         if (!setupResult.result) {
@@ -79,6 +79,8 @@ abstract class Command {
         return CommandResultWrapper(commandConfig.name, true, successMessage(),
             showSuccessMessage ?: commandConfig.showSuccessMessage)
     }
+
+    private fun getRemainingCooldownSeconds() = ((Date().time - (lastRunEpoch + coolDown)) / 1000) * -1
 
     private fun checkEnoughPoints(cost: Int): Boolean {
         return PointsManager.checkEnoughPoints(cost)
