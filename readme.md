@@ -59,3 +59,6 @@ com.github.twitch4j:twitch4j:1.16.0
 org.jetbrains.kotlin:kotlin-reflect:1.7.10
 
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10
+
+![image](https://github.com/stubfx/minecrowd/assets/14958556/7d6e3bf8-c232-4771-bd37-fdb0f0190974)
+![image](https://github.com/stubfx/minecrowd/assets/14958556/535cc0df-dffe-43b4-aaa4-1b403ab25206)
