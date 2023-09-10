@@ -47,3 +47,15 @@ The plugin configuration is quite straightforward, for each command you have 6 d
 - showSuccessMessage (default - false)
   - If true will return to the caller (chatbot usually) the success message. Is recommended to leave it to false as it makes the chat quite messy.
 - successMessage (default - You run the command ...)
+
+
+# BUILD SETTINGS
+### WORK IN PROGRESS
+
+java -Xmx1024M -Xms1024M -jar spigot-1.20.1.jar nogui
+
+com.github.twitch4j:twitch4j:1.16.0
+
+org.jetbrains.kotlin:kotlin-reflect:1.7.10
+
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10

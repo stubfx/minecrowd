@@ -9,9 +9,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" name="spigot-api-1.19.2-R0.1-SNAPSHOT-shaded" level="project" />
     <orderEntry type="library" name="jetbrains.kotlin.reflect" level="project" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="github.twitch4j" level="project" />
+    <orderEntry type="library" name="spigot-api-1.19.2-R0.1-SNAPSHOT-shaded" level="project" />
   </component>
 </module>

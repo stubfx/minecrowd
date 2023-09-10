@@ -6,6 +6,9 @@ import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.scheduler.BukkitRunnable
 
+/**
+ * The BlockReplacer class provides methods for replacing blocks in a specific area.
+ */
 object BlockReplacer {
 
     private const val CHUNK_BLOCKS_NUMBER = 15.0
@@ -13,6 +16,12 @@ object BlockReplacer {
     lateinit var main: Main
     const val threadBlockY = 10
 
+    /**
+     * Check if a block is close to the spawn area based on its location.
+     *
+     * @param block the block to check
+     * @return true if the block is close to the spawn area, false otherwise
+     */
     fun isBlockCloseToSpawnArea(block: Block): Boolean {
         val spawnLocation = block.world.spawnLocation
         val blockLocation = block.location
@@ -22,10 +31,24 @@ object BlockReplacer {
                 blockLocation.z < spawnLocation.z + SPAWN_SAFE_RADIUS
     }
 
+    /**
+     * Sets the main reference for the software.
+     *
+     * @param mainRef The main reference to be set.
+     */
     fun setMainRef(mainRef: Main) {
         main = mainRef
     }
 
+    /**
+     * Iterates over each block within a specified region defined by two locations (inclusive) and performs the specified action.
+     * This method is deprecated. Use [forEachBlockAsync] instead.
+     *
+     * @param loc1 the first location defining the region
+     * @param loc2 the second location defining the region
+     * @param func the action to be performed on each block
+     * @deprecated Use [forEachBlockAsync] instead.
+     */
     @Deprecated("Use forEachBlockAsync instead.")
     fun forEachBlock(loc1: Location, loc2: Location, func: (Block) -> Unit) {
         PluginUtils.checkLocationsWorld(loc1, loc2)
@@ -40,6 +63,14 @@ object BlockReplacer {
         }
     }
 
+    /**
+     * Asynchronously iterates over each block within the specified range of locations and performs the given action on each block.
+     *
+     * @param loc1 The first location defining the range.
+     * @param loc2 The second location defining the range.
+     * @param func The function to be executed on each block.
+     * @param onFinish The function to be executed when the iteration is complete. Default is an empty function.
+     */
     fun forEachBlockAsync(loc1: Location, loc2: Location, func: (Block) -> Unit, onFinish: () -> Unit = {}) {
         PluginUtils.checkLocationsWorld(loc1, loc2)
         val minL = PluginUtils.getMinLocation(loc1, loc2)
@@ -76,6 +107,14 @@ object BlockReplacer {
         }.runTaskTimer(main, 1, 2)
     }
 
+    /**
+     * Replaces all blocks within a given chunk with a specified material.
+     *
+     * @param chunk the chunk to replace blocks in
+     * @param material the material to replace the blocks with
+     * @param excluded an optional list of materials to exclude from replacement
+     * @param onFinish a callback function to be called when the replacement is finished
+     */
     fun chunkReplace(chunk: Chunk, material: Material, excluded: List<Material>? = null, onFinish: () -> Unit = {}) {
         // get location of the chunk
         // keep in mind that chunk.x gets the chunk index, not the world index,
@@ -99,6 +138,17 @@ object BlockReplacer {
         )
     }
 
+    /**
+     * Replaces the blocks within a specified area with a new material.
+     *
+     * @param loc1 The first location defining the area.
+     * @param loc2 The second location defining the area.
+     * @param material The material to replace the blocks with.
+     * @param excluded A list of materials that should be excluded from the replacement. Defaults to null.
+     * @param excludeAir Determines whether air blocks should be excluded from the replacement. Defaults to true.
+     *
+     * @deprecated Use [replaceAreaAsync] instead.
+     */
     @Deprecated("Use replaceAreaAsync instead.")
     fun replaceArea(
         loc1: Location,
@@ -124,6 +174,17 @@ object BlockReplacer {
         }.runTask(main)
     }
 
+    /**
+     * Replaces blocks within a specified area with a new material asynchronously.
+     *
+     * @param loc1 The first location defining the area.
+     * @param loc2 The second location defining the area.
+     * @param material The material to replace the blocks with.
+     * @param excluded A list of materials to exclude from replacement. Defaults to null.
+     * @param onlyIfIsTypeOf A list of materials to only replace if the block type is in the list.
+     * @param excludeAir Flag indicating whether to exclude air blocks from replacement. Defaults to true.
+     * @param onFinish Callback function to be executed when replacement is finished. Defaults to an empty function.
+     */
     fun replaceAreaAsync(
         loc1: Location,
         loc2: Location,
